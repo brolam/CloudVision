@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
 
+//Informar a versão das bibliotécas dependente do Google Play Services.
+ext.PLAY_SERVICES_VERSION = '10.0.1'
+
 repositories {
     mavenLocal()
     flatDir {
@@ -34,15 +37,6 @@ android {
     }
 }
 
-configurations.all {
-    resolutionStrategy {
-        eachDependency { DependencyResolveDetails details ->
-            if ((details.requested.group == 'com.google.android.gms') || ((details.requested.group == 'com.google.firebase'))) {
-                details.useVersion "10.0.1"
-            }
-        }
-    }
-}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -58,24 +52,24 @@ dependencies {
      Escanear blocos de texto nas imagens capturadas através da câmera fotográfica
      do smartphone ou tablet.
     */
-    compile 'com.google.android.gms:play-services-vision'
+    compile "com.google.android.gms:play-services-vision:$PLAY_SERVICES_VERSION"
 
     /*
     Firebase Authentication https://firebase.google.com/docs/auth/
      Realizar a autenticação do aplicativo em uma conta de usuário da Google ou E-mail.
      */
-    compile 'com.google.firebase:firebase-auth'
+    compile "com.google.firebase:firebase-auth:$PLAY_SERVICES_VERSION"
 
     /*
     Firebase Realtime Database https://firebase.google.com/docs/database/
     Armazenar os Notes Vision e blocos de texto.
      */
-    compile 'com.google.firebase:firebase-database'
+    compile "com.google.firebase:firebase-database:$PLAY_SERVICES_VERSION"
     /*
     Firebase Storage https://firebase.google.com/docs/storage/
     Armazenar as imagens de plano de fundo dos Notes Vision.
      */
-    compile 'com.google.firebase:firebase-storage'
+    compile "com.google.firebase:firebase-storage:$PLAY_SERVICES_VERSION"
 
     /*
     FirebaseUI for Android https://github.com/firebase/FirebaseUI-Android
@@ -84,6 +78,8 @@ dependencies {
     compile 'com.firebaseui:firebase-ui:1.1.1'
 
 }
+apply plugin: 'com.google.gms.google-services'
+
 
 
 
