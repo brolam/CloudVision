@@ -1,3 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2017 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  - Styles padrão para versões do Android maior ou igual 4.1, para versões maior ou igual  5.0 -
+  - veja values-21                                                                             -
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 <resources>
 
     <!-- Base application theme. -->
@@ -17,4 +38,38 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+
+    <style name="nav_header_user_name" >
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="nav_header_user_email" >
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+    <!-- Depara de fontes:
+    Font                     | android:fontFamily         | android:textStyle
+    =========================|============================|===================
+    Roboto Thin              | sans-serif-thin            |
+    Roboto Light             | sans-serif-light           |
+    Roboto Regular           | sans-serif                 |
+    Roboto Bold              | sans-serif                 | bold
+    Roboto Medium            | sans-serif-medium          |
+    Roboto Black             | sans-serif-black           |
+    Roboto Condensed Light   | sans-serif-condensed-light |
+    Roboto Condensed Regular | sans-serif-condensed       |
+    Roboto Condensed Bold    | sans-serif-condensed       | bold
+    Noto Serif               | serif                      |
+    Noto Serif Bold          | serif                      | bold
+    Droid Sans Mono          | monospace                  |
+    Cutive Mono              | serif-monospace            |
+    Coming Soon              | casual                     |
+    Dancing Script           | cursive                    |
+    Dancing Script Bold      | cursive                    | bold
+    Carrois Gothic SC        | sans-serif-smallcaps       |
+    -->
 </resources>
