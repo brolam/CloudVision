@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2017 The Android Open Source Project
+     Copyright (C) 2017 Breno Marques
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -21,4 +21,16 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_notes_vision">Notes Vision</string>
     <string name="nav_login_off">Login Out</string>
+
+    <string name="ok">OK</string>
+    <string name="permission_camera_rationale">Access to the camera is needed for detection</string>
+    <string name="low_storage_error">Ocr dependencies cannot be downloaded due to low device storage</string>
+    <string name="no_camera_permission">This application cannot run because it does not have the camera permission.  The application will now exit.</string>
+
+    <!--Note Vision Activity!-->
+    <string name="note_vision_save">Save Note Vision</string>
+    <string name="note_vision_keyboard_on">Keyboard on</string>
+    <string name="note_vision_camera_on">Camera on</string>
+    <string name="note_vision_edit_title_hint">Title</string>
+    <string name="note_vision_edit_content_hint">Note</string>
 </resources>

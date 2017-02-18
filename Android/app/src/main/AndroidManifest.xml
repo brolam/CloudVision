@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.com.brolam.cloudvision"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="br.com.brolam.cloudvision">
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
 
     <application
         android:allowBackup="true"
@@ -10,7 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:supportsRtl">
-
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="ocr" />
@@ -24,6 +27,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".ui.NoteVisionActivity"
+            android:theme="@style/AppTheme.NoActionBar.Fullscreen">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.com.brolam.cloudvision.ui.NoteVisionActivity" />
         </activity>
     </application>
 
