@@ -41,6 +41,7 @@ import br.com.brolam.cloudvision.ui.helpers.LoginHelper;
  */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+    private static int NOTE_VISON_REQUEST_COD = 1000;
 
     LoginHelper loginHelper;
     FloatingActionButton fabAdd;
@@ -128,9 +129,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onClick(View view) {
         if (view.equals(this.fabAdd)){
-            // TODO Acionar a inclusão de um Note Vision.
-            Snackbar.make(view, "Acionar a inclusão de um Note Vision.", Snackbar.LENGTH_LONG)
-                    .setAction("New Note Vision", null).show();
+           NoteVisionActivity.newNoteVision(this, NOTE_VISON_REQUEST_COD);
         }
     }
 
