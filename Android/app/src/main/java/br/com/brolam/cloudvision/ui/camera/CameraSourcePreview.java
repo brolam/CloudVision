@@ -86,7 +86,8 @@ public class CameraSourcePreview extends ViewGroup {
     }
 
     public boolean isPaused(){
-        return mCameraSource.isRunning() == false;
+
+        return mCameraSource == null? true: mCameraSource.isRunning() == false;
 
     }
 

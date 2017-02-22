@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity
          * Veja os métodos onResume, onPause e onActivityResult para mais detalhes
          * sobre o fluxo de registro do usuário.
          */
-        this.loginHelper = new LoginHelper(this, navigationView.getHeaderView(0));
+        this.loginHelper = new LoginHelper(this, navigationView.getHeaderView(0), null);
         navigationView.setNavigationItemSelectedListener(this);
         this.fabAdd.setOnClickListener(this);
     }
@@ -128,8 +128,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onClick(View view) {
-        if (view.equals(this.fabAdd)){
-           NoteVisionActivity.newNoteVision(this, NOTE_VISON_REQUEST_COD);
+        if (view.equals(this.fabAdd)) {
+            NoteVisionActivity.newNoteVision(this, NOTE_VISON_REQUEST_COD);
+            //NoteVisionActivity.updateNoteVision(this, NOTE_VISON_REQUEST_COD, "-Kda2ezEKZ0C3qydkjat", "-Kda2ezH9bLL5EC_WDyr", "Realtime Database", "https://cloudvision-cdad2. firebaseio.com/\\n\\rl cloudvision-c4ad2: nuli\\n\\r", true );
         }
     }
 

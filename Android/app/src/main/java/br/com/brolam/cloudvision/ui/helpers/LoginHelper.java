@@ -17,6 +17,7 @@ package br.com.brolam.cloudvision.ui.helpers;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,6 +36,7 @@ import br.com.brolam.cloudvision.R;
  * @since Release 01
  */
 public class LoginHelper implements FirebaseAuth.AuthStateListener {
+    private static final String TAG = "LoginHelper";
     private static final int RC_SIGN_IN = 1001; //Flag para identificar o retorna da tela de login.
     private Activity activity;
     private FirebaseAuth firebaseAuth;
@@ -43,12 +45,22 @@ public class LoginHelper implements FirebaseAuth.AuthStateListener {
     private TextView textViewUserEmail;
 
     /**
+     * Interface opicional para ser executada quando o login for realizado com sucesso.
+     */
+    public interface ILoginHelper {
+        void onLogin( FirebaseUser firebaseUser);
+    }
+
+    ILoginHelper iLoginHelper;
+
+    /**
      * Construtor principal e obrigatório para instanciar uma classe.
      * @param activity informar a atividade onde será executada o registro ou verificação do usuário.
      * @param navigationViewHeard informar o View onde será exibido as informações do usuário ou null se não existir.
      */
-    public LoginHelper(Activity activity, View navigationViewHeard) {
+    public LoginHelper(Activity activity, View navigationViewHeard, ILoginHelper iLoginHelper) {
         this.activity = activity;
+        this.iLoginHelper = iLoginHelper;
         this.firebaseAuth = FirebaseAuth.getInstance();
         if ( navigationViewHeard != null) {
             this.imageViewUserPhoto = (ImageView) navigationViewHeard.findViewById(R.id.imageViewUserPhoto);
@@ -90,6 +102,9 @@ public class LoginHelper implements FirebaseAuth.AuthStateListener {
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         if (firebaseUser != null) {
             this.setViewUser(firebaseUser);
+            if ( iLoginHelper != null){
+                iLoginHelper.onLogin(firebaseUser);
+            }
         } else {
             this.doLogin();
         }
@@ -100,14 +115,18 @@ public class LoginHelper implements FirebaseAuth.AuthStateListener {
      * @param firebaseUser informar um {@see FirebaseUser} válido.
      */
     private void setViewUser(FirebaseUser firebaseUser) {
-        if ((firebaseUser.getPhotoUrl() != null) && (this.imageViewUserPhoto != null))
-            Glide.with(this.activity).
-                    load(firebaseUser.getPhotoUrl()).
-                    into(this.imageViewUserPhoto);
-        if (this.textViewUserName != null)
-            this.textViewUserName.setText(firebaseUser.getDisplayName());
-        if (this.textViewUserEmail != null)
-            this.textViewUserEmail.setText(firebaseUser.getEmail());
+        try {
+            if ((firebaseUser.getPhotoUrl() != null) && (this.imageViewUserPhoto != null))
+                Glide.with(this.activity).
+                        load(firebaseUser.getPhotoUrl()).
+                        into(this.imageViewUserPhoto);
+            if (this.textViewUserName != null)
+                this.textViewUserName.setText(firebaseUser.getDisplayName());
+            if (this.textViewUserEmail != null)
+                this.textViewUserEmail.setText(firebaseUser.getEmail());
+        } catch (Exception e){
+            Log.e(TAG, e.getMessage());
+        }
     }
 
     /**

@@ -33,4 +33,6 @@
     <string name="note_vision_camera_on">Camera on</string>
     <string name="note_vision_edit_title_hint">Title</string>
     <string name="note_vision_edit_content_hint">Note</string>
+    <string name="note_vision_validate_title_empty">Please the title must be completed</string>
+    <string name="note_vision_validate_content_empty">Please select at least one text.</string>
 </resources>

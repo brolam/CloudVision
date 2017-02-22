@@ -25,8 +25,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -49,13 +51,19 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
+import java.util.Date;
 
 import br.com.brolam.cloudvision.R;
+import br.com.brolam.cloudvision.data.CloudVisionProvider;
+import br.com.brolam.cloudvision.data.models.NoteVision;
+import br.com.brolam.cloudvision.data.models.NoteVisionItem;
 import br.com.brolam.cloudvision.ui.camera.CameraSource;
 import br.com.brolam.cloudvision.ui.camera.CameraSourcePreview;
 import br.com.brolam.cloudvision.ui.camera.GraphicOverlay;
+import br.com.brolam.cloudvision.ui.helpers.LoginHelper;
 import br.com.brolam.cloudvision.ui.vision.OcrDetectorProcessor;
 import br.com.brolam.cloudvision.ui.vision.OcrGraphic;
 
@@ -63,8 +71,11 @@ import br.com.brolam.cloudvision.ui.vision.OcrGraphic;
  * Essa atividade é uma modificação da atividade OcrCaptureActivity.java em https://github.com/googlesamples/android-vision/blob/master/visionSamples/ocr-codelab/
  * responsável pelo o acionamento da camera fotográfica e capturar dos blocos de textos.
  * Sendo importante destacar, que foram realizadas modificações para atender as necessidades do Cloud Vision.
+ * @author Breno Marques
+ * @version 1.00
+ * @since Release 01
  */
-public class NoteVisionActivity extends AppCompatActivity implements View.OnClickListener {
+public class NoteVisionActivity extends AppCompatActivity implements View.OnClickListener, LoginHelper.ILoginHelper {
     private static final String TAG = "NoteVisionActivity";
 
     // Intent request code to handle updating play services if needed.
@@ -73,8 +84,12 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
     // Permission request codes need to be < 256
     private static final int RC_HANDLE_CAMERA_PERM = 2;
 
-    public static final String UseFlash = "UseFlash";
+    public static final String USE_FLASH = "useFlash";
     private boolean useFlash;
+
+    public static final String ON_KEYBOARD = "onKeyboard";
+    private boolean onKeyboard;
+
     private CameraSource mCameraSource;
     private CameraSourcePreview mPreview;
     private GraphicOverlay<OcrGraphic> mGraphicOverlay;
@@ -88,7 +103,16 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
     private FloatingActionButton fabCameraPlayStop;
     private View contentNoteVisionCamera;
     private View contentNoteVisionKeyboard;
+    private EditText editTextTitle;
     private EditText editTextContent;
+
+    private LoginHelper loginHelper;
+    private CloudVisionProvider  cloudVisionProvider;
+
+    public static final String NOTE_VISION_KEY = "noteVisionKey";
+    private String noteVisionKey;
+    public static final String NOTE_VISION_ITEM_KEY = "noteVisionItemKey";
+    private String noteVisionItemKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,15 +133,10 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
         this.fabCameraPlayStop = (FloatingActionButton) this.findViewById(R.id.fabCameraPlayStop);
         this.contentNoteVisionCamera = this.findViewById(R.id.contentNoteVisionCamera);
         this.contentNoteVisionKeyboard = this.findViewById(R.id.contentNoteVisionKeyboard);
+        this.editTextTitle = (EditText) this.findViewById(R.id.editTextTitle);
         this.editTextContent = (EditText) this.findViewById(R.id.editTextContent);
 
-        // read parameters from the intent used to launch the activity.
-        if ( savedInstanceState != null){
-            this.useFlash = savedInstanceState.getBoolean(UseFlash, false);
-        } else {
-            this.useFlash = getIntent().getBooleanExtra(UseFlash, false);
-        }
-
+        setSaveInstanceState(savedInstanceState);
 
         // Check for the camera permission before accessing the camera.  If the
         // permission is not granted yet, request permission.
@@ -130,17 +149,83 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
 
         gestureDetector = new GestureDetector(this, new CaptureGestureListener());
         scaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
+
+         /*
+         * Criar um LoginHelper para registrar o login do usuário no aplicativo.
+         * Veja os métodos onResume, onPause e onActivityResult para mais detalhes
+         * sobre o fluxo de registro do usuário.
+         */
+        this.loginHelper = new LoginHelper(this, null, this);
+
+    }
+
+    private void setSaveInstanceState(Bundle savedInstanceState){
+        // read parameters from the  savedInstanceState ou intent used to launch the activity.
+        Bundle bundle = savedInstanceState != null? savedInstanceState : getIntent().getExtras();
+        if ( bundle != null) {
+            this.useFlash = bundle.getBoolean(USE_FLASH, false);
+            this.onKeyboard = bundle.getBoolean(ON_KEYBOARD, false);
+            this.noteVisionKey = bundle.getString(NOTE_VISION_KEY, null);
+            this.noteVisionItemKey = bundle.getString(NOTE_VISION_ITEM_KEY, null);
+            this.editTextTitle.setText(bundle.getString(NoteVision.TITLE,this.editTextTitle.getText().toString()));
+            this.editTextContent.setText(bundle.getString(NoteVisionItem.CONTENT,this.editTextContent.getText().toString()));
+        } else {
+            this.useFlash =  false;
+            this.onKeyboard = false;
+            this.noteVisionKey = null;
+            this.noteVisionItemKey = null;
+        }
+    }
+
+    /**
+     * Ativar o provedor de dados se o login do usuário for realizado com sucesso.
+     * @param firebaseUser  informar um usuário válido.
+     */
+    @Override
+    public void onLogin(FirebaseUser firebaseUser) {
+        this.cloudVisionProvider = new CloudVisionProvider(firebaseUser.getUid());
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean(UseFlash, useFlash);
+        outState.putBoolean(USE_FLASH, this.useFlash);
+        outState.putBoolean(ON_KEYBOARD, this.onKeyboard);
+        outState.putString(NOTE_VISION_KEY, this.noteVisionKey);
+        outState.putString(NOTE_VISION_ITEM_KEY, this.noteVisionItemKey);
+        outState.putString(NoteVision.TITLE, editTextTitle.getText().toString());
+        outState.putString(NoteVisionItem.CONTENT, editTextContent.getText().toString());
     }
 
+    /**
+     * Incluir um NoteVision e seu conteúdo
+     * @param activity informar uma atividade válida
+     * @param requestCod informar o código de requisição da atividade {@see Activity.onActivityResult}
+     */
     public static void newNoteVision(Activity  activity, int requestCod){
         Intent intent = new Intent(activity, NoteVisionActivity.class );
-        intent.putExtra(UseFlash, false);
+        activity.startActivityForResult(intent, requestCod);
+
+    }
+
+
+    /**
+     * Atualizar um NoteVision e seu conteúdo(item)
+     * @param activity informar uma atividade válida
+     * @param requestCod informar o código de requisição da atividade {@see Activity.onActivityResult}
+     * @param noteVisionKey informar um chave válida.
+     * @param noteVisionItemKey informar um chave válida.
+     * @param title informar o título do NoteVision
+     * @param content informar o conteúdo do item do Notevision
+     * @param onKeyboard informar se o teclado deve ser ativiado em vez da camera.
+     */
+    public static void updateNoteVision(Activity  activity, int requestCod, String noteVisionKey, String noteVisionItemKey , String title , String content, Boolean onKeyboard) {
+        Intent intent = new Intent(activity, NoteVisionActivity.class);
+        intent.putExtra(NOTE_VISION_KEY, noteVisionKey);
+        intent.putExtra(NOTE_VISION_ITEM_KEY, noteVisionItemKey);
+        intent.putExtra(NoteVision.TITLE, title);
+        intent.putExtra(NoteVisionItem.CONTENT, content);
+        intent.putExtra(ON_KEYBOARD, onKeyboard);
         activity.startActivityForResult(intent, requestCod);
 
     }
@@ -149,6 +234,8 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_note_vision, menu);
+        //Atualizar o menu quando a tela for reconstruida.
+        setMenuItemNoteVisionKeyboardOrCamera(this.onKeyboard);
         return true;
     }
 
@@ -253,7 +340,14 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onResume() {
         super.onResume();
-        startCameraSource();
+        this.loginHelper.begin();
+        //Acionar o teclado ou camera conforme a situação antes da tela ser reconstruída ou
+        //se a atividade foi acionada com parâmetro onKeyboard = true
+        if ( this.onKeyboard )
+            this.keyboardOnOff(true);
+        else {
+            this.startCameraSource();
+        }
     }
 
     /**
@@ -262,6 +356,7 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onPause() {
         super.onPause();
+        this.loginHelper.pause();
         if (mPreview != null) {
             mPreview.stop();
         }
@@ -276,6 +371,18 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
         super.onDestroy();
         if (mPreview != null) {
             mPreview.release();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        /**
+         * Validar se o login do usuário foi realizado com sucess.
+         * Sendo importante destacar, se o login for cancelado a MainActivity será encerrada!
+         */
+        if ( loginHelper.checkLogin(requestCode, resultCode)){
+
         }
     }
 
@@ -346,8 +453,10 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
         if (mCameraSource != null) {
             keyboardOnOff(false);
             try {
+                this.setLockScreenOrientation(false);
                 mPreview.start(mCameraSource, mGraphicOverlay);
                 this.fabCameraPlayStop.setImageResource(R.drawable.ic_pause_camera_white);
+                this.fabFlashOnOff.setEnabled(true);
             } catch (IOException e) {
                 Log.e(TAG, "Unable to start camera source.", e);
                 mCameraSource.release();
@@ -355,6 +464,17 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
                 this.fabCameraPlayStop.setImageResource(R.drawable.ic_play_camera_white);
             }
         }
+    }
+
+    /**
+     * Informar se a camera está ativa.
+     * @return
+     */
+    private boolean isCameraPlay() {
+        if  ( mPreview != null ){
+            return !mPreview.isPaused();
+        }
+        return  false;
     }
 
     /**
@@ -370,6 +490,9 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
             } else {
                 mPreview.stop();
                 this.fabCameraPlayStop.setImageResource(R.drawable.ic_play_camera_white);
+                this.fabFlashOnOff.setEnabled(false);
+                this.setLockScreenOrientation(true);
+
             }
         }
     }
@@ -400,7 +523,6 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
      */
     private void keyboardOnOff(Boolean keyboardOn){
         keyboardOn = keyboardOn == null? this.contentNoteVisionKeyboard.getVisibility() != View.VISIBLE : keyboardOn;
-        MenuItem menuItemNoteVision =  toolbar.getMenu().findItem(R.id.note_vision_keyboard_or_camera);
         if (keyboardOn) {
             this.contentNoteVisionKeyboard.setVisibility(View.VISIBLE);
             if ( mPreview != null) {
@@ -408,21 +530,39 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
                 contentNoteVisionCamera.setVisibility(View.GONE);
                 contentNoteVisionKeyboard.setVisibility(View.VISIBLE);
             }
+            setMenuItemNoteVisionKeyboardOrCamera(true);
+            this.onKeyboard = true;
+            this.setLockScreenOrientation(false);
+
+        } else {
+            this.contentNoteVisionCamera.setVisibility(View.VISIBLE);
+            this.contentNoteVisionKeyboard.setVisibility(View.GONE);
+            this.onKeyboard = false;
+            setMenuItemNoteVisionKeyboardOrCamera(false);
+        }
+    }
+
+    /**
+     * Atualizar item note_vision_keyboard_or_camera no menu do toolbar.
+     * @param onKeyboard
+     */
+    private void setMenuItemNoteVisionKeyboardOrCamera(boolean onKeyboard){
+        MenuItem menuItemNoteVision =  toolbar.getMenu().findItem(R.id.note_vision_keyboard_or_camera);
+        if ( onKeyboard){
             if ( menuItemNoteVision != null) {
                 menuItemNoteVision
                         .setIcon(R.drawable.ic_on_camera_white)
                         .setTitle(R.string.note_vision_camera_on);
             }
-
-        } else {
-            contentNoteVisionCamera.setVisibility(View.VISIBLE);
-            contentNoteVisionKeyboard.setVisibility(View.GONE);
+        } else{
             if ( menuItemNoteVision != null) {
                 menuItemNoteVision
                         .setIcon(R.drawable.ic_on_keyboard_white)
                         .setTitle(R.string.note_vision_keyboard_on);
             }
+
         }
+
     }
 
     /**
@@ -430,21 +570,63 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
      */
     private void setNoteVisionContent() {
         StringBuilder stringBuilder = new StringBuilder();
+        int countSelected = 0;
         for (OcrGraphic graphic : mGraphicOverlay.getOrcGraphics()) {
             if ((graphic.isSelected())) {
                 TextBlock textBlock = graphic.getTextBlock();
                 if ((textBlock != null) && (textBlock.getValue() != null)) {
                     stringBuilder.append(String.format("%s\n\r", textBlock.getValue()));
+                    countSelected++;
                 }
             }
+        }
+        if (( countSelected == 1) && (this.editTextTitle.getText().length() == 0)){
+            this.editTextTitle.setText(NoteVision.parseTitle(stringBuilder.toString()));
         }
         this.editTextContent.setText(stringBuilder.toString());
     }
 
     /**
-     * onTap is called to capture the first TextBlock under the tap location and return it to
-     * the Initializing Activity.
-     *
+     * Validar e salvar um NoteVision
+     */
+    private void saveNoteVision() {
+        String title = editTextTitle.getText().toString();
+        Date dateNow = new Date();
+        String content = editTextContent.getText().toString();
+        this.editTextTitle.setError(null);
+        this.editTextContent.setError(null);
+
+        if (!NoteVisionItem.checkContent(content)) {
+            this.editTextContent.setError(getString(R.string.note_vision_validate_content_empty));
+            if (this.isCameraPlay()) {
+                Toast.makeText(this, getString(R.string.note_vision_validate_content_empty), Toast.LENGTH_SHORT).show();
+            } else {
+                this.editTextContent.requestFocus();
+            }
+            return;
+        } else if (!NoteVision.checkTitle(title)) {
+            this.editTextTitle.setError(getString(R.string.note_vision_validate_title_empty));
+            this.editTextTitle.requestFocus();
+            return;
+        }
+
+        this.cloudVisionProvider.setNoteVision(
+                this.noteVisionKey,
+                title,
+                this.noteVisionItemKey,
+                content,
+                dateNow);
+        //Retornar com a chave do NoteVision e item confirmado.
+        Intent intent = new Intent();
+        intent.putExtra(NOTE_VISION_KEY, this.noteVisionKey);
+        intent.putExtra(NOTE_VISION_ITEM_KEY, this.noteVisionItemKey);
+        setResult(Activity.RESULT_OK, intent);
+        this.finish();
+    }
+
+
+    /**
+     * onTap is called to capture the first TextBlock under the tap location and set to selected   *
      * @param rawX - the raw position of the tap
      * @param rawY - the raw position of the tap.
      * @return true if the activity is ending.
@@ -455,14 +637,11 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
         if (graphic != null) {
             text = graphic.getTextBlock();
             if (text != null && text.getValue() != null) {
-                //Intent data = new Intent();
-                //data.putExtra(TextBlockObject, text.getValue());
-                //setResult(CommonStatusCodes.SUCCESS, data);
-                //finish();
+                mGraphicOverlay.invalidate();
+                cameraPlayPause(false);
                 boolean isSelected = !graphic.isSelected();
                 graphic.setSelected(isSelected);
-                mPreview.stop();
-                mGraphicOverlay.invalidate();
+                //Atualizar o conteúdo do NoteVision
                 setNoteVisionContent();
                 Log.d(TAG, "Preview Camera Stopped!");
                 Log.d(TAG, String.format("Selected == %s \n\r Text: \n\r  %s", graphic.isSelected(), text.getValue()));
@@ -491,6 +670,8 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
             return true;
         } else if (id == R.id.note_vision_keyboard_or_camera) {
             keyboardOnOff(null);
+        } else if (id == R.id.note_vision_save){
+            saveNoteVision();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -504,6 +685,7 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
         }
 
     }
+
 
     private class CaptureGestureListener extends GestureDetector.SimpleOnGestureListener {
 
@@ -565,5 +747,27 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
         public void onScaleEnd(ScaleGestureDetector detector) {
             mCameraSource.doZoom(detector.getScaleFactor());
         }
+    }
+
+    /**
+     * Bloquear a rotação da tela,
+     * Origem do código: http://stackoverflow.com/a/41812971
+     * @param lock
+     */
+    protected void setLockScreenOrientation(boolean lock) {
+        if (Build.VERSION.SDK_INT >= 18) {
+            setRequestedOrientation(lock?ActivityInfo.SCREEN_ORIENTATION_LOCKED:ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+            return;
+        }
+
+        if (lock) {
+            switch (getWindowManager().getDefaultDisplay().getRotation()) {
+                case 0: setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); break; // value 1
+                case 2: setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT); break; // value 9
+                case 1: setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE); break; // value 0
+                case 3: setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE); break; // value 8
+            }
+        } else
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR); // value 10
     }
 }
