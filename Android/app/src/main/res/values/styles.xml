@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2017 The Android Open Source Project
+     Copyright (C) 2017 Breno Marques
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -60,6 +60,33 @@
     <style name="EditViewWhite" parent="AppTheme">
         <item name="colorAccent">@color/white</item>
         <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="CardView.Base">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="CardView.Title" parent="CardView.Base">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CardView.Subtitle" parent="CardView.Base">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="CardView.Summary.Title" parent="CardView.Base">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CardView.Summary.Subtitle" parent="CardView.Base">
+        <item name="android:maxLines">2</item>
     </style>
 
     <!-- Depara de fontes:
