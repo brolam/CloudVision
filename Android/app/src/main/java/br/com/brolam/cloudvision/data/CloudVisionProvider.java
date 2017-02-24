@@ -17,6 +17,9 @@ package br.com.brolam.cloudvision.data;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Logger;
+import com.google.firebase.database.Query;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +35,7 @@ import br.com.brolam.cloudvision.data.models.NoteVisionItem;
 public class CloudVisionProvider {
 
     String userId;
-    FirebaseDatabase database;
+    static FirebaseDatabase database;
     DatabaseReference referenceNotesVision;
     DatabaseReference referenceNotesVisionItems;
 
@@ -43,9 +46,13 @@ public class CloudVisionProvider {
      */
     public CloudVisionProvider(String userId) {
         this.userId = userId;
-        this.database = FirebaseDatabase.getInstance();
-        referenceNotesVision = this.database.getReference(NoteVision.PATH_NOTES_VISION).child(userId);
-        referenceNotesVisionItems = this.database.getReference(NoteVisionItem.PATH_NOTES_VISION_ITEMS).child(userId);
+        if ( database == null) {
+            database = FirebaseDatabase.getInstance();
+            database.setPersistenceEnabled(true);
+            database.setLogLevel(Logger.Level.DEBUG);
+        }
+        this.referenceNotesVision = database.getReference(NoteVision.PATH_NOTES_VISION).child(userId);
+        this.referenceNotesVisionItems = database.getReference(NoteVisionItem.PATH_NOTES_VISION_ITEMS).child(userId);
     }
 
     /**
@@ -64,9 +71,9 @@ public class CloudVisionProvider {
 
         if (noteVisionKey == null) {
             noteVisionKey = referenceNotesVision.push().getKey();
-            batchUpdates.put(String.format(NoteVision.USER_NOTE_VISION, userId, noteVisionKey), NoteVision.getNewNoteVision(title, created.getTime()));
+            batchUpdates.put(String.format(NoteVision.USER_NOTE_VISION, userId, noteVisionKey), NoteVision.getNewNoteVision(title, content, created.getTime()));
         } else {
-            batchUpdates.putAll(NoteVision.getUpdateNoteVision(this.userId, noteVisionKey, title, created.getTime()));
+            batchUpdates.putAll(NoteVision.getUpdateNoteVision(this.userId, noteVisionKey, title, content, created.getTime()));
         }
 
         if (noteVisionItemKey == null) {
@@ -75,6 +82,23 @@ public class CloudVisionProvider {
         } else {
             batchUpdates.putAll(NoteVisionItem.getUpdateNoteVisionItem(this.userId, noteVisionKey, noteVisionItemKey, content));
         }
-        this.database.getReference().updateChildren(batchUpdates);
+        database.getReference().updateChildren(batchUpdates);
+    }
+
+    /**
+     * Recuperar Notes Vision por ordem ascendente de prioridade "data da atualização" {@see NoteVision}
+     * @return {@see Query}
+     */
+    public Query getQueryNotesVision(){
+        return this.referenceNotesVision.orderByPriority();
+    }
+
+    /**
+     * Recuperar Note Vision itens de um Note Vision por ordem de prioridade "data da criação" {@see NoteVisionItem}
+     * @param noteVisionKey informar uma chave válida.
+     * @return {@see Query}
+     */
+    public Query getQueryNoteVisionItems(String noteVisionKey){
+        return this.referenceNotesVision.child(noteVisionKey).orderByPriority();
     }
 }

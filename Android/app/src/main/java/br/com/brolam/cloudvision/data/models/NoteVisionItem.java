@@ -30,17 +30,20 @@ public class NoteVisionItem {
 
     public static final String CONTENT = "content";
     public static final String CREATED = "created";
+    public static final String PRIORITY = ".priority";
 
     public static HashMap<String, Object> getNewNoteVisionItem(String content, long created){
         HashMap<String, Object> result = new HashMap<>();
         result.put(CONTENT, content);
         result.put(CREATED, created);
+        result.put(PRIORITY, Double.valueOf(created));
         return result;
     }
 
     public static HashMap<String, Object> getUpdateNoteVisionItem(String userId, String noteVisionKey, String noteVisionItemKey, String content){
         HashMap<String, Object> result = new HashMap<>();
-        String contentPath = String.format(NoteVisionItem.USER_NOTE_VISION_ITEMS,userId,noteVisionKey,noteVisionItemKey) + "/" + NoteVisionItem.CONTENT;
+        String noteVisionItemRootPath = String.format(NoteVisionItem.USER_NOTE_VISION_ITEMS,userId,noteVisionKey,noteVisionItemKey);
+        String contentPath =  noteVisionItemRootPath + "/" + NoteVisionItem.CONTENT;
         result.put(contentPath, content);
         return result;
     }

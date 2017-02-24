@@ -32,21 +32,31 @@ public class NoteVision {
     public static final int TITLE_LENGTH = 80;
     public static final String CREATED = "created";
     public static final String UPDATED = "updated";
+    public static final String SUMMARY = "summary";
+    public static final String PRIORITY = ".priority";
 
-    public static HashMap<String, Object> getNewNoteVision(String title, long created) {
+    public static HashMap<String, Object> getNewNoteVision(String title, String summary, long created) {
         HashMap<String, Object> result = new HashMap<>();
         result.put(TITLE, parseTitle(title));
         result.put(CREATED, created);
         result.put(UPDATED, created);
+        result.put(SUMMARY, summary);
+        result.put(PRIORITY, Double.valueOf(created));
         return result;
     }
 
-    public static HashMap<String, Object> getUpdateNoteVision(String userId, String noteVisionKey, String title, long updated) {
+    public static HashMap<String, Object> getUpdateNoteVision(String userId, String noteVisionKey, String title, String summary, long updated) {
         HashMap<String, Object> result = new HashMap<>();
-        String titlePath = String.format(NoteVision.USER_NOTE_VISION, userId, noteVisionKey) + "/" + NoteVision.TITLE;
-        String updatedPath = String.format(NoteVision.USER_NOTE_VISION, userId, noteVisionKey) + "/" + NoteVision.UPDATED;
+        String noteVisionRootPath = String.format(NoteVision.USER_NOTE_VISION, userId, noteVisionKey);
+        String titlePath = noteVisionRootPath + "/" + NoteVision.TITLE;
+        String updatedPath = noteVisionRootPath + "/" + NoteVision.UPDATED;
+        String summaryPath = noteVisionRootPath + "/" + NoteVision.SUMMARY;
+        String priorityPath = noteVisionRootPath + "/" + NoteVision.PRIORITY;
         result.put(titlePath, parseTitle(title));
         result.put(updatedPath, updated);
+        result.put(summaryPath, summary);
+        result.put(priorityPath, Double.valueOf(updated));
+
         return result;
     }
 
@@ -62,5 +72,21 @@ public class NoteVision {
 
     public static boolean checkTitle(String title) {
         return parseTitle(title).isEmpty() == false;
+    }
+
+    public static String getTitle(HashMap noteVision){
+         return noteVision.containsKey(TITLE)? noteVision.get(TITLE).toString():"";
+    }
+
+    public static Long getCreated(HashMap noteVision){
+        return noteVision.containsKey(CREATED)? Long.parseLong(noteVision.get(CREATED).toString()): 0;
+    }
+
+    public static Long getUpdated(HashMap noteVision){
+        return noteVision.containsKey(UPDATED)? Long.parseLong(noteVision.get(UPDATED).toString()): 0;
+    }
+
+    public static String getSummary(HashMap noteVision){
+        return noteVision.containsKey(SUMMARY)? noteVision.get(SUMMARY).toString():"";
     }
 }
