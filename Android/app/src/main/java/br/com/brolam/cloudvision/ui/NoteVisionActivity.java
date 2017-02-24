@@ -230,6 +230,18 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
 
     }
 
+    /**
+     * Adicionar um conteúdo ao NoteVision
+     * @param activity informar uma atividade válida
+     * @param requestCod informar o código de requisição da atividade {@see Activity.onActivityResult}
+     * @param noteVisionKey informar um chave válida.
+     * @param title informar o título do NoteVision
+     * @param onKeyboard informar se o teclado deve ser ativiado em vez da camera.
+     */
+    public static void addNoteVisionContent(Activity  activity, int requestCod, String noteVisionKey, String title , Boolean onKeyboard) {
+        updateNoteVision(activity, requestCod, noteVisionKey, null, title, null,onKeyboard);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

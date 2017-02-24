@@ -18,7 +18,8 @@ package br.com.brolam.cloudvision.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -29,7 +30,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.HashMap;
+
 import br.com.brolam.cloudvision.R;
+import br.com.brolam.cloudvision.data.CloudVisionProvider;
+import br.com.brolam.cloudvision.data.models.NoteVision;
+import br.com.brolam.cloudvision.ui.adapters.NoteVisionAdapter;
+import br.com.brolam.cloudvision.ui.adapters.holders.NoteVisionHolder;
 import br.com.brolam.cloudvision.ui.helpers.LoginHelper;
 
 /**
@@ -40,11 +49,15 @@ import br.com.brolam.cloudvision.ui.helpers.LoginHelper;
  * @since Release 01
  */
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, LoginHelper.ILoginHelper, NoteVisionAdapter.INoteVisionAdapter {
     private static int NOTE_VISON_REQUEST_COD = 1000;
 
     LoginHelper loginHelper;
     FloatingActionButton fabAdd;
+    RecyclerView recyclerView;
+    LinearLayoutManager linearLayoutManager;
+    CloudVisionProvider cloudVisionProvider;
+    NoteVisionAdapter noteVisionAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +66,14 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         this.fabAdd = (FloatingActionButton) findViewById(R.id.fab_add);
+        this.recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+
+        this.linearLayoutManager = new LinearLayoutManager(this);
+        this.linearLayoutManager.setReverseLayout(true);
+        this.linearLayoutManager.setStackFromEnd(true);
+        this.recyclerView.setLayoutManager(this.linearLayoutManager);
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -65,9 +86,22 @@ public class MainActivity extends AppCompatActivity
          * Veja os métodos onResume, onPause e onActivityResult para mais detalhes
          * sobre o fluxo de registro do usuário.
          */
-        this.loginHelper = new LoginHelper(this, navigationView.getHeaderView(0), null);
+        this.loginHelper = new LoginHelper(this, navigationView.getHeaderView(0), this);
         navigationView.setNavigationItemSelectedListener(this);
         this.fabAdd.setOnClickListener(this);
+    }
+
+    /**
+     * Quando o Login do usuário for realizado com sucesso, iniciar os componentes / processos
+     * que estão relacionados ao ID do usuário:
+     * @param firebaseUser
+     */
+    @Override
+    public void onLogin(FirebaseUser firebaseUser) {
+        this.cloudVisionProvider = new CloudVisionProvider(firebaseUser.getUid());
+        this.noteVisionAdapter = new NoteVisionAdapter(HashMap.class, R.layout.holder_note_vision, NoteVisionHolder.class, this.cloudVisionProvider.getQueryNotesVision());
+        this.noteVisionAdapter.setICloudVisionAdapter(this);
+        this.recyclerView.setAdapter(this.noteVisionAdapter);
     }
 
     @Override
@@ -90,6 +124,17 @@ public class MainActivity extends AppCompatActivity
     protected void onPause() {
         super.onPause();
         this.loginHelper.pause();
+        if (this.noteVisionAdapter != null){
+            this.noteVisionAdapter.cleanup();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (this.noteVisionAdapter != null){
+            this.noteVisionAdapter.cleanup();
+        }
     }
 
     @Override
@@ -145,5 +190,31 @@ public class MainActivity extends AppCompatActivity
         if ( loginHelper.checkLogin(requestCode, resultCode)){
 
         }
+    }
+
+    /**
+     * Quando um Note Vision for selecionado.
+     * @param noteVisionKey informar uma chave válida
+     * @param noteVision informar um Note Vision válido
+     */
+    @Override
+    public void onNoteVisionSelect(String noteVisionKey, HashMap noteVision) {
+
+    }
+
+    /**
+     * Quando um item do menu de um Note Vision for acionado.
+     * @param menuItem informar um item do menu válido.
+     * @param noteVisionKey informar uma chave válida.
+     * @param noteVision informar um Note Vision válido.
+     */
+    @Override
+    public void onNoteVisionMenuItemClick(MenuItem menuItem, String noteVisionKey, HashMap noteVision) {
+        int id = menuItem.getItemId();
+        if ( id == R.id.note_vision_add){
+            String title = NoteVision.getTitle(noteVision);
+            NoteVisionActivity.addNoteVisionContent(this, NOTE_VISON_REQUEST_COD, noteVisionKey, title, false );
+        }
+
     }
 }
