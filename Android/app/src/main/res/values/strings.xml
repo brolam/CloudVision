@@ -41,4 +41,8 @@
     <string name="note_vision_background">Background</string>
     <string name="note_vision_add">Add</string>
     <string name="note_vision_search">Search</string>
+    <string name="note_vision_search_hint">title</string>
+
+    <!--Note Vision Searchable!-->
+    <string name="note_vision_searchable_title_format">Search/%s</string>
 </resources>

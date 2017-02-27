@@ -38,6 +38,13 @@ public class NoteVisionAdapter extends FirebaseRecyclerAdapter<HashMap, NoteVisi
     public interface INoteVisionAdapter {
         void onNoteVisionSelect(String key, HashMap noteVision);
         void onNoteVisionMenuItemClick(MenuItem menuItem, String key, HashMap noteVision);
+
+        /**
+         * Exibir o Note Vision se a pesquisa for Verdadeira {@see onBindViewHolder}
+         * @param noteVision informar o Note Vision que deve ser pesquisado.
+         * @return Verdadeira para exibir ou Falso para não exibir.
+         */
+        Boolean searchNoteVision(HashMap noteVision);
     }
 
     private INoteVisionAdapter iNoteVisionAdapter;
@@ -56,28 +63,33 @@ public class NoteVisionAdapter extends FirebaseRecyclerAdapter<HashMap, NoteVisi
         super(modelClass, modelLayout, viewHolderClass, ref);
     }
 
-
     @Override
     public void onBindViewHolder(NoteVisionHolder viewHolder, int position) {
         HashMap noteVision = getItem(position);
-        populateViewHolder(viewHolder, noteVision, position);
+        //Somente exibir o Note Vision se a pesquisa for Verdadeira:
+        if (( iNoteVisionAdapter != null) && !iNoteVisionAdapter.searchNoteVision(noteVision)) {
+            viewHolder.setHide();
+        } else {
+            populateViewHolder(viewHolder, noteVision, position);
+        }
     }
 
+
     @Override
-    protected void populateViewHolder(NoteVisionHolder viewHolder, final HashMap model, int position) {
+    protected void populateViewHolder(NoteVisionHolder viewHolder, final HashMap noteVision, int position) {
         final String key = getRef(position).getKey();
-        viewHolder.bindNoteVision(model, new View.OnClickListener() {
+        viewHolder.bindNoteVision(noteVision, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (iNoteVisionAdapter != null) {
-                    iNoteVisionAdapter.onNoteVisionSelect(key, model);
+                    iNoteVisionAdapter.onNoteVisionSelect(key, noteVision);
                 }
             }
         }, new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (iNoteVisionAdapter != null) {
-                    iNoteVisionAdapter.onNoteVisionMenuItemClick(item, key, model);
+                    iNoteVisionAdapter.onNoteVisionMenuItemClick(item, key, noteVision);
                 }
                 return true;
             }

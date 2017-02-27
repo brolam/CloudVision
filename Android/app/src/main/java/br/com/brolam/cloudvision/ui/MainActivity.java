@@ -43,7 +43,10 @@ import br.com.brolam.cloudvision.ui.helpers.LoginHelper;
 
 /**
  * Atividade principal do aplicativo onde será acionado os fluxos abaixo:
- * - Registrar o usuário no aplicativo {@see LoginHelper}
+ * - Registrar o usuário no aplicativo {@link LoginHelper};
+ * - Listar os Notes Vision por ordem de prioridade (data de atualização) {@link NoteVisionAdapter};
+ * - Acionar a inclusão de um Note Vision {@link NoteVisionActivity};
+ * - Pesquisar Notes Vision {@link NoteVisionSearchable}
  * @author Breno Marques
  * @version 1.00
  * @since Release 01
@@ -72,7 +75,6 @@ public class MainActivity extends AppCompatActivity
         this.linearLayoutManager.setReverseLayout(true);
         this.linearLayoutManager.setStackFromEnd(true);
         this.recyclerView.setLayoutManager(this.linearLayoutManager);
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -149,9 +151,14 @@ public class MainActivity extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        //int id = item.getItemId();
 
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.note_vision_search:
+                onSearchRequested();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -217,4 +224,13 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
+
+    /**
+     Sempre retornar Verdadeiro para exibir todos os cartões  {@see NoteVisionAdapter.onBindViewHolder  }
+     */
+    @Override
+    public Boolean searchNoteVision(HashMap noteVision){
+        return true;
+    }
+
 }

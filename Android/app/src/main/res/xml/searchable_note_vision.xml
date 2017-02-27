@@ -16,16 +16,9 @@
 -->
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  - Toolbar, Menu principal                                                   -
+  - Configuração da pesquisa de Notes Vision.
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <item
-        android:orderInCategory="100"
-        android:id="@+id/note_vision_search"
-        android:title="@string/note_vision_search"
-        android:icon="@drawable/ic_search_white"
-        app:showAsAction="collapseActionView|ifRoom"
-        android:actionViewClass="android.support.v7.widget.SearchView" />
-</menu>
+<searchable xmlns:android="http://schemas.android.com/apk/res/android"
+    android:label="@string/app_name"
+    android:hint="@string/note_vision_search_hint" >
+</searchable>

@@ -42,7 +42,6 @@ public class NoteVisionHolder extends RecyclerView.ViewHolder {
     TextView textViewSummary;
     Toolbar toolbar;
 
-
     public NoteVisionHolder(View itemView) {
         super(itemView);
         this.imageViewBackground = (ImageView) this.itemView.findViewById(R.id.imageViewBackground);
@@ -52,16 +51,15 @@ public class NoteVisionHolder extends RecyclerView.ViewHolder {
         this.textViewSummary = (TextView) this.itemView.findViewById(R.id.textViewSummary);
         this.toolbar = (Toolbar) this.itemView.findViewById(R.id.toolbar);
         this.toolbar.inflateMenu(R.menu.holder_note_vision);
-
     }
 
     /**
      * Vincular um Note Vision ao cartão.
-     * @param noteVision informar um Note Vision Válido.
- * @param onClickListener informar um evento quando ouver um click no cartão.
+     * @param noteVision              informar um Note Vision Válido.
+     * @param onClickListener         informar um evento quando ouver um click no cartão.
      * @param onMenuItemClickListener informar um evento quando um item do menu de cartão for selecionado.
      */
-    public void bindNoteVision(HashMap noteVision, View.OnClickListener onClickListener, Toolbar.OnMenuItemClickListener onMenuItemClickListener){
+    public void bindNoteVision(HashMap noteVision, View.OnClickListener onClickListener, Toolbar.OnMenuItemClickListener onMenuItemClickListener) {
         this.itemView.setOnClickListener(onClickListener);
         //this.imageViewBackground.setImageResource(R.mipmap.ic_launcher);
         this.textViewTitle.setText(NoteVision.getTitle(noteVision));
@@ -70,5 +68,17 @@ public class NoteVisionHolder extends RecyclerView.ViewHolder {
         this.textViewSummary.setText(FormatHelper.getTextInOneLine(NoteVision.getSummary(noteVision)));
         this.toolbar.setOnMenuItemClickListener(onMenuItemClickListener);
     }
+
+    /**
+     * Ocultar a exibição de um Note Vision
+     */
+    public void setHide(){
+        RecyclerView.MarginLayoutParams marginLayoutParams = (RecyclerView.MarginLayoutParams) this.itemView.getLayoutParams();
+        this.itemView.setVisibility(View.GONE);
+        /*Ocultar o spaço reservado para o Note Vision */
+        this.itemView.getLayoutParams().height = 0;
+        marginLayoutParams.setMargins(0, 0, 0, 0);
+    }
+
 }
 
