@@ -236,10 +236,10 @@ public class MainActivity extends AppCompatActivity
             if (this.imagesHelper  != null){
                 try {
                     NoteVision.BackgroundOrigin backgroundOrigin = NoteVision.getBackground(noteVision);
-                    if ( backgroundOrigin == NoteVision.BackgroundOrigin.REMOTE) {
-                        this.imagesHelper.takeNoteVisionBackground(noteVisionKey);
-                    } else {
+                    if ( backgroundOrigin == NoteVision.BackgroundOrigin.LOCAL) {
                         Toast.makeText(this, R.string.note_vision_alert_background_image_in_processing, Toast.LENGTH_LONG).show();
+                    } else {
+                        this.imagesHelper.takeNoteVisionBackground(noteVisionKey);
                     }
                 } catch (IOException e) {
                     Log.e(TAG, e.getMessage());

@@ -74,7 +74,7 @@ public class NoteVisionHolder extends RecyclerView.ViewHolder {
         //Atualizar o ícone do item de menu note_vision_background conforme a origem do background
         MenuItem itemNoteVisionBackground = this.toolbar.getMenu().findItem(R.id.note_vision_background);
         itemNoteVisionBackground.setIcon(
-                backgroundOrigin == NoteVision.BackgroundOrigin.REMOTE ? R.drawable.ic_on_camera_white : R.drawable.ic_upload_white
+                backgroundOrigin == NoteVision.BackgroundOrigin.LOCAL ? R.drawable.ic_upload_white : R.drawable.ic_on_camera_white
         );
         this.toolbar.setOnMenuItemClickListener(onMenuItemClickListener);
     }
