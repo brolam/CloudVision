@@ -15,6 +15,7 @@
  */
 package br.com.brolam.cloudvision.data.models;
 
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -33,7 +34,18 @@ public class NoteVision {
     public static final String CREATED = "created";
     public static final String UPDATED = "updated";
     public static final String SUMMARY = "summary";
+    public static final String BACKGROUND = "background";
+    public static final String BACKGROUND_SIGNATURE = "background_signature";
     public static final String PRIORITY = ".priority";
+
+    /**
+     * Informar a origem da imagem de background de um Note Vision.
+     */
+    public enum BackgroundOrigin{
+        UNDEFINED, //Não definida.
+        LOCAL, // Imagem local, em arquivo temporário.
+        REMOTE; //Imagem remota, arquivo na Web.
+    }
 
     public static HashMap<String, Object> getNewNoteVision(String title, String summary, long created) {
         HashMap<String, Object> result = new HashMap<>();
@@ -57,6 +69,22 @@ public class NoteVision {
         result.put(summaryPath, summary);
         result.put(priorityPath, Double.valueOf(updated));
 
+        return result;
+    }
+
+    public static HashMap<String, Object> getUpdateNoteVisionBackground(String userId, String noteVisionKey, BackgroundOrigin backgroundOrigin) {
+        HashMap<String, Object> result = new HashMap<>();
+        String noteVisionRootPath = String.format(NoteVision.USER_NOTE_VISION, userId, noteVisionKey);
+        String backgroundPath = noteVisionRootPath + "/" + NoteVision.BACKGROUND;
+        String backgroundSignature = noteVisionRootPath + "/" + NoteVision.BACKGROUND_SIGNATURE;
+        String priorityPath = noteVisionRootPath + "/" + NoteVision.PRIORITY;
+        result.put(backgroundPath, backgroundOrigin);
+        //Sempre atualizar a assinatura do background quando a origem for
+        //alterada para BackgroundOrigin.REMOTE, isso vai atualizar o cache da imagem.
+        if (backgroundOrigin == BackgroundOrigin.REMOTE) {
+            result.put(backgroundSignature, String.valueOf(new Date().getTime()));
+        }
+        result.put(priorityPath, Double.valueOf(new Date().getTime()));
         return result;
     }
 
@@ -88,5 +116,17 @@ public class NoteVision {
 
     public static String getSummary(HashMap noteVision){
         return noteVision.containsKey(SUMMARY)? noteVision.get(SUMMARY).toString():"";
+    }
+
+    public static BackgroundOrigin getBackground(HashMap noteVision) {
+        if ( noteVision.containsKey(BACKGROUND)){
+           return BackgroundOrigin.valueOf(noteVision.get(BACKGROUND).toString());
+        }
+        return BackgroundOrigin.UNDEFINED;
+    }
+
+    public static String getBackgroundSignature(HashMap noteVision){
+        return noteVision.containsKey(BACKGROUND_SIGNATURE)? noteVision.get(BACKGROUND_SIGNATURE).toString(): "";
+
     }
 }

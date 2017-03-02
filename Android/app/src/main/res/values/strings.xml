@@ -42,7 +42,10 @@
     <string name="note_vision_add">Add</string>
     <string name="note_vision_search">Search</string>
     <string name="note_vision_search_hint">title</string>
+    <string name="note_vision_alert_background_image_in_processing">There is a background image in processing.</string>
+    <string name="main_activity_request_error" formatted="true">Request %d error, please contact support for assistance.</string>
 
     <!--Note Vision Searchable!-->
     <string name="note_vision_searchable_title_format">Search/%s</string>
+
 </resources>

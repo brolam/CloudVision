@@ -86,6 +86,22 @@ public class CloudVisionProvider {
     }
 
     /**
+     * Incluir ou Atualizar a origem da imagem de background para um Note Vision.
+     * @param noteVisionKey informar uma chave válida.
+     * @param backgroundOrigin informar a origem do background.
+     */
+    public void setNoteVisionBackground(String noteVisionKey, NoteVision.BackgroundOrigin backgroundOrigin){
+        Map<String, Object> batchUpdates = new HashMap<>();
+        batchUpdates.putAll(NoteVision.getUpdateNoteVisionBackground(this.userId, noteVisionKey , backgroundOrigin));
+        database.getReference().updateChildren(batchUpdates);
+    }
+
+
+    public String getUserId() {
+        return userId;
+    }
+
+    /**
      * Recuperar Notes Vision por ordem ascendente de prioridade "data da atualização" {@see NoteVision}
      * @return {@see Query}
      */

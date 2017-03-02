@@ -27,8 +27,11 @@
     <dimen name="default_margin_list_top_padding">4dp</dimen>
     <dimen name="default_text_margin">8dp</dimen>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     - Altura dos cartões Notes Vision                                                             -
+     - Cartões Notes Vision                                                             -
      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <dimen name="note_vision_cards_height">230dp</dimen>
+    <integer name="note_vision_background_width">720</integer>
+    <integer name="note_vision_background_height">1280</integer>
+
 
 </resources>

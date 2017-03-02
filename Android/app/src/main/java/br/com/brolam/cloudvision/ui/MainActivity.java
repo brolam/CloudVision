@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -29,16 +30,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
+import android.widget.ImageView;
+import android.widget.Toast;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.io.IOException;
 import java.util.HashMap;
-
 import br.com.brolam.cloudvision.R;
 import br.com.brolam.cloudvision.data.CloudVisionProvider;
 import br.com.brolam.cloudvision.data.models.NoteVision;
 import br.com.brolam.cloudvision.ui.adapters.NoteVisionAdapter;
 import br.com.brolam.cloudvision.ui.adapters.holders.NoteVisionHolder;
+import br.com.brolam.cloudvision.ui.helpers.ImagesHelper;
 import br.com.brolam.cloudvision.ui.helpers.LoginHelper;
 
 /**
@@ -47,13 +50,15 @@ import br.com.brolam.cloudvision.ui.helpers.LoginHelper;
  * - Listar os Notes Vision por ordem de prioridade (data de atualização) {@link NoteVisionAdapter};
  * - Acionar a inclusão de um Note Vision {@link NoteVisionActivity};
  * - Pesquisar Notes Vision {@link NoteVisionSearchable}
+ * - Adicionar uma imagem de background para um Note Vision {@link ImagesHelper}
  * @author Breno Marques
  * @version 1.00
  * @since Release 01
  */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, LoginHelper.ILoginHelper, NoteVisionAdapter.INoteVisionAdapter {
-    private static int NOTE_VISON_REQUEST_COD = 1000;
+    private static final int NOTE_VISON_REQUEST_COD = 1000;
+    private static final String TAG = "MainActivity";
 
     LoginHelper loginHelper;
     FloatingActionButton fabAdd;
@@ -61,6 +66,7 @@ public class MainActivity extends AppCompatActivity
     LinearLayoutManager linearLayoutManager;
     CloudVisionProvider cloudVisionProvider;
     NoteVisionAdapter noteVisionAdapter;
+    ImagesHelper imagesHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +108,7 @@ public class MainActivity extends AppCompatActivity
     public void onLogin(FirebaseUser firebaseUser) {
         this.cloudVisionProvider = new CloudVisionProvider(firebaseUser.getUid());
         this.noteVisionAdapter = new NoteVisionAdapter(HashMap.class, R.layout.holder_note_vision, NoteVisionHolder.class, this.cloudVisionProvider.getQueryNotesVision());
+        this.imagesHelper = new ImagesHelper(this, this.cloudVisionProvider);
         this.noteVisionAdapter.setICloudVisionAdapter(this);
         this.recyclerView.setAdapter(this.noteVisionAdapter);
     }
@@ -126,9 +133,6 @@ public class MainActivity extends AppCompatActivity
     protected void onPause() {
         super.onPause();
         this.loginHelper.pause();
-        if (this.noteVisionAdapter != null){
-            this.noteVisionAdapter.cleanup();
-        }
     }
 
     @Override
@@ -194,8 +198,15 @@ public class MainActivity extends AppCompatActivity
          * Validar se o login do usuário foi realizado com sucess.
          * Sendo importante destacar, se o login for cancelado a MainActivity será encerrada!
          */
-        if ( loginHelper.checkLogin(requestCode, resultCode)){
-
+        if (loginHelper.checkLogin(requestCode, resultCode)) {
+            if (this.imagesHelper != null) {
+                try {
+                    this.imagesHelper.onActivityResult(requestCode, resultCode, data);
+                } catch (IOException e) {
+                    Log.e(TAG, e.getMessage());
+                    Toast.makeText(this, String.format(getString(R.string.main_activity_request_error),requestCode), Toast.LENGTH_LONG).show();
+                }
+            }
         }
     }
 
@@ -221,6 +232,20 @@ public class MainActivity extends AppCompatActivity
         if ( id == R.id.note_vision_add){
             String title = NoteVision.getTitle(noteVision);
             NoteVisionActivity.addNoteVisionContent(this, NOTE_VISON_REQUEST_COD, noteVisionKey, title, false );
+        } else if ( id == R.id.note_vision_background){
+            if (this.imagesHelper  != null){
+                try {
+                    NoteVision.BackgroundOrigin backgroundOrigin = NoteVision.getBackground(noteVision);
+                    if ( backgroundOrigin == NoteVision.BackgroundOrigin.REMOTE) {
+                        this.imagesHelper.takeNoteVisionBackground(noteVisionKey);
+                    } else {
+                        Toast.makeText(this, R.string.note_vision_alert_background_image_in_processing, Toast.LENGTH_LONG).show();
+                    }
+                } catch (IOException e) {
+                    Log.e(TAG, e.getMessage());
+                    Toast.makeText(this, String.format(getString(R.string.main_activity_request_error),ImagesHelper.REQUEST_IMAGE_CAPTURE), Toast.LENGTH_LONG).show();
+                }
+            }
         }
 
     }
@@ -231,6 +256,16 @@ public class MainActivity extends AppCompatActivity
     @Override
     public Boolean searchNoteVision(HashMap noteVision){
         return true;
+    }
+
+    /*
+     Atualizar a imagem de background para um Note Vision
+     */
+    @Override
+    public void setBackground(String noteVisionKey, HashMap noteVision, ImageView imageView) {
+        if ( this.imagesHelper != null){
+            this.imagesHelper.loadNoteVisionBackground(noteVisionKey, noteVision, imageView);
+        }
     }
 
 }

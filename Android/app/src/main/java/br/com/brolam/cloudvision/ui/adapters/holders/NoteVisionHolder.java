@@ -17,6 +17,7 @@ package br.com.brolam.cloudvision.ui.adapters.holders;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -53,6 +54,10 @@ public class NoteVisionHolder extends RecyclerView.ViewHolder {
         this.toolbar.inflateMenu(R.menu.holder_note_vision);
     }
 
+    public ImageView getImageViewBackground() {
+        return imageViewBackground;
+    }
+
     /**
      * Vincular um Note Vision ao cartão.
      * @param noteVision              informar um Note Vision Válido.
@@ -61,11 +66,16 @@ public class NoteVisionHolder extends RecyclerView.ViewHolder {
      */
     public void bindNoteVision(HashMap noteVision, View.OnClickListener onClickListener, Toolbar.OnMenuItemClickListener onMenuItemClickListener) {
         this.itemView.setOnClickListener(onClickListener);
-        //this.imageViewBackground.setImageResource(R.mipmap.ic_launcher);
         this.textViewTitle.setText(NoteVision.getTitle(noteVision));
         this.textViewCreated.setText(FormatHelper.getDateCreated(this.textViewCreated.getContext(), NoteVision.getCreated(noteVision)));
         this.textViewUpdated.setText(FormatHelper.getDateUpdated(this.textViewUpdated.getContext(), NoteVision.getUpdated(noteVision)));
         this.textViewSummary.setText(FormatHelper.getTextInOneLine(NoteVision.getSummary(noteVision)));
+        NoteVision.BackgroundOrigin backgroundOrigin = NoteVision.getBackground(noteVision);
+        //Atualizar o ícone do item de menu note_vision_background conforme a origem do background
+        MenuItem itemNoteVisionBackground = this.toolbar.getMenu().findItem(R.id.note_vision_background);
+        itemNoteVisionBackground.setIcon(
+                backgroundOrigin == NoteVision.BackgroundOrigin.REMOTE ? R.drawable.ic_on_camera_white : R.drawable.ic_upload_black
+        );
         this.toolbar.setOnMenuItemClickListener(onMenuItemClickListener);
     }
 

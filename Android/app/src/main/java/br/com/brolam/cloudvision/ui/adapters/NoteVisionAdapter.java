@@ -18,6 +18,7 @@ package br.com.brolam.cloudvision.ui.adapters;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.Query;
@@ -45,6 +46,11 @@ public class NoteVisionAdapter extends FirebaseRecyclerAdapter<HashMap, NoteVisi
          * @return Verdadeira para exibir ou Falso para não exibir.
          */
         Boolean searchNoteVision(HashMap noteVision);
+
+        /*
+          Atualizar a imagem de background do Note Vision.
+         */
+        void setBackground(String noteVisionKey, HashMap noteVision, ImageView imageView);
     }
 
     private INoteVisionAdapter iNoteVisionAdapter;
@@ -94,6 +100,11 @@ public class NoteVisionAdapter extends FirebaseRecyclerAdapter<HashMap, NoteVisi
                 return true;
             }
         });
+
+        if (this.iNoteVisionAdapter != null) {
+            this.iNoteVisionAdapter.setBackground(key, noteVision, viewHolder.getImageViewBackground());
+        }
+
 
     }
 
