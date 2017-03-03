@@ -33,7 +33,6 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseUser;
-
 import java.io.IOException;
 import java.util.HashMap;
 import br.com.brolam.cloudvision.R;
@@ -41,6 +40,7 @@ import br.com.brolam.cloudvision.data.CloudVisionProvider;
 import br.com.brolam.cloudvision.data.models.NoteVision;
 import br.com.brolam.cloudvision.ui.adapters.NoteVisionAdapter;
 import br.com.brolam.cloudvision.ui.adapters.holders.NoteVisionHolder;
+import br.com.brolam.cloudvision.ui.helpers.ClipboardHelper;
 import br.com.brolam.cloudvision.ui.helpers.ImagesHelper;
 import br.com.brolam.cloudvision.ui.helpers.LoginHelper;
 
@@ -51,6 +51,7 @@ import br.com.brolam.cloudvision.ui.helpers.LoginHelper;
  * - Acionar a inclusão de um Note Vision {@link NoteVisionActivity};
  * - Pesquisar Notes Vision {@link NoteVisionSearchable}
  * - Adicionar uma imagem de background para um Note Vision {@link ImagesHelper}
+ * - Copiar um Note Vision para a área de transferência {@link ClipboardHelper}
  * @author Breno Marques
  * @version 1.00
  * @since Release 01
@@ -246,6 +247,10 @@ public class MainActivity extends AppCompatActivity
                     Toast.makeText(this, String.format(getString(R.string.main_activity_request_error),ImagesHelper.REQUEST_IMAGE_CAPTURE), Toast.LENGTH_LONG).show();
                 }
             }
+        } else if (id == R.id.note_vision_copy){
+            ClipboardHelper clipboardHelper = new ClipboardHelper(this);
+            clipboardHelper.noteVision(noteVision);
+            Toast.makeText(this, R.string.note_vision_clipboard_copied, Toast.LENGTH_LONG).show();
         }
 
     }
