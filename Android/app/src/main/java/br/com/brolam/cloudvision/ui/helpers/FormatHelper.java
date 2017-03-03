@@ -62,7 +62,7 @@ public class FormatHelper {
      * @return texto com somente uma linha.
      */
     public static String getTextInOneLine(String text){
-        text = text.replace("\n", "").replace("\r", "");
+        text = text.replace("\n\r", " ");
         return text;
     }
 
