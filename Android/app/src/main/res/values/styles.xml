@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
      Copyright (C) 2017 Breno Marques
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -43,13 +42,13 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
-    <style name="nav_header_user_name" >
+    <style name="nav_header_user_name">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="nav_header_user_email" >
+    <style name="nav_header_user_email">
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">14sp</item>
@@ -87,6 +86,30 @@
 
     <style name="CardView.Summary.Subtitle" parent="CardView.Base">
         <item name="android:maxLines">2</item>
+    </style>
+
+    <style name="ListItem">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="ListItem.Title" parent="ListItem">
+        <item name="android:textSize">16sp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="ListItem.Content" parent="ListItem">
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="ListItem.ImageButton" >
+        <item name="android:background">@drawable/selector_image_button</item>
+        <item name="android:paddingLeft">@dimen/list_item_image_button_paddingLeft</item>
+        <item name="android:paddingRight">@dimen/list_item_image_button_paddingRight</item>
     </style>
 
     <!-- Depara de fontes:

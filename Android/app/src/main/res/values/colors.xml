@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2017 The Android Open Source Project
+     Copyright (C) 2017 The Breno Marques
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -20,8 +20,21 @@
     <color name="colorPrimaryDark">#D32F2F</color>
     <color name="colorAccent">#FF5722</color>
     <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
      - Cor de proteção de fundo para textos na cor branca                                          -
      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <color name="white_texts_background_protection">#77333333</color>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    - ImageButton Colors                                                                           -
+    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <color name="image_button_enabled">@color/colorAccent</color>
+    <color name="image_button_focused">@color/colorAccent</color>
+    <color name="image_button_pressed">@color/colorPrimaryDark</color>
+    <color name="image_button_disabled">@color/white_texts_background_protection</color>
+
+
+
+
 </resources>

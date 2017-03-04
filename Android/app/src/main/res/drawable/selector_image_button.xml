@@ -16,21 +16,30 @@
 -->
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  - Navigation Drawer Header, Menu principal                                                   -
+  - Selector para um ImageButton em um ListView Item                                           -
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_note_vision"
-            android:icon="@drawable/ic_note_vision_black"
-            android:title="@string/nav_notes_vision" />
-    </group>
-    <group
-        android:id="@+id/menu_bottom"
-        android:checkableBehavior="none">
-            <item
-                android:id="@+id/nav_user_login_off"
-                android:icon="@drawable/ic_login_off_white"
-                android:title="@string/nav_login_off" />
-    </group>
-</menu>
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- disabled state-->
+    <item
+        android:state_enabled="false"
+        android:drawable="@color/image_button_disabled"
+        />
+    <!-- pressed state / clicked state -->
+    <item
+        android:state_pressed="true"
+        android:state_enabled="true"
+        android:drawable="@color/image_button_pressed"
+        />
+    <!-- focused state -->
+    <item
+        android:state_focused="true"
+        android:state_enabled="true"
+        android:drawable="@color/image_button_focused"
+        />
+    <!-- enabled state / default state-->
+    <item
+        android:state_enabled="true"
+        android:drawable="@color/image_button_enabled"
+        />
+</selector>

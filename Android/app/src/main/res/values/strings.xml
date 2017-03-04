@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
      Copyright (C) 2017 Breno Marques
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -48,5 +47,8 @@
 
     <!--Note Vision Searchable!-->
     <string name="note_vision_searchable_title_format">Search/%s</string>
+    <string name="title_activity_note_vision_details">NoteVisionDetailsActivity</string>
 
+    <!--Note Vision Details!-->
+    <string name="note_vision_delete">Delete</string>
 </resources>
