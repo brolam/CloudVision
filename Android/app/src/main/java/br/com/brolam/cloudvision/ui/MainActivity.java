@@ -43,6 +43,7 @@ import br.com.brolam.cloudvision.ui.adapters.holders.NoteVisionHolder;
 import br.com.brolam.cloudvision.ui.helpers.ClipboardHelper;
 import br.com.brolam.cloudvision.ui.helpers.ImagesHelper;
 import br.com.brolam.cloudvision.ui.helpers.LoginHelper;
+import br.com.brolam.cloudvision.ui.helpers.ShareHelper;
 
 /**
  * Atividade principal do aplicativo onde será acionado os fluxos abaixo:
@@ -252,6 +253,8 @@ public class MainActivity extends AppCompatActivity
             ClipboardHelper clipboardHelper = new ClipboardHelper(this);
             clipboardHelper.noteVision(noteVision);
             Toast.makeText(this, R.string.note_vision_clipboard_copied, Toast.LENGTH_LONG).show();
+        } else if (id == R.id.note_vision_share){
+            ShareHelper.noteVision(this, noteVision);
         }
 
     }
