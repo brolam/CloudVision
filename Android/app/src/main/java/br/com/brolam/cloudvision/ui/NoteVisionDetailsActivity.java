@@ -28,6 +28,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseUser;
 import java.util.HashMap;
 import br.com.brolam.cloudvision.R;
@@ -36,6 +38,7 @@ import br.com.brolam.cloudvision.data.models.NoteVision;
 import br.com.brolam.cloudvision.data.models.NoteVisionItem;
 import br.com.brolam.cloudvision.ui.adapters.NoteVisionDetailsAdapter;
 import br.com.brolam.cloudvision.ui.adapters.holders.NoteVisionDetailsHolder;
+import br.com.brolam.cloudvision.ui.helpers.ClipboardHelper;
 import br.com.brolam.cloudvision.ui.helpers.FormatHelper;
 import br.com.brolam.cloudvision.ui.helpers.ImagesHelper;
 import br.com.brolam.cloudvision.ui.helpers.LoginHelper;
@@ -202,11 +205,17 @@ public class NoteVisionDetailsActivity extends AppCompatActivity implements Logi
     @Override
     public void onNoteVisionItemButtonClick(String noteVisionItemKey, HashMap noteVisionItem, View imageButton) {
         switch (imageButton.getId()) {
+            //Editar o Note Vision Seleciondo.
             case R.id.imageButtonEdit:
                 String title = NoteVision.getTitle(this.noteVision);
                 String content = NoteVisionItem.getContent(noteVisionItem);
                 NoteVisionActivity.updateNoteVision(this,NOTE_VISION_REQUEST_COD, this.noteVisionKey, noteVisionItemKey , title, content, true);
                 return;
+            //Copiar para a área de transferência o Note Vision Item selecionado.
+            case R.id.imageButtonCopy:
+                ClipboardHelper clipboardHelper = new ClipboardHelper(this);
+                clipboardHelper.noteVisionItem(noteVision, noteVisionItem);
+                Toast.makeText(this, R.string.note_vision_clipboard_copied, Toast.LENGTH_LONG).show();
         }
     }
 

@@ -21,6 +21,7 @@ import android.content.Context;
 import java.util.HashMap;
 import br.com.brolam.cloudvision.R;
 import br.com.brolam.cloudvision.data.models.NoteVision;
+import br.com.brolam.cloudvision.data.models.NoteVisionItem;
 
 /**
  * Facilitar a transferência de informações para a área de transferência, clipboard.
@@ -40,7 +41,7 @@ public class ClipboardHelper {
 
     /**
      * Copiar um Note Vision para área de transferência
-     * @param noteVision
+     * @param noteVision informar um Note Vision válido.
      */
     public void noteVision(HashMap noteVision){
         String label = String.format("%s  %s", context.getString(R.string.app_name), FormatHelper.getTextInOneLine(NoteVision.getTitle(noteVision)));
@@ -51,6 +52,26 @@ public class ClipboardHelper {
                 FormatHelper.getDateCreated(context, NoteVision.getCreated(noteVision)),
                 FormatHelper.getTextInOneLine(summary),
                 FormatHelper.getDateCreated(context, NoteVision.getUpdated(noteVision))
+        );
+        ClipData clip = ClipData.newPlainText(label, text);
+        this.clipboard.setPrimaryClip(clip);
+    }
+
+
+    /**
+     * Copiar um Note Vision Item para área de transferência
+     * @param noteVision informar um Note Vision válido.
+     * @param noteVisionItem informar um Note Vision Item válido.
+     */
+    public void noteVisionItem(HashMap noteVision, HashMap noteVisionItem){
+        String label = String.format("%s  %s", context.getString(R.string.app_name), FormatHelper.getTextInOneLine(NoteVision.getTitle(noteVision)));
+        String title = NoteVision.getTitle(noteVision);
+        String content = NoteVisionItem.getContent(noteVisionItem);
+        String text = String.format("%s %s\n\r%s %s",
+                FormatHelper.getTextInOneLine(title),
+                FormatHelper.getDateCreated(context, NoteVision.getCreated(noteVision)),
+                FormatHelper.getTextInOneLine(content),
+                FormatHelper.getDateCreated(context, NoteVisionItem.getCreated(noteVision))
         );
         ClipData clip = ClipData.newPlainText(label, text);
         this.clipboard.setPrimaryClip(clip);
