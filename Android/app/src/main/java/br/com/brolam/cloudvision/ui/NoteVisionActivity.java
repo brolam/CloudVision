@@ -208,7 +208,6 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
 
     }
 
-
     /**
      * Atualizar um NoteVision e seu conteúdo(item)
      * @param activity informar uma atividade válida
@@ -332,7 +331,6 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
                 Log.w(TAG, getString(R.string.low_storage_error));
             }
         }
-
 
         // Creates and starts the camera.  Note that this uses a higher resolution in comparison
         // to other detection examples to enable the text recognizer to detect small pieces of text.
@@ -636,7 +634,6 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
         this.finish();
     }
 
-
     /**
      * onTap is called to capture the first TextBlock under the tap location and set to selected   *
      * @param rawX - the raw position of the tap
@@ -668,8 +665,6 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
         return text != null;
     }
 
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -697,7 +692,6 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
         }
 
     }
-
 
     private class CaptureGestureListener extends GestureDetector.SimpleOnGestureListener {
 

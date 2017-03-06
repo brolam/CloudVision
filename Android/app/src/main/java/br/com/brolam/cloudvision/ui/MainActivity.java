@@ -52,13 +52,15 @@ import br.com.brolam.cloudvision.ui.helpers.LoginHelper;
  * - Pesquisar Notes Vision {@link NoteVisionSearchable}
  * - Adicionar uma imagem de background para um Note Vision {@link ImagesHelper}
  * - Copiar um Note Vision para a área de transferência {@link ClipboardHelper}
+ * - Acionar a exibição do detalhe de um Note Vision {@link NoteVisionDetailsActivity}
  * @author Breno Marques
  * @version 1.00
  * @since Release 01
  */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, LoginHelper.ILoginHelper, NoteVisionAdapter.INoteVisionAdapter {
-    private static final int NOTE_VISON_REQUEST_COD = 1000;
+    private static final int NOTE_VISION_REQUEST_COD = 1000;
+    private static final int NOTE_VISION_DETAILS_REQUEST_COD = 3000;
     private static final String TAG = "MainActivity";
 
     LoginHelper loginHelper;
@@ -156,7 +158,6 @@ public class MainActivity extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-
         switch (item.getItemId()) {
             case R.id.note_vision_search:
                 onSearchRequested();
@@ -186,7 +187,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onClick(View view) {
         if (view.equals(this.fabAdd)) {
-            NoteVisionActivity.newNoteVision(this, NOTE_VISON_REQUEST_COD);
+            NoteVisionActivity.newNoteVision(this, NOTE_VISION_REQUEST_COD);
             //NoteVisionActivity.updateNoteVision(this, NOTE_VISON_REQUEST_COD, "-Kda2ezEKZ0C3qydkjat", "-Kda2ezH9bLL5EC_WDyr", "Realtime Database", "https://cloudvision-cdad2. firebaseio.com/\\n\\rl cloudvision-c4ad2: nuli\\n\\r", true );
         }
     }
@@ -218,7 +219,7 @@ public class MainActivity extends AppCompatActivity
      */
     @Override
     public void onNoteVisionSelect(String noteVisionKey, HashMap noteVision) {
-
+        NoteVisionDetailsActivity.show(this, NOTE_VISION_DETAILS_REQUEST_COD, noteVisionKey, noteVision);
     }
 
     /**
@@ -232,7 +233,7 @@ public class MainActivity extends AppCompatActivity
         int id = menuItem.getItemId();
         if ( id == R.id.note_vision_add){
             String title = NoteVision.getTitle(noteVision);
-            NoteVisionActivity.addNoteVisionContent(this, NOTE_VISON_REQUEST_COD, noteVisionKey, title, false );
+            NoteVisionActivity.addNoteVisionContent(this, NOTE_VISION_REQUEST_COD, noteVisionKey, title, false );
         } else if ( id == R.id.note_vision_background){
             if (this.imagesHelper  != null){
                 try {

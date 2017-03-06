@@ -115,6 +115,6 @@ public class CloudVisionProvider {
      * @return {@see Query}
      */
     public Query getQueryNoteVisionItems(String noteVisionKey){
-        return this.referenceNotesVision.child(noteVisionKey).orderByPriority();
+        return this.referenceNotesVisionItems.child(noteVisionKey).orderByPriority();
     }
 }

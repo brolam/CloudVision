@@ -60,5 +60,15 @@ public class NoteVisionItem {
         return parseContent(content).isEmpty() == false ;
     }
 
+    public static Long getCreated(HashMap noteVisionItem){
+        return noteVisionItem.containsKey(CREATED)? Long.parseLong(noteVisionItem.get(CREATED).toString()): 0;
+    }
+
+    public static String getContent(HashMap noteVisionItem){
+        return noteVisionItem.containsKey(CONTENT)? noteVisionItem.get(CONTENT).toString():"";
+    }
+
+
+
 
 }
