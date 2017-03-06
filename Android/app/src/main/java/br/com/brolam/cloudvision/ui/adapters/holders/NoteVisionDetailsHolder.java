@@ -36,6 +36,7 @@ public class NoteVisionDetailsHolder extends RecyclerView.ViewHolder {
     LinearLayout linearLayoutContent;
     TextView textViewCreated;
     TextView textViewContent;
+    TextView textViewContentMultiLine;
 
 
     public NoteVisionDetailsHolder(View itemView) {
@@ -43,6 +44,7 @@ public class NoteVisionDetailsHolder extends RecyclerView.ViewHolder {
         this.linearLayoutContent = (LinearLayout) this.itemView.findViewById(R.id.linearLayoutContent);
         this.textViewCreated = (TextView) this.itemView.findViewById(R.id.textViewCreated);
         this.textViewContent = (TextView) this.itemView.findViewById(R.id.textViewContent);
+        this.textViewContentMultiLine = (TextView) this.itemView.findViewById(R.id.textViewContentMultiLine);
     }
 
     /**
@@ -52,10 +54,13 @@ public class NoteVisionDetailsHolder extends RecyclerView.ViewHolder {
      */
     public void bindNoteVisionItem(HashMap noteVisionItem, View.OnClickListener onClickListener, int linearLayoutContentWidth) {
         this.itemView.setOnClickListener(onClickListener);
+        this.linearLayoutContent.setOnClickListener(onClickListener);
+        this.textViewContentMultiLine.setOnClickListener(onClickListener);
         Context context = this.textViewCreated.getContext();
         this.textViewCreated.setText(FormatHelper.getDateCreated(context, NoteVisionItem.getCreated(noteVisionItem)));
         this.textViewContent.setText(FormatHelper.getTextInOneLine(NoteVisionItem.getContent(noteVisionItem)));
         this.linearLayoutContent.getLayoutParams().width = linearLayoutContentWidth;
+        setExpand(false);
     }
 
     public void setImagesButtonOnClickListener(View.OnClickListener onClickListener){
@@ -65,6 +70,28 @@ public class NoteVisionDetailsHolder extends RecyclerView.ViewHolder {
         this.itemView.findViewById(R.id.imageButtonDelete).setOnClickListener(onClickListener);
     }
 
+    /**
+     * Aumentar ou diminuir o largura do item para exibir o coneúdo do Note Vision Item.
+     * @param expand informar true para aumentar e false para diminuir.
+     */
+    public void setExpand(boolean expand) {
+        if (expand){
+            this.textViewContent.setVisibility(View.GONE);
+            this.textViewContentMultiLine.setText(this.textViewContent.getText());
+            this.textViewContentMultiLine.setVisibility(View.VISIBLE);
+        } else {
+            this.textViewContent.setVisibility(View.VISIBLE);
+            this.textViewContentMultiLine.setVisibility(View.GONE);
+            this.textViewContentMultiLine.setText(null);
+        }
+    }
 
+    /**
+     * Informar se o item está expandido.
+     * @return true se o item estiver expandido.
+     */
+    public boolean isExpand(){
+        return this.textViewContentMultiLine.getVisibility() == View.VISIBLE;
+    }
 }
 

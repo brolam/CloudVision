@@ -35,9 +35,7 @@ public class NoteVisionDetailsAdapter extends FirebaseRecyclerAdapter<HashMap, N
      * Interface para gerencia os eventos de um Note Vision Item.
      */
     public interface INoteVisionDetailsAdapter {
-        void onNoteVisionItemSelect(String key, HashMap noteVision);
         void onNoteVisionItemButtonClick(String key, HashMap noteVisionItem, View imageButton);
-
         /**
          * Recuperar a largura do conteúdo de um Note Vision Item na tela para configurar
          * o Swiping List Item.
@@ -69,19 +67,17 @@ public class NoteVisionDetailsAdapter extends FirebaseRecyclerAdapter<HashMap, N
     }
 
     @Override
-    protected void populateViewHolder(NoteVisionDetailsHolder viewHolder, final HashMap noteVisionItem, int position) {
+    protected void populateViewHolder(final NoteVisionDetailsHolder viewHolder, final HashMap noteVisionItem, int position) {
         final String key = getRef(position).getKey();
         int contentWidth = this.iNoteVisionDetailsAdapter == null ? Toolbar.LayoutParams.WRAP_CONTENT : iNoteVisionDetailsAdapter.getContentWidth();
         viewHolder.bindNoteVisionItem(noteVisionItem, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (iNoteVisionDetailsAdapter != null) {
-                    iNoteVisionDetailsAdapter.onNoteVisionItemSelect(key, noteVisionItem);
-                }
+                setItemExpandOrCollapse(viewHolder);
             }
         }, contentWidth);
 
-        View.OnClickListener onClickListenerImageButtion = new View.OnClickListener() {
+        View.OnClickListener onClickListenerImageButton = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if ( iNoteVisionDetailsAdapter != null){
@@ -90,7 +86,12 @@ public class NoteVisionDetailsAdapter extends FirebaseRecyclerAdapter<HashMap, N
 
             }
         };
-        viewHolder.setImagesButtonOnClickListener(onClickListenerImageButtion);
+        viewHolder.setImagesButtonOnClickListener(onClickListenerImageButton);
+
+        //Exibir tod0 o conteúdo do item.
+        if ( getItemCount() == 1){
+            viewHolder.setExpand(true);
+        }
 
     }
 
@@ -107,5 +108,18 @@ public class NoteVisionDetailsAdapter extends FirebaseRecyclerAdapter<HashMap, N
 
     public void setINoteVisionDetailsAdapter(INoteVisionDetailsAdapter iNoteVisionDetailsAdapter) {
         this.iNoteVisionDetailsAdapter = iNoteVisionDetailsAdapter;
+    }
+
+    /**
+     * Inverter a expansão do conteúdo.
+     * @param viewHolder
+     */
+    private void setItemExpandOrCollapse(NoteVisionDetailsHolder viewHolder){
+        boolean expand = viewHolder.isExpand();
+        if ( expand){
+            viewHolder.setExpand(false);
+        } else {
+            viewHolder.setExpand(true);
+        }
     }
 }

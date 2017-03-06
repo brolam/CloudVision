@@ -200,11 +200,6 @@ public class NoteVisionDetailsActivity extends AppCompatActivity implements Logi
     }
 
     @Override
-    public void onNoteVisionItemSelect(String key, HashMap noteVision) {
-
-    }
-
-    @Override
     public void onNoteVisionItemButtonClick(String noteVisionItemKey, HashMap noteVisionItem, View imageButton) {
         switch (imageButton.getId()) {
             case R.id.imageButtonEdit:
