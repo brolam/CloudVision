@@ -117,4 +117,14 @@ public class CloudVisionProvider {
     public Query getQueryNoteVisionItems(String noteVisionKey){
         return this.referenceNotesVisionItems.child(noteVisionKey).orderByPriority();
     }
+
+    /**
+     * Excluir um Note Vision Item.
+     * @param noteVisionKey informar um chave válida
+     * @param noteVisionItemKey informar um chave válida
+     */
+    public void deleteNoteVisionItem(String noteVisionKey, String noteVisionItemKey){
+        this.referenceNotesVisionItems.child(noteVisionKey).child(noteVisionItemKey).removeValue();
+
+    }
 }

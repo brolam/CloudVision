@@ -51,4 +51,5 @@
 
     <!--Note Vision Details!-->
     <string name="note_vision_delete">Delete</string>
+    <string name="note_vision_confirm_delete">Are you sure? %s to delete.</string>
 </resources>

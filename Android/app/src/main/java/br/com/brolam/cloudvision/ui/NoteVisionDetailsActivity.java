@@ -18,7 +18,9 @@ package br.com.brolam.cloudvision.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -92,12 +94,13 @@ public class NoteVisionDetailsActivity extends AppCompatActivity implements Logi
 
     /**
      * Acionar a exibição dos detalhes de um Note Vision.
-     * @param activity informar a atividade que receberá o retorno.
-     * @param requestCod informar o código de requisição dessa atividade.
+     *
+     * @param activity      informar a atividade que receberá o retorno.
+     * @param requestCod    informar o código de requisição dessa atividade.
      * @param noteVisionKey informar uma chave válida.
-     * @param noteVision informar um NoteVision válido.
+     * @param noteVision    informar um NoteVision válido.
      */
-    public static void show(Activity activity, int requestCod, String noteVisionKey, HashMap noteVision){
+    public static void show(Activity activity, int requestCod, String noteVisionKey, HashMap noteVision) {
         Intent intent = new Intent(activity, NoteVisionDetailsActivity.class);
         intent.putExtra(NOTE_VISION_KEY, noteVisionKey);
         intent.putExtra(NOTE_VISION, noteVision);
@@ -188,7 +191,7 @@ public class NoteVisionDetailsActivity extends AppCompatActivity implements Logi
          * Validar se o login do usuário foi realizado com sucess.
          * Sendo importante destacar, se o login for cancelado a atividade será encerrada!
          */
-        if ( loginHelper.checkLogin(requestCode, resultCode)){
+        if (loginHelper.checkLogin(requestCode, resultCode)) {
 
         }
     }
@@ -198,7 +201,7 @@ public class NoteVisionDetailsActivity extends AppCompatActivity implements Logi
         switch (view.getId()) {
             case R.id.fab:
                 String title = NoteVision.getTitle(this.noteVision);
-                NoteVisionActivity.addNoteVisionContent(this,NOTE_VISION_REQUEST_COD, this.noteVisionKey, title, false);
+                NoteVisionActivity.addNoteVisionContent(this, NOTE_VISION_REQUEST_COD, this.noteVisionKey, title, false);
                 return;
         }
     }
@@ -210,7 +213,7 @@ public class NoteVisionDetailsActivity extends AppCompatActivity implements Logi
             case R.id.imageButtonEdit:
                 String title = NoteVision.getTitle(this.noteVision);
                 String content = NoteVisionItem.getContent(noteVisionItem);
-                NoteVisionActivity.updateNoteVision(this,NOTE_VISION_REQUEST_COD, this.noteVisionKey, noteVisionItemKey , title, content, true);
+                NoteVisionActivity.updateNoteVision(this, NOTE_VISION_REQUEST_COD, this.noteVisionKey, noteVisionItemKey, title, content, true);
                 return;
             //Copiar para a área de transferência o Note Vision Item selecionado.
             case R.id.imageButtonCopy:
@@ -221,6 +224,10 @@ public class NoteVisionDetailsActivity extends AppCompatActivity implements Logi
             //Compartilhar o Note Vision Item selelcionado com outros aplicativos.
             case R.id.imageButtonShared:
                 ShareHelper.noteVisionItem(this, noteVision, noteVisionItem);
+                return;
+            case R.id.imageButtonDelete:
+                deleteNoteVisionItem(noteVisionItemKey);
+                return;
         }
     }
 
@@ -229,5 +236,25 @@ public class NoteVisionDetailsActivity extends AppCompatActivity implements Logi
         return this.recyclerView.getWidth();
     }
 
-
+    /**
+     * Solicitar a confirmação de exclusão de um Note Vision Item.
+     * @param noteVisionItemKey informar uma chave válida.
+     */
+    private void deleteNoteVisionItem(final String noteVisionItemKey) {
+        Snackbar snackbar = Snackbar.make
+                (
+                        this.recyclerView,
+                        String.format(getString(R.string.note_vision_confirm_delete), getString(R.string.ok)),
+                        BaseTransientBottomBar.LENGTH_LONG
+                );
+        snackbar.setAction(R.string.ok, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (cloudVisionProvider != null) {
+                    cloudVisionProvider.deleteNoteVisionItem(noteVisionKey, noteVisionItemKey);
+                }
+            }
+        });
+        snackbar.show();
+    }
 }
