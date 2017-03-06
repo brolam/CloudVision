@@ -32,9 +32,9 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/note_vision_search"
+        android:id="@+id/note_vision_share"
         android:orderInCategory="300"
-        android:title="@string/note_vision_search"
+        android:title="@string/note_vision_share"
         android:icon="@drawable/ic_share_white"
         app:showAsAction="always" />
 </menu>

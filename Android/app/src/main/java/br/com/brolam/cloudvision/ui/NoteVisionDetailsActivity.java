@@ -42,6 +42,7 @@ import br.com.brolam.cloudvision.ui.helpers.ClipboardHelper;
 import br.com.brolam.cloudvision.ui.helpers.FormatHelper;
 import br.com.brolam.cloudvision.ui.helpers.ImagesHelper;
 import br.com.brolam.cloudvision.ui.helpers.LoginHelper;
+import br.com.brolam.cloudvision.ui.helpers.ShareHelper;
 
 /**
  * Manutenção e exbição de um Note Vision Item.
@@ -172,9 +173,9 @@ public class NoteVisionDetailsActivity extends AppCompatActivity implements Logi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            //case R.id.note_vision_search:
-                //onSearchRequested();
-            //    return true;
+            case R.id.note_vision_share:
+                ShareHelper.noteVision(this, noteVision);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -216,6 +217,10 @@ public class NoteVisionDetailsActivity extends AppCompatActivity implements Logi
                 ClipboardHelper clipboardHelper = new ClipboardHelper(this);
                 clipboardHelper.noteVisionItem(noteVision, noteVisionItem);
                 Toast.makeText(this, R.string.note_vision_clipboard_copied, Toast.LENGTH_LONG).show();
+                return;
+            //Compartilhar o Note Vision Item selelcionado com outros aplicativos.
+            case R.id.imageButtonShared:
+                ShareHelper.noteVisionItem(this, noteVision, noteVisionItem);
         }
     }
 
