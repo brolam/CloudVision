@@ -25,6 +25,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +34,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
+import java.io.IOException;
 import java.util.HashMap;
 import br.com.brolam.cloudvision.R;
 import br.com.brolam.cloudvision.data.CloudVisionProvider;
@@ -52,7 +58,8 @@ import br.com.brolam.cloudvision.ui.helpers.ShareHelper;
  * @version 1.00
  * @since Release 01
  */
-public class NoteVisionDetailsActivity extends AppCompatActivity implements LoginHelper.ILoginHelper, NoteVisionDetailsAdapter.INoteVisionDetailsAdapter, View.OnClickListener {
+public class NoteVisionDetailsActivity extends AppCompatActivity implements LoginHelper.ILoginHelper, NoteVisionDetailsAdapter.INoteVisionDetailsAdapter, View.OnClickListener, ValueEventListener {
+    private static final String TAG = "DetailsActivity";
     public static final String NOTE_VISION_KEY = "noteVisionKey";
     public static final String NOTE_VISION = "noteVision";
     private static final int NOTE_VISION_REQUEST_COD = 1000;
@@ -89,7 +96,6 @@ public class NoteVisionDetailsActivity extends AppCompatActivity implements Logi
          * sobre o fluxo de registro do usuário.
          */
         this.loginHelper = new LoginHelper(this, null, this);
-
     }
 
     /**
@@ -120,8 +126,8 @@ public class NoteVisionDetailsActivity extends AppCompatActivity implements Logi
         if (bundle != null) {
             this.noteVisionKey = bundle.getString(NOTE_VISION_KEY);
             this.noteVision = (HashMap) bundle.getSerializable(NOTE_VISION);
+            this.setHeader();
         }
-        setHeader();
     }
 
     /**
@@ -149,6 +155,9 @@ public class NoteVisionDetailsActivity extends AppCompatActivity implements Logi
     protected void onPause() {
         super.onPause();
         this.loginHelper.pause();
+        if ( this.cloudVisionProvider != null){
+            this.cloudVisionProvider.removeListenerOneNoteVision(this.noteVisionKey, this);
+        }
     }
 
     @Override
@@ -163,7 +172,20 @@ public class NoteVisionDetailsActivity extends AppCompatActivity implements Logi
         );
         this.noteVisionDetailsAdapter.setINoteVisionDetailsAdapter(this);
         this.recyclerView.setAdapter(noteVisionDetailsAdapter);
-        this.setHeader();
+        if ( this.cloudVisionProvider != null){
+            this.cloudVisionProvider.addListenerOneNoteVision(this.noteVisionKey, this);
+        }
+    }
+
+    @Override
+    public void onDataChange(DataSnapshot dataSnapshot) {
+        this.noteVision = (HashMap)dataSnapshot.getValue();
+        setHeader();
+    }
+
+    @Override
+    public void onCancelled(DatabaseError databaseError) {
+
     }
 
     @Override
@@ -179,6 +201,20 @@ public class NoteVisionDetailsActivity extends AppCompatActivity implements Logi
             case R.id.note_vision_share:
                 ShareHelper.noteVision(this, noteVision);
                 return true;
+            case R.id.note_vision_background:
+                if (this.imagesHelper  != null){
+                    try {
+                        NoteVision.BackgroundOrigin backgroundOrigin = NoteVision.getBackground(noteVision);
+                        if ( backgroundOrigin == NoteVision.BackgroundOrigin.LOCAL) {
+                            Toast.makeText(this, R.string.note_vision_alert_background_image_in_processing, Toast.LENGTH_LONG).show();
+                        } else {
+                            this.imagesHelper.takeNoteVisionBackground(noteVisionKey);
+                        }
+                    } catch (IOException e) {
+                        Log.e(TAG, e.getMessage());
+                        Toast.makeText(this, String.format(getString(R.string.main_activity_request_error),ImagesHelper.REQUEST_IMAGE_CAPTURE), Toast.LENGTH_LONG).show();
+                    }
+                }
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -192,13 +228,22 @@ public class NoteVisionDetailsActivity extends AppCompatActivity implements Logi
          * Sendo importante destacar, se o login for cancelado a atividade será encerrada!
          */
         if (loginHelper.checkLogin(requestCode, resultCode)) {
-
+            //Confirmar a alteração da imagem de background.
+            if (this.imagesHelper != null) {
+                try {
+                    this.imagesHelper.onActivityResult(requestCode, resultCode, data);
+                } catch (IOException e) {
+                    Log.e(TAG, e.getMessage());
+                    Toast.makeText(this, String.format(getString(R.string.main_activity_request_error),requestCode), Toast.LENGTH_LONG).show();
+                }
+            }
         }
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            //Adicionar um Note Vision Item.
             case R.id.fab:
                 String title = NoteVision.getTitle(this.noteVision);
                 NoteVisionActivity.addNoteVisionContent(this, NOTE_VISION_REQUEST_COD, this.noteVisionKey, title, false);
@@ -257,4 +302,5 @@ public class NoteVisionDetailsActivity extends AppCompatActivity implements Logi
         });
         snackbar.show();
     }
+
 }

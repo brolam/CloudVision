@@ -15,16 +15,20 @@
  */
 package br.com.brolam.cloudvision.data;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Logger;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import br.com.brolam.cloudvision.data.models.NoteVision;
 import br.com.brolam.cloudvision.data.models.NoteVisionItem;
+import br.com.brolam.cloudvision.ui.NoteVisionDetailsActivity;
 
 /**
  * Realizar manutenção e consultas no banco de dados do CloudVision.
@@ -96,9 +100,26 @@ public class CloudVisionProvider {
         database.getReference().updateChildren(batchUpdates);
     }
 
-
     public String getUserId() {
         return userId;
+    }
+
+    /**
+     * Adicionar um ouvinte para um Note Vision.
+     * @param noteVisionKey informar uma chave válida.
+     * @param valueEventListener informar um ouvinte válido.
+     */
+    public void addListenerOneNoteVision(String noteVisionKey, ValueEventListener valueEventListener){
+        referenceNotesVision.child(noteVisionKey).addValueEventListener(valueEventListener);
+    }
+
+    /**
+     * Remover um ouvinte de um Note Vision.
+     * @param noteVisionKey informar uma chave válida.
+     * @param valueEventListener informar um ouvinte válido.
+     */
+    public void removeListenerOneNoteVision(String noteVisionKey, ValueEventListener valueEventListener){
+        referenceNotesVision.child(noteVisionKey).removeEventListener(valueEventListener);
     }
 
     /**
@@ -127,4 +148,5 @@ public class CloudVisionProvider {
         this.referenceNotesVisionItems.child(noteVisionKey).child(noteVisionItemKey).removeValue();
 
     }
+
 }
