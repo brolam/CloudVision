@@ -122,6 +122,7 @@ public class OcrGraphic extends GraphicOverlay.Graphic implements Comparable<Ocr
 
     public void setSelected(boolean selected) {
         isSelected = selected;
+        this.mOverlay.invalidate();
     }
 
     @Override
