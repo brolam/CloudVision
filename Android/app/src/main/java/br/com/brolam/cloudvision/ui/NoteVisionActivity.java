@@ -101,6 +101,7 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
     private Toolbar toolbar;
     private FloatingActionButton fabFlashOnOff;
     private FloatingActionButton fabCameraPlayStop;
+    private FloatingActionButton fabAdd;
     private View contentNoteVisionCamera;
     private View contentNoteVisionKeyboard;
     private EditText editTextTitle;
@@ -131,6 +132,7 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
         mGraphicOverlay = (GraphicOverlay<OcrGraphic>) findViewById(R.id.graphicOverlay);
         this.fabFlashOnOff = (FloatingActionButton) this.findViewById(R.id.fabFlashOnOff);
         this.fabCameraPlayStop = (FloatingActionButton) this.findViewById(R.id.fabCameraPlayStop);
+        this.fabAdd = (FloatingActionButton) this.findViewById(R.id.fabAdd);
         this.contentNoteVisionCamera = this.findViewById(R.id.contentNoteVisionCamera);
         this.contentNoteVisionKeyboard = this.findViewById(R.id.contentNoteVisionKeyboard);
         this.editTextTitle = (EditText) this.findViewById(R.id.editTextTitle);
@@ -466,7 +468,7 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
                 this.setLockScreenOrientation(false);
                 mPreview.start(mCameraSource, mGraphicOverlay);
                 this.fabCameraPlayStop.setImageResource(R.drawable.ic_pause_camera_white);
-                this.fabFlashOnOff.setEnabled(true);
+                this.fabFlashOnOff.setVisibility(View.VISIBLE);
             } catch (IOException e) {
                 Log.e(TAG, "Unable to start camera source.", e);
                 mCameraSource.release();
@@ -500,7 +502,7 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
             } else {
                 mPreview.stop();
                 this.fabCameraPlayStop.setImageResource(R.drawable.ic_play_camera_white);
-                this.fabFlashOnOff.setEnabled(false);
+                this.fabFlashOnOff.setVisibility(View.INVISIBLE);
                 this.setLockScreenOrientation(true);
 
             }
@@ -570,6 +572,7 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
                         .setIcon(R.drawable.ic_on_keyboard_white)
                         .setTitle(R.string.note_vision_keyboard_on);
             }
+            showOrHideFabAdd();
 
         }
 
@@ -594,12 +597,24 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
             this.editTextTitle.setText(NoteVision.parseTitle(stringBuilder.toString()));
         }
         this.editTextContent.setText(stringBuilder.toString());
+        showOrHideFabAdd();
+    }
+
+    /**
+     * Atribuir os blocos de textos selecionados ao editTextContent.
+     */
+    private void cleanNoteVisionContent() {
+        for (OcrGraphic graphic : mGraphicOverlay.getOrcGraphics()) {
+            graphic.setSelected(false);
+        }
+        this.editTextContent.setText("");
+        showOrHideFabAdd();
     }
 
     /**
      * Validar e salvar um NoteVision
      */
-    private void saveNoteVision() {
+    private void saveNoteVision(Boolean finish) {
         String title = editTextTitle.getText().toString();
         Date dateNow = new Date();
         String content = editTextContent.getText().toString();
@@ -620,18 +635,25 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
             return;
         }
 
-        this.cloudVisionProvider.setNoteVision(
+        //Salvar o Note Vision / Item e também atualizar a chave do Note Vision,
+        //para que as próximas inclusões dos itens sejam no mesmo Note Vision.
+        this.noteVisionKey = this.cloudVisionProvider.setNoteVision(
                 this.noteVisionKey,
                 title,
                 this.noteVisionItemKey,
                 content,
                 dateNow);
-        //Retornar com a chave do NoteVision e item confirmado.
-        Intent intent = new Intent();
-        intent.putExtra(NOTE_VISION_KEY, this.noteVisionKey);
-        intent.putExtra(NOTE_VISION_ITEM_KEY, this.noteVisionItemKey);
-        setResult(Activity.RESULT_OK, intent);
-        this.finish();
+        //Retornar com a chave do NoteVision e item confirmado e encerrar a inclusão.
+        if (finish) {
+            Intent intent = new Intent();
+            intent.putExtra(NOTE_VISION_KEY, this.noteVisionKey);
+            intent.putExtra(NOTE_VISION_ITEM_KEY, this.noteVisionItemKey);
+            setResult(Activity.RESULT_OK, intent);
+            this.finish();
+        } else {
+            //Limpar a tela para a inclusão de novos itens.
+            cleanNoteVisionContent();
+        }
     }
 
     /**
@@ -678,19 +700,20 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
         } else if (id == R.id.note_vision_keyboard_or_camera) {
             keyboardOnOff(null);
         } else if (id == R.id.note_vision_save){
-            saveNoteVision();
+            saveNoteVision(true);
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onClick(View view) {
-        if ( view.equals(this.fabFlashOnOff)){
-          cameraFlashOnOff(null);
-        } else  if ( view.equals(this.fabCameraPlayStop)){
+        if (view.equals(this.fabFlashOnOff)) {
+            cameraFlashOnOff(null);
+        } else if (view.equals(this.fabCameraPlayStop)) {
             cameraPlayPause(null);
+        } else if (view.equals(this.fabAdd)) {
+            saveNoteVision(false);
         }
-
     }
 
     private class CaptureGestureListener extends GestureDetector.SimpleOnGestureListener {
@@ -775,5 +798,17 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
             }
         } else
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR); // value 10
+    }
+
+    /**
+     * Mostrar ou esconder FabAdd conforme a situação to Note Vision Item.
+     */
+    private void showOrHideFabAdd(){
+        //Se for uma inclusão e o conteúdo for válido, ativar o botão de inclusão.
+        if ( ( this.noteVisionItemKey == null) && NoteVisionItem.checkContent(editTextContent.getText().toString())) {
+            this.fabAdd.setVisibility(View.VISIBLE);
+        } else {
+            this.fabAdd.setVisibility(View.INVISIBLE);
+        }
     }
 }

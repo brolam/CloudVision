@@ -61,6 +61,14 @@
             android:layout_margin="@dimen/fab_margin"
             android:onClick="onClick"
             app:srcCompat="@drawable/ic_pause_camera_white" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fab_margin"
+            android:onClick="onClick"
+            app:srcCompat="@drawable/ic_add_white" />
     </LinearLayout>
 
 </RelativeLayout>
