@@ -115,6 +115,8 @@ public class MainActivity extends AppCompatActivity
         this.imagesHelper = new ImagesHelper(this, this.cloudVisionProvider);
         this.noteVisionAdapter.setICloudVisionAdapter(this);
         this.recyclerView.setAdapter(this.noteVisionAdapter);
+        //Adicionar o ouvinte para excluir os arquivos registrados no {@link br.com.brolam.cloudvision.data.models.DeletedFiles}
+        this.cloudVisionProvider.addListenerDeletedFiles(this.imagesHelper);
     }
 
     @Override
@@ -137,6 +139,8 @@ public class MainActivity extends AppCompatActivity
     protected void onPause() {
         super.onPause();
         this.loginHelper.pause();
+        //Remover o ouvinte para excluir os arquivos registrados no {@link br.com.brolam.cloudvision.data.models.DeletedFiles}
+        this.cloudVisionProvider.removeListenerDeletedFiles(this.imagesHelper);
     }
 
     @Override

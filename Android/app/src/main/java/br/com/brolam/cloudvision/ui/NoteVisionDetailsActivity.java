@@ -215,6 +215,12 @@ public class NoteVisionDetailsActivity extends AppCompatActivity implements Logi
                         Toast.makeText(this, String.format(getString(R.string.main_activity_request_error),ImagesHelper.REQUEST_IMAGE_CAPTURE), Toast.LENGTH_LONG).show();
                     }
                 }
+                return true;
+            //Excluir um Note Vision.
+            case R.id.note_vision_delete:
+                this.deleteNoteVision();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -270,6 +276,7 @@ public class NoteVisionDetailsActivity extends AppCompatActivity implements Logi
             case R.id.imageButtonShared:
                 ShareHelper.noteVisionItem(this, noteVision, noteVisionItem);
                 return;
+            //Excluir um Note Vsion Item selecionado.
             case R.id.imageButtonDelete:
                 deleteNoteVisionItem(noteVisionItemKey);
                 return;
@@ -297,6 +304,29 @@ public class NoteVisionDetailsActivity extends AppCompatActivity implements Logi
             public void onClick(View view) {
                 if (cloudVisionProvider != null) {
                     cloudVisionProvider.deleteNoteVisionItem(noteVisionKey, noteVisionItemKey);
+                }
+            }
+        });
+        snackbar.show();
+    }
+
+    /**
+     * Solicitar a confirmação de exclusão de um Note Vision.
+     */
+    private void deleteNoteVision() {
+        Snackbar snackbar = Snackbar.make
+                (
+                        this.recyclerView,
+                        String.format(getString(R.string.note_vision_confirm_delete), getString(R.string.ok)),
+                        BaseTransientBottomBar.LENGTH_LONG
+                );
+        snackbar.setAction(R.string.ok, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (cloudVisionProvider != null) {
+                    cloudVisionProvider.removeListenerOneNoteVision(noteVisionKey, NoteVisionDetailsActivity.this);
+                    cloudVisionProvider.deleteNoteVision(noteVisionKey);
+                    NoteVisionDetailsActivity.this.finish();
                 }
             }
         });

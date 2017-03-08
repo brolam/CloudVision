@@ -15,20 +15,17 @@
  */
 package br.com.brolam.cloudvision.data;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Logger;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import br.com.brolam.cloudvision.data.models.DeletedFiles;
 import br.com.brolam.cloudvision.data.models.NoteVision;
 import br.com.brolam.cloudvision.data.models.NoteVisionItem;
-import br.com.brolam.cloudvision.ui.NoteVisionDetailsActivity;
 
 /**
  * Realizar manutenção e consultas no banco de dados do CloudVision.
@@ -42,6 +39,7 @@ public class CloudVisionProvider {
     static FirebaseDatabase database;
     DatabaseReference referenceNotesVision;
     DatabaseReference referenceNotesVisionItems;
+    DatabaseReference referenceDeletedFiles;
 
     /**
      * Construtor obrigratório com o ID do usuário.
@@ -57,6 +55,7 @@ public class CloudVisionProvider {
         }
         this.referenceNotesVision = database.getReference(NoteVision.PATH_NOTES_VISION).child(userId);
         this.referenceNotesVisionItems = database.getReference(NoteVisionItem.PATH_NOTES_VISION_ITEMS).child(userId);
+        this.referenceDeletedFiles = database.getReference(DeletedFiles.PATH_DELETED_FILES).child(userId);
     }
 
     /**
@@ -149,4 +148,48 @@ public class CloudVisionProvider {
 
     }
 
+    /**
+     * Excluir um Note Vision e seus itens e também registrar a exclusão dos arquivos, imagens e etc.,
+     * relacionados ao Note Vision. Sendo importante destacar, que esse processo será executado em uma única
+     * tansação.
+     * @param noteVisionKey
+     */
+    public void deleteNoteVision(String noteVisionKey){
+        Map<String, Object> batchUpdates = new HashMap<>();
+        //Criar uma chave para o arquivo deletado.
+        String deletedFileKey = referenceDeletedFiles.push().getKey();
+        String noteVisionBackgroundPath =  NoteVision.getBackgroundPath(getUserId(),noteVisionKey);
+        HashMap deletedFile = DeletedFiles.getNewDeletedFiles(noteVisionBackgroundPath, new Date().getTime());
+        //registrar o arquivo deletado e excluir o Note Vision e seus itens em uma única transação.
+        batchUpdates.put(String.format(DeletedFiles.USER_DELETED_FILES, userId, deletedFileKey), deletedFile );
+        batchUpdates.putAll(NoteVision.getDelete(getUserId(), noteVisionKey));
+        batchUpdates.putAll(NoteVisionItem.getDelete(getUserId(), noteVisionKey));
+        this.database.getReference().updateChildren(batchUpdates);
+    }
+
+    /**
+     * Excluir o registro de uma arquivo deletado.
+     * @param deletedFileKey informar uma chave válida.
+     */
+    public void deleteDeletedFile(String deletedFileKey){
+        Map<String, Object> batchUpdates = new HashMap<>();
+        batchUpdates.putAll(DeletedFiles.getDelete(getUserId(), deletedFileKey));
+        this.database.getReference().updateChildren(batchUpdates);
+    }
+
+    /**
+     * Adicionar um ouvinte para um registro de arquivo deletado.
+     * @param valueEventListener informar um ouvinte válido.
+     */
+    public void addListenerDeletedFiles(ValueEventListener valueEventListener){
+        referenceDeletedFiles.addValueEventListener(valueEventListener);
+    }
+
+    /**
+     * Remover um ouvinte para um registro de arquivo deletado
+     * @param valueEventListener informar um ouvinte válido.
+     */
+    public void removeListenerDeletedFiles(ValueEventListener valueEventListener){
+        referenceDeletedFiles.removeEventListener(valueEventListener);
+    }
 }

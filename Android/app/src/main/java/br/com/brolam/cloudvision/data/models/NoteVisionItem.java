@@ -24,10 +24,11 @@ import java.util.HashMap;
  * @since Release 01
  */
 public class NoteVisionItem {
-
+    //Origem
     public static final String PATH_NOTES_VISION_ITEMS =  "notesVisionItems";
     public static final String USER_NOTE_VISION_ITEMS =  "/" + PATH_NOTES_VISION_ITEMS + "/%s/%s/%s";
-
+    public static final String USER_NOTE_VISION_ITEMS_DELETE =  "/" + PATH_NOTES_VISION_ITEMS + "/%s/%s";
+    //Campos
     public static final String CONTENT = "content";
     public static final String CREATED = "created";
     public static final String PRIORITY = ".priority";
@@ -45,6 +46,13 @@ public class NoteVisionItem {
         String noteVisionItemRootPath = String.format(NoteVisionItem.USER_NOTE_VISION_ITEMS,userId,noteVisionKey,noteVisionItemKey);
         String contentPath =  noteVisionItemRootPath + "/" + NoteVisionItem.CONTENT;
         result.put(contentPath, content);
+        return result;
+    }
+
+    public static HashMap<String, Object> getDelete(String userId, String noteVisionKey){
+        HashMap<String, Object> result = new HashMap<>();
+        String noteVisionItemsRootPath = String.format(USER_NOTE_VISION_ITEMS_DELETE, userId, noteVisionKey);
+        result.put(noteVisionItemsRootPath, null);
         return result;
     }
 
@@ -67,8 +75,5 @@ public class NoteVisionItem {
     public static String getContent(HashMap noteVisionItem){
         return noteVisionItem.containsKey(CONTENT)? noteVisionItem.get(CONTENT).toString():"";
     }
-
-
-
 
 }

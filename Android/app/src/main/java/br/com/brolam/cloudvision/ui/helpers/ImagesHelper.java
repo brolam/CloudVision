@@ -35,6 +35,10 @@ import com.bumptech.glide.signature.StringSignature;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -47,6 +51,7 @@ import java.util.List;
 import java.util.Map;
 import br.com.brolam.cloudvision.R;
 import br.com.brolam.cloudvision.data.CloudVisionProvider;
+import br.com.brolam.cloudvision.data.models.DeletedFiles;
 import br.com.brolam.cloudvision.data.models.NoteVision;
 
 /**
@@ -55,9 +60,8 @@ import br.com.brolam.cloudvision.data.models.NoteVision;
  * @version 1.00
  * @since Release 01
  */
-public class ImagesHelper {
+public class ImagesHelper implements ValueEventListener {
     private static final String TAG = "ImagesHelper";
-    private static final String PATH_NOTE_VISION_BACKGROUND = "images/notes_vision/%s/%s/background.JPEG";
     public static final int REQUEST_IMAGE_CAPTURE = 2000;
     //Informar a chave do Note Vision que está solicitando o armazenamento da image
     // {@see takeNoteVisionBackground} e {@see saveNoteVisionBackground}
@@ -104,10 +108,7 @@ public class ImagesHelper {
      */
     public void loadNoteVisionBackground(String noteVisionKey, HashMap noteVision, ImageView imageView) {
         //Endereço da imagem no Firebase Storage.
-        String pathNoteVisionBackground = String.format(
-                PATH_NOTE_VISION_BACKGROUND,
-                this.cloudVisionProvider.getUserId(),
-                noteVisionKey);
+        String pathNoteVisionBackground = NoteVision.getBackgroundPath( this.cloudVisionProvider.getUserId(), noteVisionKey);
         imageView.setImageBitmap(null);
         NoteVision.BackgroundOrigin backgroundOrigin = NoteVision.getBackground(noteVision);
 
@@ -185,10 +186,7 @@ public class ImagesHelper {
      */
     private void requestNoteVisionBackgroundPutFile(String noteVisionKey) {
         //Endereço da imagem no Firebase Storage.
-        String pathNoteVisionBackground = String.format(
-                PATH_NOTE_VISION_BACKGROUND,
-                this.cloudVisionProvider.getUserId(),
-                noteVisionKey);
+        String pathNoteVisionBackground = NoteVision.getBackgroundPath( this.cloudVisionProvider.getUserId(), noteVisionKey);
 
         //Recuperar uma referência para o arquivo no Firebase Storage e verificar se já
         //existe uma requisição ativa ou gerar uma nova requisição.
@@ -210,6 +208,48 @@ public class ImagesHelper {
     }
 
     /**
+     * Realizar uma requisição de exclusão no Firebase Storage.
+     * @param deletedFileKey informar uma chave válida.
+     */
+    private void requestDeleteFile(String deletedFileKey, String path) {
+
+        //Recuperar uma referência para o arquivo no Firebase Storage e verificar se já
+        //existe uma requisição ativa ou gerar uma nova requisição.
+        StorageReference reference = firebaseStorage.getReference(path);
+        if (reference != null) {
+            List<UploadTask> activeUploadTasks = reference.getActiveUploadTasks();
+            Task<Void> taskDelete = null;
+            if (activeUploadTasks.size() == 0) {
+                taskDelete = reference.delete();
+                //Adicionar ouvintes para os eventos de falha e sucesso.
+                taskDelete.addOnFailureListener(new OnFailureDeletedFile(deletedFileKey));
+                taskDelete.addOnSuccessListener(new OnSuccessDeletedFile(deletedFileKey));
+            }
+
+        }
+    }
+
+    /**
+     * Monitorar os registros de arquivos deletados e solicitar a exclusão no Firebase Storage.
+     * @param dataSnapshot informar uma lista de {@link DeletedFiles}
+     */
+    @Override
+    public void onDataChange(DataSnapshot dataSnapshot) {
+        for (DataSnapshot deletedFile : dataSnapshot.getChildren()) {
+            HashMap deletedFileValues = (HashMap) deletedFile.getValue();
+            String path = DeletedFiles.getPath(deletedFileValues);
+            if (path != null) {
+                requestDeleteFile(deletedFile.getKey(), path);
+            }
+        }
+    }
+
+    @Override
+    public void onCancelled(DatabaseError databaseError) {
+
+    }
+
+    /**
      * Ouvinte para o evento de falha no upload de uma imagem de background Note Vision
      */
     private class OnFailureNoteVisionBackground implements OnFailureListener{
@@ -221,6 +261,24 @@ public class ImagesHelper {
         @Override
         public void onFailure(@NonNull Exception e) {
             notesVisionUploadsReference.remove(this.noteVisionKey);
+        }
+    }
+
+
+    /**
+     * Ouvinte para o evento de falha na exclusão de um arquivo
+     */
+    private class OnFailureDeletedFile implements OnFailureListener{
+        String deletedFileKey;
+        public OnFailureDeletedFile(String deletedFileKey){
+            this.deletedFileKey = deletedFileKey;
+        }
+
+        @Override
+        public void onFailure(@NonNull Exception e) {
+            if ( e.getMessage().indexOf("Object does not exist") > -1 ){
+                cloudVisionProvider.deleteDeletedFile(deletedFileKey);
+            }
         }
     }
 
@@ -240,6 +298,22 @@ public class ImagesHelper {
                 notesVisionUploadsReference.remove(this.noteVisionKey);
                 cloudVisionProvider.setNoteVisionBackground(this.noteVisionKey, NoteVision.BackgroundOrigin.REMOTE);
             };
+        }
+    }
+
+    /**
+     * Ouvinte para o evento de sucesso na exclusão no upload de uma imagem de background Note Vision
+     */
+    private class OnSuccessDeletedFile implements OnSuccessListener<Void>{
+        String deletedFileKey;
+
+        public OnSuccessDeletedFile(String deletedFileKey){
+            this.deletedFileKey = deletedFileKey;
+        }
+
+        @Override
+        public void onSuccess(Void aVoid) {
+            cloudVisionProvider.deleteDeletedFile(deletedFileKey);
         }
     }
 

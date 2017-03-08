@@ -28,6 +28,7 @@ public class NoteVision {
 
     public static final String PATH_NOTES_VISION = "notesVision";
     public static final String USER_NOTE_VISION = "/" + PATH_NOTES_VISION + "/%s/%s";
+    public static final String PATH_NOTE_VISION_BACKGROUND = "images/notes_vision/%s/%s/background.JPEG";
 
     public static final String TITLE = "title";
     public static final int TITLE_LENGTH = 80;
@@ -88,6 +89,13 @@ public class NoteVision {
         return result;
     }
 
+    public static HashMap<String, Object> getDelete(String userId, String noteVisionKey){
+        HashMap<String, Object> result = new HashMap<>();
+        String noteVisionRootPath = String.format(USER_NOTE_VISION, userId, noteVisionKey);
+        result.put(noteVisionRootPath, null);
+        return result;
+    }
+
     public static String parseTitle(String title) {
         if (title != null) {
             //Remover os caracteres que sinaliza o final da linha.
@@ -128,5 +136,9 @@ public class NoteVision {
     public static String getBackgroundSignature(HashMap noteVision){
         return noteVision.containsKey(BACKGROUND_SIGNATURE)? noteVision.get(BACKGROUND_SIGNATURE).toString(): "";
 
+    }
+
+    public static String getBackgroundPath(String userId, String noteVisionKey){
+        return String.format(PATH_NOTE_VISION_BACKGROUND, userId, noteVisionKey);
     }
 }
