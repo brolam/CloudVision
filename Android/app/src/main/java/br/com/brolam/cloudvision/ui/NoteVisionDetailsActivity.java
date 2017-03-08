@@ -161,6 +161,14 @@ public class NoteVisionDetailsActivity extends AppCompatActivity implements Logi
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if ( this.cloudVisionProvider != null){
+            this.cloudVisionProvider.removeListenerOneNoteVision(this.noteVisionKey, this);
+        }
+    }
+
+    @Override
     public void onLogin(FirebaseUser firebaseUser) {
         this.cloudVisionProvider = new CloudVisionProvider(firebaseUser.getUid());
         this.imagesHelper = new ImagesHelper(this, this.cloudVisionProvider);
