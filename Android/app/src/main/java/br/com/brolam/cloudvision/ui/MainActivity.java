@@ -26,7 +26,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,6 +39,7 @@ import br.com.brolam.cloudvision.data.CloudVisionProvider;
 import br.com.brolam.cloudvision.data.models.NoteVision;
 import br.com.brolam.cloudvision.ui.adapters.NoteVisionAdapter;
 import br.com.brolam.cloudvision.ui.adapters.holders.NoteVisionHolder;
+import br.com.brolam.cloudvision.ui.helpers.ActivityHelper;
 import br.com.brolam.cloudvision.ui.helpers.ClipboardHelper;
 import br.com.brolam.cloudvision.ui.helpers.ImagesHelper;
 import br.com.brolam.cloudvision.ui.helpers.LoginHelper;
@@ -58,7 +58,7 @@ import br.com.brolam.cloudvision.ui.helpers.ShareHelper;
  * @version 1.00
  * @since Release 01
  */
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends ActivityHelper
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, LoginHelper.ILoginHelper, NoteVisionAdapter.INoteVisionAdapter {
     private static final int NOTE_VISION_REQUEST_COD = 1000;
     private static final int NOTE_VISION_DETAILS_REQUEST_COD = 3000;
@@ -110,13 +110,22 @@ public class MainActivity extends AppCompatActivity
      */
     @Override
     public void onLogin(FirebaseUser firebaseUser) {
-        this.cloudVisionProvider = new CloudVisionProvider(firebaseUser.getUid());
-        this.noteVisionAdapter = new NoteVisionAdapter(HashMap.class, R.layout.holder_note_vision, NoteVisionHolder.class, this.cloudVisionProvider.getQueryNotesVision());
-        this.imagesHelper = new ImagesHelper(this, this.cloudVisionProvider);
-        this.noteVisionAdapter.setICloudVisionAdapter(this);
-        this.recyclerView.setAdapter(this.noteVisionAdapter);
+        if ( this.cloudVisionProvider == null) {
+            this.cloudVisionProvider = new CloudVisionProvider(firebaseUser.getUid());
+            this.noteVisionAdapter = new NoteVisionAdapter(HashMap.class, R.layout.holder_note_vision, NoteVisionHolder.class, this.cloudVisionProvider.getQueryNotesVision());
+            this.imagesHelper = new ImagesHelper(this, this.cloudVisionProvider);
+            this.noteVisionAdapter.setICloudVisionAdapter(this);
+            this.recyclerView.setAdapter(this.noteVisionAdapter);
+        }
         //Adicionar o ouvinte para excluir os arquivos registrados no {@link br.com.brolam.cloudvision.data.models.DeletedFiles}
         this.cloudVisionProvider.addListenerDeletedFiles(this.imagesHelper);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //Salvar o state do RecyclerView
+        super.saveRecyclerViewState(outState);
     }
 
     @Override
@@ -140,7 +149,9 @@ public class MainActivity extends AppCompatActivity
         super.onPause();
         this.loginHelper.pause();
         //Remover o ouvinte para excluir os arquivos registrados no {@link br.com.brolam.cloudvision.data.models.DeletedFiles}
-        this.cloudVisionProvider.removeListenerDeletedFiles(this.imagesHelper);
+        if ( this.cloudVisionProvider != null ){
+            this.cloudVisionProvider.removeListenerDeletedFiles(this.imagesHelper);
+        }
     }
 
     @Override
@@ -148,6 +159,11 @@ public class MainActivity extends AppCompatActivity
         super.onDestroy();
         if (this.noteVisionAdapter != null){
             this.noteVisionAdapter.cleanup();
+        }
+
+        //Remover o ouvinte para excluir os arquivos registrados no {@link br.com.brolam.cloudvision.data.models.DeletedFiles}
+        if ( this.cloudVisionProvider != null ){
+            this.cloudVisionProvider.removeListenerDeletedFiles(this.imagesHelper);
         }
     }
 
@@ -196,7 +212,6 @@ public class MainActivity extends AppCompatActivity
             //NoteVisionActivity.updateNoteVision(this, NOTE_VISON_REQUEST_COD, "-Kda2ezEKZ0C3qydkjat", "-Kda2ezH9bLL5EC_WDyr", "Realtime Database", "https://cloudvision-cdad2. firebaseio.com/\\n\\rl cloudvision-c4ad2: nuli\\n\\r", true );
         }
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -279,6 +294,14 @@ public class MainActivity extends AppCompatActivity
         if ( this.imagesHelper != null){
             this.imagesHelper.loadNoteVisionBackground(noteVisionKey, noteVision, imageView);
         }
+    }
+
+    /**
+     * Esse método é acionado no final da atualização do Adapter {@link NoteVisionAdapter}
+     */
+    @Override
+    public void restoreViewState() {
+        super.restoreRecyclerViewState();
     }
 
 }

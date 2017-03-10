@@ -23,6 +23,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.Query;
 import java.util.HashMap;
+
 import br.com.brolam.cloudvision.ui.adapters.holders.NoteVisionHolder;
 
 /**
@@ -36,7 +37,7 @@ public class NoteVisionAdapter extends FirebaseRecyclerAdapter<HashMap, NoteVisi
     /**
      * Interface para gerencia os eventos de um Note Vision Card.
      */
-    public interface INoteVisionAdapter {
+    public interface INoteVisionAdapter extends IAdapterBase {
         void onNoteVisionSelect(String key, HashMap noteVision);
         void onNoteVisionMenuItemClick(MenuItem menuItem, String key, HashMap noteVision);
 
@@ -120,5 +121,13 @@ public class NoteVisionAdapter extends FirebaseRecyclerAdapter<HashMap, NoteVisi
 
     public void setICloudVisionAdapter(INoteVisionAdapter iNoteVisionAdapter) {
         this.iNoteVisionAdapter = iNoteVisionAdapter;
+    }
+
+    @Override
+    protected void onDataChanged() {
+        super.onDataChanged();
+        if (iNoteVisionAdapter != null){
+            iNoteVisionAdapter.restoreViewState();
+        }
     }
 }

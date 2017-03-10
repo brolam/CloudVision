@@ -21,7 +21,6 @@ import android.os.Bundle;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -46,6 +45,7 @@ import br.com.brolam.cloudvision.data.models.NoteVision;
 import br.com.brolam.cloudvision.data.models.NoteVisionItem;
 import br.com.brolam.cloudvision.ui.adapters.NoteVisionDetailsAdapter;
 import br.com.brolam.cloudvision.ui.adapters.holders.NoteVisionDetailsHolder;
+import br.com.brolam.cloudvision.ui.helpers.ActivityHelper;
 import br.com.brolam.cloudvision.ui.helpers.ClipboardHelper;
 import br.com.brolam.cloudvision.ui.helpers.FormatHelper;
 import br.com.brolam.cloudvision.ui.helpers.ImagesHelper;
@@ -58,7 +58,7 @@ import br.com.brolam.cloudvision.ui.helpers.ShareHelper;
  * @version 1.00
  * @since Release 01
  */
-public class NoteVisionDetailsActivity extends AppCompatActivity implements LoginHelper.ILoginHelper, NoteVisionDetailsAdapter.INoteVisionDetailsAdapter, View.OnClickListener, ValueEventListener {
+public class NoteVisionDetailsActivity extends ActivityHelper implements LoginHelper.ILoginHelper, NoteVisionDetailsAdapter.INoteVisionDetailsAdapter, View.OnClickListener, ValueEventListener {
     private static final String TAG = "DetailsActivity";
     public static final String NOTE_VISION_KEY = "noteVisionKey";
     public static final String NOTE_VISION = "noteVision";
@@ -66,6 +66,8 @@ public class NoteVisionDetailsActivity extends AppCompatActivity implements Logi
 
     private String noteVisionKey;
     private HashMap noteVision;
+
+    FloatingActionButton fab;
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
 
@@ -81,13 +83,12 @@ public class NoteVisionDetailsActivity extends AppCompatActivity implements Logi
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         this.recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         setSupportActionBar(toolbar);
-
         this.linearLayoutManager = new LinearLayoutManager(this);
         this.linearLayoutManager.setReverseLayout(true);
         this.linearLayoutManager.setStackFromEnd(true);
         this.recyclerView.setLayoutManager(this.linearLayoutManager);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
         setSaveInstanceState(savedInstanceState);
          /*
@@ -118,6 +119,10 @@ public class NoteVisionDetailsActivity extends AppCompatActivity implements Logi
         super.onSaveInstanceState(outState);
         outState.putString(NOTE_VISION_KEY, this.noteVisionKey);
         outState.putSerializable(NOTE_VISION, this.noteVision);
+        super.saveCoordinatorLayoutHelper(outState);
+        super.saveNestedScrollHelperViewState(outState);
+        super.saveRecyclerViewState(outState);
+
     }
 
     private void setSaveInstanceState(Bundle savedInstanceState) {
@@ -170,19 +175,19 @@ public class NoteVisionDetailsActivity extends AppCompatActivity implements Logi
 
     @Override
     public void onLogin(FirebaseUser firebaseUser) {
-        this.cloudVisionProvider = new CloudVisionProvider(firebaseUser.getUid());
-        this.imagesHelper = new ImagesHelper(this, this.cloudVisionProvider);
-        this.noteVisionDetailsAdapter = new NoteVisionDetailsAdapter(
-                HashMap.class,
-                R.layout.holder_note_vision_details,
-                NoteVisionDetailsHolder.class,
-                this.cloudVisionProvider.getQueryNoteVisionItems(this.noteVisionKey)
-        );
-        this.noteVisionDetailsAdapter.setINoteVisionDetailsAdapter(this);
-        this.recyclerView.setAdapter(noteVisionDetailsAdapter);
-        if ( this.cloudVisionProvider != null){
-            this.cloudVisionProvider.addListenerOneNoteVision(this.noteVisionKey, this);
+        if ( this.cloudVisionProvider == null) {
+            this.cloudVisionProvider = new CloudVisionProvider(firebaseUser.getUid());
+            this.imagesHelper = new ImagesHelper(this, this.cloudVisionProvider);
+            this.noteVisionDetailsAdapter = new NoteVisionDetailsAdapter(
+                    HashMap.class,
+                    R.layout.holder_note_vision_details,
+                    NoteVisionDetailsHolder.class,
+                    this.cloudVisionProvider.getQueryNoteVisionItems(this.noteVisionKey)
+            );
+            this.noteVisionDetailsAdapter.setINoteVisionDetailsAdapter(this);
+            this.recyclerView.setAdapter(noteVisionDetailsAdapter);
         }
+        this.cloudVisionProvider.addListenerOneNoteVision(this.noteVisionKey, this);
     }
 
     @Override
@@ -303,7 +308,7 @@ public class NoteVisionDetailsActivity extends AppCompatActivity implements Logi
     private void deleteNoteVisionItem(final String noteVisionItemKey) {
         Snackbar snackbar = Snackbar.make
                 (
-                        this.recyclerView,
+                        this.fab,
                         String.format(getString(R.string.note_vision_confirm_delete), getString(R.string.ok)),
                         BaseTransientBottomBar.LENGTH_LONG
                 );
@@ -324,7 +329,7 @@ public class NoteVisionDetailsActivity extends AppCompatActivity implements Logi
     private void deleteNoteVision() {
         Snackbar snackbar = Snackbar.make
                 (
-                        this.recyclerView,
+                        this.fab,
                         String.format(getString(R.string.note_vision_confirm_delete), getString(R.string.ok)),
                         BaseTransientBottomBar.LENGTH_LONG
                 );
@@ -341,4 +346,11 @@ public class NoteVisionDetailsActivity extends AppCompatActivity implements Logi
         snackbar.show();
     }
 
+    @Override
+    public void restoreViewState() {
+        super.restoreCoordinatorLayoutHelperViewState();
+        super.restoreNestedScrollHelperViewState();
+        super.restoreRecyclerViewState();
+
+    }
 }
