@@ -221,13 +221,12 @@ public class MainActivity extends ActivityHelper
          * Sendo importante destacar, se o login for cancelado a MainActivity será encerrada!
          */
         if (loginHelper.checkLogin(requestCode, resultCode)) {
+            //Verificar se exitem algum requisão para salvar uma imagem.
+            //Observação: Se ocorrer a rotação da tela essa verificação será cancelada,
+            //            sendo assim, essa verificar também deve ocorrer novamente na
+            //            reconstrução da tela, {@link ImagesHelper.restoreStorageReference }
             if (this.imagesHelper != null) {
-                try {
-                    this.imagesHelper.onActivityResult(requestCode, resultCode, data);
-                } catch (IOException e) {
-                    Log.e(TAG, e.getMessage());
-                    Toast.makeText(this, String.format(getString(R.string.main_activity_request_error),requestCode), Toast.LENGTH_LONG).show();
-                }
+                this.imagesHelper.onActivityResult(requestCode, resultCode, data);
             }
         }
     }

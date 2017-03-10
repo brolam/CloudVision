@@ -18,12 +18,10 @@ package br.com.brolam.cloudvision.ui.helpers;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -78,6 +76,9 @@ public class ImagesHelper implements ValueEventListener {
 
     public ImagesHelper(Activity activity, CloudVisionProvider cloudVisionProvider ){
         this.activity = activity;
+        Resources resources = activity.getResources();
+        this.noteVisionBackgroundWidth = resources.getInteger(R.integer.note_vision_background_width);
+        this.noteVisionBackgroundHeight = resources.getInteger(R.integer.note_vision_background_height);
         this.cloudVisionProvider = cloudVisionProvider;
         this.firebaseStorage = FirebaseStorage.getInstance();
         if ( notesVisionUploadsReference  == null ) {
@@ -85,15 +86,18 @@ public class ImagesHelper implements ValueEventListener {
         } else {
             restoreStorageReference();
         }
-        Resources resources = activity.getResources();
-        this.noteVisionBackgroundWidth = resources.getInteger(R.integer.note_vision_background_width);
-        this.noteVisionBackgroundHeight = resources.getInteger(R.integer.note_vision_background_height);
     }
 
     /**
-     * Restourar os uploads se a atividade for reconstruida.
+     * Restaurar os uploads se a atividade for reconstruida.
      */
     private void restoreStorageReference() {
+        //Se o saveImageNoteVisonBackground for executado nesse método, significa que a tela foi reconstruida,
+        //provavelmente na rotação, dessa forma, é necessário salvar nesse método.
+        if (requestImageNoteVisionKey != null) {
+            saveImageNoteVisonBackground(requestImageNoteVisionKey);
+        }
+
         for (Map.Entry<String, String> map : this.notesVisionUploadsReference.entrySet()) {
             requestNoteVisionBackgroundPutFile(map.getKey());
         }
@@ -146,8 +150,6 @@ public class ImagesHelper implements ValueEventListener {
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, getImageUriFileProvider(noteVisionKey));
             //Informar a chave do Note Vision que será recuperado no método {@see saveNoteVisionBackground}
             requestImageNoteVisionKey = noteVisionKey;
-            //Travar a rotação da tela para
-            this.setLockScreenOrientation(true);
             activity.startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
@@ -156,28 +158,26 @@ public class ImagesHelper implements ValueEventListener {
       Acionar esse método no onActivityResult da atividade para finalizar a confirmação da
       imagem.
      */
-    public void onActivityResult(int requestCode, int resultCode, Intent data) throws IOException {
-        try {
-
-            if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == activity.RESULT_OK) {
-                if (requestImageNoteVisionKey != null) {
-                    //Reduzir o tamanho da imagem
-                    resizeImage(getImageUriFile(
-                            requestImageNoteVisionKey).getPath(),
-                            noteVisionBackgroundWidth,
-                            noteVisionBackgroundHeight);
-                    //Sinalizar que o Note Vision deve considerar a imagem temporária.
-                    cloudVisionProvider.setNoteVisionBackground(requestImageNoteVisionKey, NoteVision.BackgroundOrigin.LOCAL);
-                    //Realizar a requisição de upload da imagem.
-                    requestNoteVisionBackgroundPutFile(requestImageNoteVisionKey);
-                }
-                requestImageNoteVisionKey = null;
-
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == activity.RESULT_OK) {
+            if (requestImageNoteVisionKey != null) {
+                saveImageNoteVisonBackground(requestImageNoteVisionKey);
             }
-        } finally {
-            this.setLockScreenOrientation(false);
         }
+    }
 
+    /**
+     * Salvar a imagens do Note Vision background.
+     * @param noteVisionKey informar uma chave válida.
+     */
+    private void saveImageNoteVisonBackground(String noteVisionKey) {
+        if ( parseImageNoteVisionBackground(noteVisionKey)) {
+            //Sinalizar que o Note Vision deve considerado uma imagem temporária.
+            cloudVisionProvider.setNoteVisionBackground(noteVisionKey, NoteVision.BackgroundOrigin.LOCAL);
+            //Realizar a requisição de upload da imagem.
+            requestNoteVisionBackgroundPutFile(noteVisionKey);
+        }
+        requestImageNoteVisionKey = null;
     }
 
     /**
@@ -263,7 +263,6 @@ public class ImagesHelper implements ValueEventListener {
             notesVisionUploadsReference.remove(this.noteVisionKey);
         }
     }
-
 
     /**
      * Ouvinte para o evento de falha na exclusão de um arquivo
@@ -367,24 +366,31 @@ public class ImagesHelper implements ValueEventListener {
     }
 
     /**
-     * Bloquear a rotação da tela,
-     * Origem do código: http://stackoverflow.com/a/41812971
-     * @param lock
+     * Analisar e validar uma imagem de background para um Note Vision.
+     * @param noteVisionKey
+     * @return verdadeiro se a imagem for válida.
      */
-    protected void setLockScreenOrientation(boolean lock) {
-        if (Build.VERSION.SDK_INT >= 18) {
-            activity.setRequestedOrientation(lock? ActivityInfo.SCREEN_ORIENTATION_LOCKED:ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
-            return;
-        }
-
-        if (lock) {
-            switch (activity.getWindowManager().getDefaultDisplay().getRotation()) {
-                case 0: activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); break; // value 1
-                case 2: activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT); break; // value 9
-                case 1: activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE); break; // value 0
-                case 3: activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE); break; // value 8
+    private boolean parseImageNoteVisionBackground(String noteVisionKey){
+        Uri imageUri = getImageUriFile(noteVisionKey);
+        File imageFile = new File(imageUri.getPath());
+        if (imageFile.exists()){
+            //Reduzir o tamanho de imagens acima de 1MB.
+            if (imageFile.getTotalSpace() > 1048576) {
+                //Tentar reduzir o tamanho da imagem.
+                try {
+                    resizeImage(imageUri.getPath(),
+                            noteVisionBackgroundWidth,
+                            noteVisionBackgroundHeight);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else if ( imageFile.getTotalSpace() == 0){
+                //Excluir a imagem se a mesma não for válida.
+                imageFile.delete();
+                return false;
             }
-        } else
-            activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR); // value 10
+            return true;
+        };
+        return false;
     }
 }
