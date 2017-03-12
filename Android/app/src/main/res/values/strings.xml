@@ -14,7 +14,7 @@
      limitations under the License.
 -->
 <resources>
-    <string name="app_name">CloudVision</string>
+    <string name="app_name">Cloud Vision</string>
     <!--Navigation Drawer Strings !-->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -52,4 +52,7 @@
     <!--Note Vision Details!-->
     <string name="note_vision_delete">Delete</string>
     <string name="note_vision_confirm_delete">Are you sure? %s to delete.</string>
+
+    <!--Note Vision Widgets!-->
+    <string name="note_vision_widget_empty">Notes Vision could not be recovered</string>
 </resources>

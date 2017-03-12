@@ -38,7 +38,9 @@
     <integer name="note_vision_background_height">1280</integer>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     - Lista Notes Vision Itens                                                                    -
+     - Widgets                                                                    -
      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <dimen name="note_vision_summary_widget_height">110dp</dimen>
+    <dimen name="note_vision_summary_widget_width">250dp</dimen>
 
 </resources>

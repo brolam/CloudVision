@@ -66,6 +66,7 @@ import br.com.brolam.cloudvision.ui.camera.GraphicOverlay;
 import br.com.brolam.cloudvision.ui.helpers.LoginHelper;
 import br.com.brolam.cloudvision.ui.vision.OcrDetectorProcessor;
 import br.com.brolam.cloudvision.ui.vision.OcrGraphic;
+import br.com.brolam.cloudvision.ui.widgets.NoteVisionSummaryWidget;
 
 /**
  * Essa atividade é uma modificação da atividade OcrCaptureActivity.java em https://github.com/googlesamples/android-vision/blob/master/visionSamples/ocr-codelab/
@@ -643,6 +644,8 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
                 this.noteVisionItemKey,
                 content,
                 dateNow);
+        //Solicitar a atualização do Widget.
+        NoteVisionSummaryWidget.notifyWidgetUpdate(this);
         //Retornar com a chave do NoteVision e item confirmado e encerrar a inclusão.
         if (finish) {
             Intent intent = new Intent();

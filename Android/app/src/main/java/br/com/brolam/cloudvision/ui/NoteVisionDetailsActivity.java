@@ -16,6 +16,7 @@
 package br.com.brolam.cloudvision.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BaseTransientBottomBar;
@@ -100,17 +101,27 @@ public class NoteVisionDetailsActivity extends ActivityHelper implements LoginHe
     }
 
     /**
+     * Recuperar um Intent com os parâmetros necessário para exibir os detalhes de um Note Vision.
+     * @param context      informar a atividade que receberá o retorno.
+     * @param noteVisionKey informar uma chave válida.
+     * @param noteVision    informar um NoteVision válido.
+     */
+    public static Intent getIntent(Context context, String noteVisionKey, HashMap noteVision) {
+        Intent intent = new Intent(context, NoteVisionDetailsActivity.class);
+        intent.putExtra(NOTE_VISION_KEY, noteVisionKey);
+        intent.putExtra(NOTE_VISION, noteVision);
+        return intent;
+    }
+
+    /**
      * Acionar a exibição dos detalhes de um Note Vision.
-     *
      * @param activity      informar a atividade que receberá o retorno.
      * @param requestCod    informar o código de requisição dessa atividade.
      * @param noteVisionKey informar uma chave válida.
      * @param noteVision    informar um NoteVision válido.
      */
     public static void show(Activity activity, int requestCod, String noteVisionKey, HashMap noteVision) {
-        Intent intent = new Intent(activity, NoteVisionDetailsActivity.class);
-        intent.putExtra(NOTE_VISION_KEY, noteVisionKey);
-        intent.putExtra(NOTE_VISION, noteVision);
+        Intent intent = getIntent(activity, noteVisionKey, noteVision);
         activity.startActivityForResult(intent, requestCod);
     }
 

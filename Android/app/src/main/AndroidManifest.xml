@@ -4,7 +4,6 @@
     package="br.com.brolam.cloudvision">
 
     <uses-feature android:name="android.hardware.camera" />
-
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -33,6 +32,7 @@
                 android:name="android.app.default_searchable"
                 android:value=".ui.NoteVisionSearchable" />
         </activity>
+
         <activity
             android:name=".ui.NoteVisionActivity"
             android:theme="@style/AppTheme.NoActionBar.Fullscreen">
@@ -40,6 +40,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="br.com.brolam.cloudvision.ui.NoteVisionActivity" />
         </activity>
+
         <activity
             android:name=".ui.NoteVisionSearchable"
             android:label="@string/app_name"
@@ -70,6 +71,22 @@
             android:name=".ui.NoteVisionDetailsActivity"
             android:label="@string/title_activity_note_vision_details"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <receiver android:name=".ui.widgets.NoteVisionSummaryWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="br.com.brolam.cloudvision.ui.widgets.NOTE_VISION_SUMMARY_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_note_vision_summary" />
+        </receiver>
+
+        <service
+            android:name=".services.WidgetsRemoteViewsService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>
