@@ -30,6 +30,7 @@ import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -584,18 +585,13 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
      */
     private void setNoteVisionContent() {
         StringBuilder stringBuilder = new StringBuilder();
-        int countSelected = 0;
         for (OcrGraphic graphic : mGraphicOverlay.getOrcGraphics()) {
             if ((graphic.isSelected())) {
                 TextBlock textBlock = graphic.getTextBlock();
                 if ((textBlock != null) && (textBlock.getValue() != null)) {
-                    stringBuilder.append(String.format("%s\n\r", textBlock.getValue()));
-                    countSelected++;
+                    stringBuilder.append(String.format("%s ", textBlock.getValue()));
                 }
             }
-        }
-        if (( countSelected == 1) && (this.editTextTitle.getText().length() == 0)){
-            this.editTextTitle.setText(NoteVision.parseTitle(stringBuilder.toString()));
         }
         this.editTextContent.setText(stringBuilder.toString());
         showOrHideFabAdd();
@@ -610,6 +606,25 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
         }
         this.editTextContent.setText("");
         showOrHideFabAdd();
+    }
+
+    /**
+     * Perguntar se o título deve ser preenchido com o texto selecionado.
+     * @param graphic informar um OcrGraphic válido.
+     */
+    private void parseFillTitle(final OcrGraphic graphic){
+        assert (graphic != null) && graphic.isSelected() && graphic.getTextBlock() != null;
+        if ( !NoteVision.checkTitle(this.editTextTitle.getText().toString())){
+            Snackbar snackbar = Snackbar.make(fabCameraPlayStop, R.string.note_vision_ask_fill_title, BaseTransientBottomBar.LENGTH_LONG);
+            snackbar.setAction(R.string.yes, new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    assert (graphic != null && graphic.getTextBlock() != null);
+                    editTextTitle.setText(graphic.getTextBlock().getValue());
+                    graphic.setSelected(false);
+                }
+            }).show();
+        }
     }
 
     /**
@@ -673,8 +688,8 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
             if (text != null && text.getValue() != null) {
                 mGraphicOverlay.invalidate();
                 cameraPlayPause(false);
-                boolean isSelected = !graphic.isSelected();
-                graphic.setSelected(isSelected);
+                graphic.setSelected(!graphic.isSelected());
+                parseFillTitle(graphic);
                 //Atualizar o conteúdo do NoteVision
                 setNoteVisionContent();
                 Log.d(TAG, "Preview Camera Stopped!");
@@ -787,10 +802,12 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
      * @param lock
      */
     protected void setLockScreenOrientation(boolean lock) {
+        setRequestedOrientation(lock?ActivityInfo.SCREEN_ORIENTATION_LOCKED:ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
         if (Build.VERSION.SDK_INT >= 18) {
             setRequestedOrientation(lock?ActivityInfo.SCREEN_ORIENTATION_LOCKED:ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
             return;
         }
+
 
         if (lock) {
             switch (getWindowManager().getDefaultDisplay().getRotation()) {

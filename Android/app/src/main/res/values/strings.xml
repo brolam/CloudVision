@@ -30,9 +30,11 @@
     <string name="note_vision_validate_title_empty">Please the title must be completed</string>
     <string name="note_vision_validate_content_empty">Please select at least one text.</string>
     <string name="ok">OK</string>
+    <string name="yes">Yes</string>
     <string name="permission_camera_rationale">Access to the camera is needed for detection</string>
     <string name="low_storage_error">Ocr dependencies cannot be downloaded due to low device storage</string>
     <string name="no_camera_permission">This application cannot run because it does not have the camera permission.  The application will now exit.</string>
+    <string name="note_vision_ask_fill_title">Is this the Note Vision title?</string>
 
     <!--Main Activity!-->
     <string name="note_vision_share">Share</string>
