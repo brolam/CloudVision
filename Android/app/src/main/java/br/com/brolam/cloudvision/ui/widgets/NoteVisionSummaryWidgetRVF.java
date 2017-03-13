@@ -33,6 +33,7 @@ import java.util.HashMap;
 import br.com.brolam.cloudvision.R;
 import br.com.brolam.cloudvision.data.CloudVisionProvider;
 import br.com.brolam.cloudvision.ui.adapters.holders.NoteVisionSummaryHolder;
+import br.com.brolam.cloudvision.ui.helpers.AppAnalyticsHelper;
 
 /**
  * Adapter remoto do Note Vision Summary Widget, onde é realizada o login e consulta dos Notes Vision.
@@ -134,6 +135,8 @@ public class NoteVisionSummaryWidgetRVF implements RemoteViewsService.RemoteView
             this.queryNotesVision = cloudVisionProvider.getQueryNotesVision();
             this.queryNotesVision.removeEventListener(this);
             this.queryNotesVision.addValueEventListener(this);
+            AppAnalyticsHelper appAnalyticsHelper = new AppAnalyticsHelper(context);
+            appAnalyticsHelper.logWidgets(NoteVisionSummaryWidget.TAG);
         } else {
             this.notesVision.clear();
             NoteVisionSummaryWidget.notifyWidgetUpdate(context);

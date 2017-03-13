@@ -36,6 +36,7 @@ import br.com.brolam.cloudvision.ui.NoteVisionDetailsActivity;
  * @since Release 01
  */
 public class NoteVisionSummaryWidget extends AppWidgetProvider {
+    public static final String TAG = "NoteVisionSummaryWidget";
     //Para registra e receber mensagens de atualizações
     public static final String NOTE_VISION_SUMMARY_UPDATE = "br.com.brolam.cloudvision.ui.widgets.NOTE_VISION_SUMMARY_UPDATE";
 

@@ -64,6 +64,7 @@ import br.com.brolam.cloudvision.data.models.NoteVisionItem;
 import br.com.brolam.cloudvision.ui.camera.CameraSource;
 import br.com.brolam.cloudvision.ui.camera.CameraSourcePreview;
 import br.com.brolam.cloudvision.ui.camera.GraphicOverlay;
+import br.com.brolam.cloudvision.ui.helpers.AppAnalyticsHelper;
 import br.com.brolam.cloudvision.ui.helpers.LoginHelper;
 import br.com.brolam.cloudvision.ui.vision.OcrDetectorProcessor;
 import br.com.brolam.cloudvision.ui.vision.OcrGraphic;
@@ -111,6 +112,7 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
 
     private LoginHelper loginHelper;
     private CloudVisionProvider  cloudVisionProvider;
+    private AppAnalyticsHelper appAnalyticsHelper;
 
     public static final String NOTE_VISION_KEY = "noteVisionKey";
     private String noteVisionKey;
@@ -187,7 +189,10 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
      */
     @Override
     public void onLogin(FirebaseUser firebaseUser) {
-        this.cloudVisionProvider = new CloudVisionProvider(firebaseUser.getUid());
+        if ( this.cloudVisionProvider == null) {
+            this.cloudVisionProvider = new CloudVisionProvider(firebaseUser.getUid());
+            this.appAnalyticsHelper = new AppAnalyticsHelper(this);
+        }
     }
 
     @Override
@@ -651,6 +656,8 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
             return;
         }
 
+        boolean newNoteVision = this.noteVisionKey == null;
+
         //Salvar o Note Vision / Item e também atualizar a chave do Note Vision,
         //para que as próximas inclusões dos itens sejam no mesmo Note Vision.
         this.noteVisionKey = this.cloudVisionProvider.setNoteVision(
@@ -659,6 +666,7 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
                 this.noteVisionItemKey,
                 content,
                 dateNow);
+        if (newNoteVision) this.appAnalyticsHelper.logNoteVisionAdded(TAG);
         //Solicitar a atualização do Widget.
         NoteVisionSummaryWidget.notifyWidgetUpdate(this);
         //Retornar com a chave do NoteVision e item confirmado e encerrar a inclusão.
@@ -717,6 +725,9 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
             return true;
         } else if (id == R.id.note_vision_keyboard_or_camera) {
             keyboardOnOff(null);
+            if (this.contentNoteVisionKeyboard.getVisibility() == View.VISIBLE ) {
+                this.appAnalyticsHelper.logNoteVisionKeyboardOn(TAG);
+            }
         } else if (id == R.id.note_vision_save){
             saveNoteVision(true);
         }

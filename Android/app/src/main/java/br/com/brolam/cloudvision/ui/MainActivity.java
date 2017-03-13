@@ -40,6 +40,7 @@ import br.com.brolam.cloudvision.data.models.NoteVision;
 import br.com.brolam.cloudvision.ui.adapters.NoteVisionAdapter;
 import br.com.brolam.cloudvision.ui.adapters.holders.NoteVisionHolder;
 import br.com.brolam.cloudvision.ui.helpers.ActivityHelper;
+import br.com.brolam.cloudvision.ui.helpers.AppAnalyticsHelper;
 import br.com.brolam.cloudvision.ui.helpers.ClipboardHelper;
 import br.com.brolam.cloudvision.ui.helpers.ImagesHelper;
 import br.com.brolam.cloudvision.ui.helpers.LoginHelper;
@@ -71,6 +72,7 @@ public class MainActivity extends ActivityHelper
     CloudVisionProvider cloudVisionProvider;
     NoteVisionAdapter noteVisionAdapter;
     ImagesHelper imagesHelper;
+    AppAnalyticsHelper appAnalyticsHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +118,7 @@ public class MainActivity extends ActivityHelper
             this.imagesHelper = new ImagesHelper(this, this.cloudVisionProvider);
             this.noteVisionAdapter.setICloudVisionAdapter(this);
             this.recyclerView.setAdapter(this.noteVisionAdapter);
+            this.appAnalyticsHelper = new AppAnalyticsHelper(this);
         }
         //Adicionar o ouvinte para excluir os arquivos registrados no {@link br.com.brolam.cloudvision.data.models.DeletedFiles}
         this.cloudVisionProvider.addListenerDeletedFiles(this.imagesHelper);
@@ -209,7 +212,7 @@ public class MainActivity extends ActivityHelper
     public void onClick(View view) {
         if (view.equals(this.fabAdd)) {
             NoteVisionActivity.newNoteVision(this, NOTE_VISION_REQUEST_COD);
-            //NoteVisionActivity.updateNoteVision(this, NOTE_VISON_REQUEST_COD, "-Kda2ezEKZ0C3qydkjat", "-Kda2ezH9bLL5EC_WDyr", "Realtime Database", "https://cloudvision-cdad2. firebaseio.com/\\n\\rl cloudvision-c4ad2: nuli\\n\\r", true );
+            this.appAnalyticsHelper.logNoteVisionAdd(TAG);
         }
     }
 
@@ -261,6 +264,7 @@ public class MainActivity extends ActivityHelper
                         Toast.makeText(this, R.string.note_vision_alert_background_image_in_processing, Toast.LENGTH_LONG).show();
                     } else {
                         this.imagesHelper.takeNoteVisionBackground(noteVisionKey);
+                        this.appAnalyticsHelper.logNoteVisionAddBackground(TAG);
                     }
                 } catch (IOException e) {
                     Log.e(TAG, e.getMessage());
@@ -270,9 +274,11 @@ public class MainActivity extends ActivityHelper
         } else if (id == R.id.note_vision_copy){
             ClipboardHelper clipboardHelper = new ClipboardHelper(this);
             clipboardHelper.noteVision(noteVision);
+            this.appAnalyticsHelper.logNoteVisionCopyToClipboard(TAG);
             Toast.makeText(this, R.string.note_vision_clipboard_copied, Toast.LENGTH_LONG).show();
         } else if (id == R.id.note_vision_share){
             ShareHelper.noteVision(this, noteVision);
+            this.appAnalyticsHelper.logNoteVisionShared(TAG);
         }
 
     }

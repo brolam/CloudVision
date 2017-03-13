@@ -72,6 +72,12 @@ dependencies {
     compile "com.google.firebase:firebase-storage:$PLAY_SERVICES_VERSION"
 
     /*
+      Firebase Analytics for Android https://firebase.google.com/docs/analytics
+      Análise do perfil dos usuários e utilização do aplicativo.
+     */
+    compile "com.google.firebase:firebase-core:$PLAY_SERVICES_VERSION"
+
+    /*
     FirebaseUI for Android https://github.com/firebase/FirebaseUI-Android
     Reutilizar UIs na integração com o Firebase.
      */

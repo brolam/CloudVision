@@ -47,6 +47,7 @@ import br.com.brolam.cloudvision.data.models.NoteVisionItem;
 import br.com.brolam.cloudvision.ui.adapters.NoteVisionDetailsAdapter;
 import br.com.brolam.cloudvision.ui.adapters.holders.NoteVisionDetailsHolder;
 import br.com.brolam.cloudvision.ui.helpers.ActivityHelper;
+import br.com.brolam.cloudvision.ui.helpers.AppAnalyticsHelper;
 import br.com.brolam.cloudvision.ui.helpers.ClipboardHelper;
 import br.com.brolam.cloudvision.ui.helpers.FormatHelper;
 import br.com.brolam.cloudvision.ui.helpers.ImagesHelper;
@@ -76,6 +77,7 @@ public class NoteVisionDetailsActivity extends ActivityHelper implements LoginHe
     CloudVisionProvider cloudVisionProvider;
     ImagesHelper imagesHelper;
     NoteVisionDetailsAdapter noteVisionDetailsAdapter;
+    AppAnalyticsHelper appAnalyticsHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -197,6 +199,7 @@ public class NoteVisionDetailsActivity extends ActivityHelper implements LoginHe
             );
             this.noteVisionDetailsAdapter.setINoteVisionDetailsAdapter(this);
             this.recyclerView.setAdapter(noteVisionDetailsAdapter);
+            this.appAnalyticsHelper = new AppAnalyticsHelper(this);
         }
         this.cloudVisionProvider.addListenerOneNoteVision(this.noteVisionKey, this);
     }
@@ -224,6 +227,7 @@ public class NoteVisionDetailsActivity extends ActivityHelper implements LoginHe
         switch (item.getItemId()) {
             case R.id.note_vision_share:
                 ShareHelper.noteVision(this, noteVision);
+                this.appAnalyticsHelper.logNoteVisionShared(TAG);
                 return true;
             case R.id.note_vision_background:
                 if (this.imagesHelper  != null){
@@ -233,6 +237,7 @@ public class NoteVisionDetailsActivity extends ActivityHelper implements LoginHe
                             Toast.makeText(this, R.string.note_vision_alert_background_image_in_processing, Toast.LENGTH_LONG).show();
                         } else {
                             this.imagesHelper.takeNoteVisionBackground(noteVisionKey);
+                            this.appAnalyticsHelper.logNoteVisionAddBackground(TAG);
                         }
                     } catch (IOException e) {
                         Log.e(TAG, e.getMessage());
@@ -243,6 +248,7 @@ public class NoteVisionDetailsActivity extends ActivityHelper implements LoginHe
             //Excluir um Note Vision.
             case R.id.note_vision_delete:
                 this.deleteNoteVision();
+                this.appAnalyticsHelper.logNoteVisionDeleted(TAG);
                 return true;
 
             default:
@@ -292,11 +298,13 @@ public class NoteVisionDetailsActivity extends ActivityHelper implements LoginHe
             case R.id.imageButtonCopy:
                 ClipboardHelper clipboardHelper = new ClipboardHelper(this);
                 clipboardHelper.noteVisionItem(noteVision, noteVisionItem);
+                this.appAnalyticsHelper.logNoteVisionCopyToClipboard(TAG);
                 Toast.makeText(this, R.string.note_vision_clipboard_copied, Toast.LENGTH_LONG).show();
                 return;
             //Compartilhar o Note Vision Item selelcionado com outros aplicativos.
             case R.id.imageButtonShared:
                 ShareHelper.noteVisionItem(this, noteVision, noteVisionItem);
+                this.appAnalyticsHelper.logNoteVisionShared(TAG);
                 return;
             //Excluir um Note Vsion Item selecionado.
             case R.id.imageButtonDelete:
@@ -348,6 +356,7 @@ public class NoteVisionDetailsActivity extends ActivityHelper implements LoginHe
                 if (cloudVisionProvider != null) {
                     cloudVisionProvider.removeListenerOneNoteVision(noteVisionKey, NoteVisionDetailsActivity.this);
                     cloudVisionProvider.deleteNoteVision(noteVisionKey);
+                    appAnalyticsHelper.logNoteVisionDeleted(TAG);
                     NoteVisionDetailsActivity.this.finish();
                 }
             }
