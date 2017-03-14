@@ -73,6 +73,19 @@ public class NoteVision {
         return result;
     }
 
+
+    public static HashMap<String, Object> getUpdateNoteVisionSummary(String userId, String noteVisionKey, String summary, long updated) {
+        HashMap<String, Object> result = new HashMap<>();
+        String noteVisionRootPath = String.format(NoteVision.USER_NOTE_VISION, userId, noteVisionKey);
+        String updatedPath = noteVisionRootPath + "/" + NoteVision.UPDATED;
+        String summaryPath = noteVisionRootPath + "/" + NoteVision.SUMMARY;
+        String priorityPath = noteVisionRootPath + "/" + NoteVision.PRIORITY;
+        result.put(updatedPath, updated);
+        result.put(summaryPath, summary);
+        result.put(priorityPath, Double.valueOf(updated));
+        return result;
+    }
+
     public static HashMap<String, Object> getUpdateNoteVisionBackground(String userId, String noteVisionKey, BackgroundOrigin backgroundOrigin) {
         HashMap<String, Object> result = new HashMap<>();
         String noteVisionRootPath = String.format(NoteVision.USER_NOTE_VISION, userId, noteVisionKey);

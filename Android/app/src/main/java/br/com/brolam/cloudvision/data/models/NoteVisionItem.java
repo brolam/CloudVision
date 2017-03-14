@@ -27,7 +27,7 @@ public class NoteVisionItem {
     //Origem
     public static final String PATH_NOTES_VISION_ITEMS =  "notesVisionItems";
     public static final String USER_NOTE_VISION_ITEMS =  "/" + PATH_NOTES_VISION_ITEMS + "/%s/%s/%s";
-    public static final String USER_NOTE_VISION_ITEMS_DELETE =  "/" + PATH_NOTES_VISION_ITEMS + "/%s/%s";
+    public static final String USER_NOTE_VISION_ITEMS_DELETE_ALL =  "/" + PATH_NOTES_VISION_ITEMS + "/%s/%s";
     //Campos
     public static final String CONTENT = "content";
     public static final String CREATED = "created";
@@ -49,9 +49,16 @@ public class NoteVisionItem {
         return result;
     }
 
-    public static HashMap<String, Object> getDelete(String userId, String noteVisionKey){
+    public static HashMap<String, Object> getDelete(String userId, String noteVisionKey, String noteVisionItemKey ){
         HashMap<String, Object> result = new HashMap<>();
-        String noteVisionItemsRootPath = String.format(USER_NOTE_VISION_ITEMS_DELETE, userId, noteVisionKey);
+        String noteVisionItemRootPath = String.format(USER_NOTE_VISION_ITEMS, userId, noteVisionKey, noteVisionItemKey);
+        result.put(noteVisionItemRootPath, null);
+        return result;
+    }
+
+    public static HashMap<String, Object> getDeleteAll(String userId, String noteVisionKey){
+        HashMap<String, Object> result = new HashMap<>();
+        String noteVisionItemsRootPath = String.format(USER_NOTE_VISION_ITEMS_DELETE_ALL, userId, noteVisionKey);
         result.put(noteVisionItemsRootPath, null);
         return result;
     }

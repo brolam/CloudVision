@@ -84,6 +84,8 @@ public class CloudVisionProvider {
             noteVisionItemKey = referenceNotesVisionItems.child(noteVisionKey).push().getKey();
             batchUpdates.put(String.format(NoteVisionItem.USER_NOTE_VISION_ITEMS, userId, noteVisionKey, noteVisionItemKey), NoteVisionItem.getNewNoteVisionItem(content, created.getTime()));
         } else {
+            //Atualizar o summary do Note Vision com a alteração do conteúdo do Note Vision Item.
+            batchUpdates.putAll(NoteVision.getUpdateNoteVisionSummary(userId, noteVisionKey, content, new Date().getTime()));
             batchUpdates.putAll(NoteVisionItem.getUpdateNoteVisionItem(this.userId, noteVisionKey, noteVisionItemKey, content));
         }
         database.getReference().updateChildren(batchUpdates);
@@ -141,13 +143,17 @@ public class CloudVisionProvider {
     }
 
     /**
-     * Excluir um Note Vision Item.
+     * Excluir um Note Vision Item e atualizar o summary do Note Vision.
      * @param noteVisionKey informar um chave válida
      * @param noteVisionItemKey informar um chave válida
      */
     public void deleteNoteVisionItem(String noteVisionKey, String noteVisionItemKey){
-        this.referenceNotesVisionItems.child(noteVisionKey).child(noteVisionItemKey).removeValue();
-
+        Map<String, Object> batchUpdates = new HashMap<>();
+        //Atualizar o summary do Note Vision
+        batchUpdates.putAll(NoteVision.getUpdateNoteVisionSummary(userId, noteVisionKey, "", new Date().getTime()));
+        //Excluir o Note Vision Item.
+        batchUpdates.putAll(NoteVisionItem.getDelete(userId, noteVisionKey, noteVisionItemKey));
+        this.database.getReference().updateChildren(batchUpdates);
     }
 
     /**
@@ -165,7 +171,7 @@ public class CloudVisionProvider {
         //registrar o arquivo deletado e excluir o Note Vision e seus itens em uma única transação.
         batchUpdates.put(String.format(DeletedFiles.USER_DELETED_FILES, userId, deletedFileKey), deletedFile );
         batchUpdates.putAll(NoteVision.getDelete(getUserId(), noteVisionKey));
-        batchUpdates.putAll(NoteVisionItem.getDelete(getUserId(), noteVisionKey));
+        batchUpdates.putAll(NoteVisionItem.getDeleteAll(getUserId(), noteVisionKey));
         this.database.getReference().updateChildren(batchUpdates);
     }
 
