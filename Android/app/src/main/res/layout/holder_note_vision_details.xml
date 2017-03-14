@@ -43,8 +43,8 @@
                 style="@style/ListItem.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/default_margin"
-                android:layout_marginRight="@dimen/default_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/default_margin"
                 tools:text="Tru, Mar 2, 2017, 12:20 PM" />
 
@@ -53,8 +53,8 @@
                 style="@style/ListItem.Content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/default_margin"
-                android:layout_marginRight="@dimen/default_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:maxLines="2"
                 android:paddingTop="@dimen/default_text_margin"
                 tools:text="XXXXX XXXX XXXXX XXXXXXX XXXXX XXXX XXXXXXXXX XXXXXXXXX XXXXXXXXX XXXXXXXX XXXXXXXXXX XXXXXXXX XXXXXXXX" />
@@ -64,8 +64,8 @@
                 style="@style/ListItem.Content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/default_margin"
-                android:layout_marginRight="@dimen/default_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:inputType="textMultiLine"
                 android:paddingTop="@dimen/default_text_margin"
                 android:visibility="gone" />
