@@ -81,28 +81,32 @@
                 style="@style/ListItem.ImageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/ic_on_keyboard_white" />
+                app:srcCompat="@drawable/ic_on_keyboard_white"
+                android:contentDescription="@string/talk_back_note_vision_item_edit"/>
 
             <ImageButton
                 android:id="@+id/imageButtonCopy"
                 style="@style/ListItem.ImageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/ic_copy_white" />
+                app:srcCompat="@drawable/ic_copy_white"
+                android:contentDescription="@string/talk_back_note_vision_item_copy"/>
 
             <ImageButton
                 android:id="@+id/imageButtonShared"
                 style="@style/ListItem.ImageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/ic_share_white" />
+                app:srcCompat="@drawable/ic_share_white"
+                android:contentDescription="@string/talk_back_note_vision_item_share"/>
 
             <ImageButton
                 android:id="@+id/imageButtonDelete"
                 style="@style/ListItem.ImageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/ic_delete_white" />
+                app:srcCompat="@drawable/ic_delete_white"
+                android:contentDescription="@string/talk_back_note_vision_item_delete"/>
 
         </LinearLayout>
 

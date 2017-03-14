@@ -66,6 +66,7 @@
         android:layout_margin="@dimen/fab_margin"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@drawable/ic_add_white" />
+        app:srcCompat="@drawable/ic_add_white"
+        android:contentDescription="@string/note_vision_add"/>
 
 </br.com.brolam.cloudvision.ui.helpers.CoordinatorLayoutHelper>

@@ -39,6 +39,7 @@
         android:layout_alignParentTop="true"
         android:clipToPadding="false"
         android:scrollbars="vertical"
-        tools:listitem="@layout/holder_note_vision" />
+        tools:listitem="@layout/holder_note_vision"
+        android:contentDescription="@string/talk_back_list_of_notes_vision"/>
 
 </RelativeLayout>

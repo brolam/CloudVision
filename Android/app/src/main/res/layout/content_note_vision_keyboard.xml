@@ -25,7 +25,8 @@
     android:id="@+id/contentNoteVisionKeyboard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="br.com.brolam.cloudvision.ui.NoteVisionActivity">
+    tools:context="br.com.brolam.cloudvision.ui.NoteVisionActivity"
+    android:contentDescription="@string/talk_back_keyboard_on">
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"

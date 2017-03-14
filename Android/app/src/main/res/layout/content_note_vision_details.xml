@@ -33,5 +33,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
-        tools:listitem="@layout/holder_note_vision_details" />
+        tools:listitem="@layout/holder_note_vision_details"
+        android:contentDescription="@string/talk_back_list_of_notes_vision_items"/>
 </br.com.brolam.cloudvision.ui.helpers.NestedScrollViewHelper>

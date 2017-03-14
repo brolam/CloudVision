@@ -31,7 +31,8 @@
     <br.com.brolam.cloudvision.ui.camera.CameraSourcePreview
         android:id="@+id/preview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <br.com.brolam.cloudvision.ui.camera.GraphicOverlay
             android:id="@+id/graphicOverlay"
@@ -52,7 +53,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/fab_margin"
             android:onClick="onClick"
-            app:srcCompat="@drawable/ic_on_flash_white" />
+            app:srcCompat="@drawable/ic_on_flash_white"
+            android:contentDescription="@string/talk_back_camera_flash_on"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabCameraPlayStop"
@@ -60,7 +62,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/fab_margin"
             android:onClick="onClick"
-            app:srcCompat="@drawable/ic_pause_camera_white" />
+            app:srcCompat="@drawable/ic_pause_camera_white"
+            android:contentDescription="@string/talk_back_camera_pause"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabAdd"
@@ -68,7 +71,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/fab_margin"
             android:onClick="onClick"
-            app:srcCompat="@drawable/ic_add_white" />
+            app:srcCompat="@drawable/ic_add_white"
+            android:contentDescription="@string/note_vision_add"/>
     </LinearLayout>
 
 </RelativeLayout>

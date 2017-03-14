@@ -475,6 +475,7 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
                 this.setLockScreenOrientation(false);
                 mPreview.start(mCameraSource, mGraphicOverlay);
                 this.fabCameraPlayStop.setImageResource(R.drawable.ic_pause_camera_white);
+                this.fabCameraPlayStop.setContentDescription(getString(R.string.talk_back_camera_pause));
                 this.fabFlashOnOff.setVisibility(View.VISIBLE);
             } catch (IOException e) {
                 Log.e(TAG, "Unable to start camera source.", e);
@@ -509,6 +510,7 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
             } else {
                 mPreview.stop();
                 this.fabCameraPlayStop.setImageResource(R.drawable.ic_play_camera_white);
+                this.fabCameraPlayStop.setContentDescription(getString(R.string.talk_back_camera_play));
                 this.fabFlashOnOff.setVisibility(View.INVISIBLE);
                 this.setLockScreenOrientation(true);
 
@@ -526,10 +528,12 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
         if ( flashOn){
             this.mCameraSource.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
             this.fabFlashOnOff.setImageResource(R.drawable.ic_off_flash_white);
+            this.fabFlashOnOff.setContentDescription(getString(R.string.talk_back_camera_flash_off));
             this.useFlash = true;
         } else {
             this.mCameraSource.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
             this.fabFlashOnOff.setImageResource(R.drawable.ic_on_flash_white);
+            this.fabFlashOnOff.setContentDescription(getString(R.string.talk_back_camera_flash_on));
             this.useFlash = false;
         }
     }

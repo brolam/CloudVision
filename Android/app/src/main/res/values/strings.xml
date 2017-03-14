@@ -40,7 +40,7 @@
     <string name="note_vision_share">Share</string>
     <string name="note_vision_copy">Copy</string>
     <string name="note_vision_background">Background</string>
-    <string name="note_vision_add">Add</string>
+    <string name="note_vision_add">Add Note Vision</string>
     <string name="note_vision_search">Search</string>
     <string name="note_vision_search_hint">title</string>
     <string name="note_vision_alert_background_image_in_processing">There is a background image in processing.</string>
@@ -57,4 +57,19 @@
 
     <!--Note Vision Widgets!-->
     <string name="note_vision_widget_empty">Notes Vision could not be recovered</string>
+
+    <!--TalkBack Strings!-->
+    <string name="talk_back_list_of_notes_vision">List of notes vision</string>
+    <string name="talk_back_list_of_notes_vision_items">List of notes vision Items</string>
+    <string name="talk_back_camera_preview">Camera preview</string>
+    <string name="talk_back_camera_flash_on">Turn on the flash</string>
+    <string name="talk_back_camera_flash_off">Turn off the flash</string>
+    <string name="talk_back_camera_play">Turn on the play</string>
+    <string name="talk_back_camera_pause">Turn on the pause</string>
+    <string name="talk_back_keyboard_on">Keyboard Enabled</string>
+    <string name="talk_back_note_vision_item_edit">Edit note</string>
+    <string name="talk_back_note_vision_item_copy">Copy note</string>
+    <string name="talk_back_note_vision_item_share">Share note</string>
+    <string name="talk_back_note_vision_item_delete">Delete note</string>
+
 </resources>
