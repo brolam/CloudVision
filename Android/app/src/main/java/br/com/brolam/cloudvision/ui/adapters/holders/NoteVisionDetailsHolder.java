@@ -18,6 +18,7 @@ package br.com.brolam.cloudvision.ui.adapters.holders;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.HashMap;
@@ -33,6 +34,7 @@ import br.com.brolam.cloudvision.ui.helpers.FormatHelper;
  */
 public class NoteVisionDetailsHolder extends RecyclerView.ViewHolder {
 
+    HorizontalScrollView horizontalScrollView;
     LinearLayout linearLayoutContent;
     TextView textViewCreated;
     TextView textViewContent;
@@ -41,6 +43,7 @@ public class NoteVisionDetailsHolder extends RecyclerView.ViewHolder {
 
     public NoteVisionDetailsHolder(View itemView) {
         super(itemView);
+        this.horizontalScrollView = (HorizontalScrollView) this.itemView.findViewById(R.id.horizontalScrollView);
         this.linearLayoutContent = (LinearLayout) this.itemView.findViewById(R.id.linearLayoutContent);
         this.textViewCreated = (TextView) this.itemView.findViewById(R.id.textViewCreated);
         this.textViewContent = (TextView) this.itemView.findViewById(R.id.textViewContent);
@@ -61,6 +64,8 @@ public class NoteVisionDetailsHolder extends RecyclerView.ViewHolder {
         this.textViewContent.setText(FormatHelper.getTextInOneLine(NoteVisionItem.getContent(noteVisionItem)));
         this.linearLayoutContent.getLayoutParams().width = linearLayoutContentWidth;
         setExpand(false);
+        this.horizontalScrollView.fullScroll(View.FOCUS_LEFT);
+
     }
 
     public void setImagesButtonOnClickListener(View.OnClickListener onClickListener){
@@ -68,6 +73,7 @@ public class NoteVisionDetailsHolder extends RecyclerView.ViewHolder {
         this.itemView.findViewById(R.id.imageButtonCopy).setOnClickListener(onClickListener);
         this.itemView.findViewById(R.id.imageButtonShared).setOnClickListener(onClickListener);
         this.itemView.findViewById(R.id.imageButtonDelete).setOnClickListener(onClickListener);
+        this.horizontalScrollView.fullScroll(View.FOCUS_LEFT);
     }
 
     /**
