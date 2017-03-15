@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -86,6 +87,13 @@ public class NoteVisionDetailsActivity extends ActivityHelper implements LoginHe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         this.recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         setSupportActionBar(toolbar);
+        // Show the Up button in the action bar.
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowTitleEnabled(true);
+        }
+
         this.linearLayoutManager = new LinearLayoutManager(this);
         this.linearLayoutManager.setReverseLayout(true);
         this.linearLayoutManager.setStackFromEnd(true);
@@ -152,12 +160,13 @@ public class NoteVisionDetailsActivity extends ActivityHelper implements LoginHe
      * Atualizar o cabeçalho com informações do Note Vision.
      */
     private void setHeader() {
-        this.setTitle(NoteVision.getTitle(this.noteVision));
-        TextView textViewCreated = (TextView) this.findViewById(R.id.textViewCreated);
-        ImageView imageViewBackground = (ImageView) this.findViewById(R.id.imageViewBackground);
-        if (textViewCreated != null) {
-            textViewCreated.setText(FormatHelper.getDateCreated(this, NoteVision.getCreated(this.noteVision)));
+        //this.setTitle(NoteVision.getTitle(this.noteVision));
+        ActionBar actionBar = this.getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(NoteVision.getTitle(this.noteVision));
+            actionBar.setSubtitle(FormatHelper.getDateCreated(this, NoteVision.getCreated(this.noteVision)));
         }
+        ImageView imageViewBackground = (ImageView) this.findViewById(R.id.imageViewBackground);
         if ((this.imagesHelper != null) && (imageViewBackground != null)) {
             this.imagesHelper.loadNoteVisionBackground(this.noteVisionKey, this.noteVision, imageViewBackground);
         }
@@ -238,6 +247,9 @@ public class NoteVisionDetailsActivity extends ActivityHelper implements LoginHe
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.note_vision_share:
                 ShareHelper.noteVision(this, noteVision);
                 this.appAnalyticsHelper.logNoteVisionShared(TAG);
@@ -389,7 +401,5 @@ public class NoteVisionDetailsActivity extends ActivityHelper implements LoginHe
             this.recyclerView.getLayoutManager().scrollToPosition(itemPosition);
             clearItemSelectedKey();
         }
-
-
     }
 }

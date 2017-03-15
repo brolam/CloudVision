@@ -232,7 +232,7 @@ public class MainActivity extends ActivityHelper
                 this.imagesHelper.onActivityResult(requestCode, resultCode, data);
             }
             String noteVisionKey = data != null ? data.getStringExtra(NoteVisionActivity.NOTE_VISION_KEY) : null;
-            super.setItemSelectedKey(noteVisionKey);
+            setItemSelectedKey(noteVisionKey);
         }
     }
 
@@ -243,6 +243,7 @@ public class MainActivity extends ActivityHelper
      */
     @Override
     public void onNoteVisionSelect(String noteVisionKey, HashMap noteVision) {
+        setItemSelectedKey(noteVisionKey);
         NoteVisionDetailsActivity.show(this, NOTE_VISION_DETAILS_REQUEST_COD, noteVisionKey, noteVision);
     }
 
