@@ -130,4 +130,13 @@ public class NoteVisionAdapter extends FirebaseRecyclerAdapter<HashMap, NoteVisi
             iNoteVisionAdapter.restoreViewState();
         }
     }
+
+    public int getItemPosition(String noteVisionKey){
+        for(int position = 0; position < getItemCount(); position++ ){
+            if(noteVisionKey.equals(getRef(position).getKey())){
+                return position;
+            }
+        }
+        return -1;
+    }
 }

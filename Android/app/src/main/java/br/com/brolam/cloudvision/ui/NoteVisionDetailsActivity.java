@@ -164,6 +164,19 @@ public class NoteVisionDetailsActivity extends ActivityHelper implements LoginHe
     }
 
     @Override
+    public void onBackPressed() {
+
+        if ( this.noteVisionKey != null){
+            Intent data = new Intent();
+            data.putExtra(NOTE_VISION_KEY, this.noteVisionKey);
+            setResult(0,data);
+            this.finish();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         this.loginHelper.begin();
@@ -271,6 +284,8 @@ public class NoteVisionDetailsActivity extends ActivityHelper implements LoginHe
             if (this.imagesHelper != null) {
                 this.imagesHelper.onActivityResult(requestCode, resultCode, data);
             }
+            String noteVisionItemKey = data != null ? data.getStringExtra(NoteVisionActivity.NOTE_VISION_ITEM_KEY) : null;
+            setItemSelectedKey(noteVisionItemKey);
         }
     }
 
@@ -369,6 +384,12 @@ public class NoteVisionDetailsActivity extends ActivityHelper implements LoginHe
         super.restoreCoordinatorLayoutHelperViewState();
         super.restoreNestedScrollHelperViewState();
         super.restoreRecyclerViewState();
+        if (getItemSelectedKey() != null) {
+            int itemPosition = this.noteVisionDetailsAdapter.getItemPosition(getItemSelectedKey());
+            this.recyclerView.getLayoutManager().scrollToPosition(itemPosition);
+            clearItemSelectedKey();
+        }
+
 
     }
 }

@@ -231,6 +231,8 @@ public class MainActivity extends ActivityHelper
             if (this.imagesHelper != null) {
                 this.imagesHelper.onActivityResult(requestCode, resultCode, data);
             }
+            String noteVisionKey = data != null ? data.getStringExtra(NoteVisionActivity.NOTE_VISION_KEY) : null;
+            super.setItemSelectedKey(noteVisionKey);
         }
     }
 
@@ -307,6 +309,11 @@ public class MainActivity extends ActivityHelper
     @Override
     public void restoreViewState() {
         super.restoreRecyclerViewState();
+        if ( getItemSelectedKey() != null) {
+            int itemPosition = this.noteVisionAdapter.getItemPosition(getItemSelectedKey());
+            this.recyclerView.getLayoutManager().scrollToPosition(itemPosition);
+            clearItemSelectedKey();
+        }
     }
 
 }

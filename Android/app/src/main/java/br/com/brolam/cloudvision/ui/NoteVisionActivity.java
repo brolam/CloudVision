@@ -56,6 +56,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 
 import br.com.brolam.cloudvision.R;
 import br.com.brolam.cloudvision.data.CloudVisionProvider;
@@ -204,6 +205,18 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
         outState.putString(NOTE_VISION_ITEM_KEY, this.noteVisionItemKey);
         outState.putString(NoteVision.TITLE, editTextTitle.getText().toString());
         outState.putString(NoteVisionItem.CONTENT, editTextContent.getText().toString());
+    }
+
+    @Override
+    public void onBackPressed() {
+        if ( this.noteVisionKey != null){
+            Intent data = new Intent();
+            data.putExtra(NOTE_VISION_KEY, this.noteVisionKey);
+            setResult(0,data);
+            this.finish();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     /**
@@ -607,13 +620,14 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
     }
 
     /**
-     * Atribuir os blocos de textos selecionados ao editTextContent.
+     * Novo Note Vision Item.
      */
-    private void cleanNoteVisionContent() {
+    private void newNoteVisionContent() {
         for (OcrGraphic graphic : mGraphicOverlay.getOrcGraphics()) {
             graphic.setSelected(false);
         }
         this.editTextContent.setText("");
+        this.noteVisionItemKey = null;
         showOrHideFabAdd();
     }
 
@@ -664,12 +678,15 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
 
         //Salvar o Note Vision / Item e também atualizar a chave do Note Vision,
         //para que as próximas inclusões dos itens sejam no mesmo Note Vision.
-        this.noteVisionKey = this.cloudVisionProvider.setNoteVision(
+        HashMap<String, String> keys = this.cloudVisionProvider.setNoteVision(
                 this.noteVisionKey,
                 title,
                 this.noteVisionItemKey,
                 content,
                 dateNow);
+        this.noteVisionKey = keys.get(NOTE_VISION_KEY);
+        this.noteVisionItemKey = keys.get(NOTE_VISION_ITEM_KEY);
+
         if (newNoteVision) this.appAnalyticsHelper.logNoteVisionAdded(TAG);
         //Solicitar a atualização do Widget.
         NoteVisionSummaryWidget.notifyWidgetUpdate(this);
@@ -682,7 +699,7 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
             this.finish();
         } else {
             //Limpar a tela para a inclusão de novos itens.
-            cleanNoteVisionContent();
+            newNoteVisionContent();
         }
     }
 
@@ -725,7 +742,7 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
         int id = item.getItemId();
 
         if (id == android.R.id.home) {
-           navigateUpTo(new Intent(this, MainActivity.class));
+           onBackPressed();
             return true;
         } else if (id == R.id.note_vision_keyboard_or_camera) {
             keyboardOnOff(null);

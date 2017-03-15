@@ -68,10 +68,11 @@ public class CloudVisionProvider {
      * @param noteVisionItemKey informar null para inclusão ou uma chave válida para atualização.
      * @param content           informar um conteúdo válido.
      * @param created           informar a data de inclusão do NoteVision e o conteúdo.
-     * @return retornar com a chave do NoteVision.
+     * @return retornar com as chaves do NoteVision e NoteVisionItem.
      */
-    public String setNoteVision(String noteVisionKey, String title, String noteVisionItemKey, String content, Date created) {
+    public HashMap<String, String> setNoteVision(String noteVisionKey, String title, String noteVisionItemKey, String content, Date created) {
         Map<String, Object> batchUpdates = new HashMap<>();
+        HashMap<String, String> keys = new HashMap<>();
 
         if (noteVisionKey == null) {
             noteVisionKey = referenceNotesVision.push().getKey();
@@ -89,7 +90,9 @@ public class CloudVisionProvider {
             batchUpdates.putAll(NoteVisionItem.getUpdateNoteVisionItem(this.userId, noteVisionKey, noteVisionItemKey, content));
         }
         database.getReference().updateChildren(batchUpdates);
-        return noteVisionKey;
+        keys.put("noteVisionKey",noteVisionKey);
+        keys.put("noteVisionItemKey",noteVisionItemKey);
+        return keys;
     }
 
     /**

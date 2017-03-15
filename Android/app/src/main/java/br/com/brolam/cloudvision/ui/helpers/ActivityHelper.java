@@ -35,6 +35,22 @@ public class ActivityHelper extends AppCompatActivity {
     private Parcelable coordinatorLayoutHelperViewState = null;
     private Parcelable nestedScrollHelperViewState = null;
 
+    //Registar a chave do item na lista principal da atividade que deve ser
+    //selecionado quando a atividade for recriada.
+    private String itemSelectedKey;
+
+    public String getItemSelectedKey() {
+        return itemSelectedKey;
+    }
+
+    public void setItemSelectedKey(String itemSelectedKey) {
+        this.itemSelectedKey = itemSelectedKey;
+    }
+
+    public void clearItemSelectedKey(){
+        setItemSelectedKey(null);
+    }
+
     /**
      * Salvar o state view do RecyclerView principal da atividade.
      * @param outState informar um Bundle válido.
