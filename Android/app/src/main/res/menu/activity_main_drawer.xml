@@ -25,6 +25,22 @@
             android:icon="@drawable/ic_note_vision_black"
             android:title="@string/nav_notes_vision" />
     </group>
+
+    <group
+        android:id="@+id/menu_ai_nodels"
+        android:checkableBehavior="none"
+        >
+        <item
+            android:id="@+id/nav_ai_inputs"
+            android:icon="@drawable/ic_input_model_black"
+            android:title="@string/nav_inputs_model" />
+
+        <item
+            android:id="@+id/nav_ai_analysis"
+            android:icon="@drawable/ic_analysis_model_black"
+            android:title="@string/nav_analysis_model" />
+    </group>
+
     <group
         android:id="@+id/menu_bottom"
         android:checkableBehavior="none">
