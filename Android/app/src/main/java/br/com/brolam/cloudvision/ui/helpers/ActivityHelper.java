@@ -15,10 +15,17 @@
  */
 package br.com.brolam.cloudvision.ui.helpers;
 
+import android.Manifest;
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
+
 import br.com.brolam.cloudvision.R;
 
 /**
@@ -28,6 +35,13 @@ import br.com.brolam.cloudvision.R;
  * @since Release 01
  */
 public class ActivityHelper extends AppCompatActivity {
+    // Intent request code to handle updating play services if needed.
+    public static final int RC_HANDLE_GMS = 9001;
+
+    // Permission request codes need to be < 256
+    public static final int RC_HANDLE_CAMERA_PERM = 2;
+
+
     private static final String RECYCLER_VIEW_STATE = "recycler_view_state";
     private static final String COORDINATOR_LAYOUT_HELPER_VIEW_STATE = "CoordinatorLayoutHelperViewState";
     private static final String NESTED_SCROLL_HELPER_VIEW_STATE = "nested_scroll_helper_view_state";
@@ -141,5 +155,36 @@ public class ActivityHelper extends AppCompatActivity {
             nestedScrollViewHelper.restoreInstanceState(this.coordinatorLayoutHelperViewState);
             this.coordinatorLayoutHelperViewState = null;
         }
+    }
+
+    /**
+     * Handles the requesting of the camera permission.  This includes
+     * showing a "Snackbar" message of why the permission is needed then
+     * sending the request.
+     */
+    public static void requestCameraPermission(String tag, final Activity activity, View view) {
+        Log.w(tag, "Camera permission is not granted. Requesting permission");
+
+        final String[] permissions = new String[]{Manifest.permission.CAMERA};
+
+        if (!ActivityCompat.shouldShowRequestPermissionRationale(activity,
+                Manifest.permission.CAMERA)) {
+            ActivityCompat.requestPermissions(activity, permissions, RC_HANDLE_CAMERA_PERM);
+            return;
+        }
+
+
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ActivityCompat.requestPermissions(activity, permissions,
+                        RC_HANDLE_CAMERA_PERM);
+            }
+        };
+
+        Snackbar.make(view, R.string.permission_camera_rationale,
+                Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.ok, listener)
+                .show();
     }
 }

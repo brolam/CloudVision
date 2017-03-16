@@ -15,13 +15,16 @@
  */
 package br.com.brolam.cloudvision.ui;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -255,20 +258,7 @@ public class NoteVisionDetailsActivity extends ActivityHelper implements LoginHe
                 this.appAnalyticsHelper.logNoteVisionShared(TAG);
                 return true;
             case R.id.note_vision_background:
-                if (this.imagesHelper  != null){
-                    try {
-                        NoteVision.BackgroundOrigin backgroundOrigin = NoteVision.getBackground(noteVision);
-                        if ( backgroundOrigin == NoteVision.BackgroundOrigin.LOCAL) {
-                            Toast.makeText(this, R.string.note_vision_alert_background_image_in_processing, Toast.LENGTH_LONG).show();
-                        } else {
-                            this.imagesHelper.takeNoteVisionBackground(noteVisionKey);
-                            this.appAnalyticsHelper.logNoteVisionAddBackground(TAG);
-                        }
-                    } catch (IOException e) {
-                        Log.e(TAG, e.getMessage());
-                        Toast.makeText(this, String.format(getString(R.string.main_activity_request_error),ImagesHelper.REQUEST_IMAGE_CAPTURE), Toast.LENGTH_LONG).show();
-                    }
-                }
+                addNoteVisionBackground(noteVisionKey, noteVision);
                 return true;
             //Excluir um Note Vision.
             case R.id.note_vision_delete:
@@ -365,6 +355,39 @@ public class NoteVisionDetailsActivity extends ActivityHelper implements LoginHe
             }
         });
         snackbar.show();
+    }
+
+
+    /**
+     * Adicionar a imagem de background ao NotVision e também verificar a permissão a câmera
+     * fotográfica.
+     * @param noteVisionKey informar uma chave válida
+     * @param noteVision informar um NoteVision válido.
+     */
+    private void addNoteVisionBackground(String noteVisionKey, HashMap noteVision){
+        // Check for the camera permission before accessing the camera.  If the
+        // permission is not granted yet, request permission.
+        int rc = ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+        if (rc == PackageManager.PERMISSION_GRANTED) {
+            if (this.imagesHelper  != null){
+                try {
+                    NoteVision.BackgroundOrigin backgroundOrigin = NoteVision.getBackground(noteVision);
+                    if ( backgroundOrigin == NoteVision.BackgroundOrigin.LOCAL) {
+                        Toast.makeText(this, R.string.note_vision_alert_background_image_in_processing, Toast.LENGTH_LONG).show();
+                    } else {
+                        this.imagesHelper.takeNoteVisionBackground(noteVisionKey);
+                        this.appAnalyticsHelper.logNoteVisionAddBackground(TAG);
+                    }
+                } catch (IOException e) {
+                    Log.e(TAG, e.getMessage());
+                    Toast.makeText(this, String.format(getString(R.string.main_activity_request_error),ImagesHelper.REQUEST_IMAGE_CAPTURE), Toast.LENGTH_LONG).show();
+                }
+            }
+
+        } else {
+            ActivityHelper.requestCameraPermission(TAG, this, fab);
+        }
+
     }
 
     /**

@@ -65,6 +65,7 @@ import br.com.brolam.cloudvision.data.models.NoteVisionItem;
 import br.com.brolam.cloudvision.ui.camera.CameraSource;
 import br.com.brolam.cloudvision.ui.camera.CameraSourcePreview;
 import br.com.brolam.cloudvision.ui.camera.GraphicOverlay;
+import br.com.brolam.cloudvision.ui.helpers.ActivityHelper;
 import br.com.brolam.cloudvision.ui.helpers.AppAnalyticsHelper;
 import br.com.brolam.cloudvision.ui.helpers.LoginHelper;
 import br.com.brolam.cloudvision.ui.vision.OcrDetectorProcessor;
@@ -81,12 +82,6 @@ import br.com.brolam.cloudvision.ui.widgets.NoteVisionSummaryWidget;
  */
 public class NoteVisionActivity extends AppCompatActivity implements View.OnClickListener, LoginHelper.ILoginHelper {
     private static final String TAG = "NoteVisionActivity";
-
-    // Intent request code to handle updating play services if needed.
-    private static final int RC_HANDLE_GMS = 9001;
-
-    // Permission request codes need to be < 256
-    private static final int RC_HANDLE_CAMERA_PERM = 2;
 
     public static final String USE_FLASH = "useFlash";
     private boolean useFlash;
@@ -151,7 +146,7 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
         if (rc == PackageManager.PERMISSION_GRANTED) {
             createCameraSource();
         } else {
-            requestCameraPermission();
+            ActivityHelper.requestCameraPermission(TAG, this, mGraphicOverlay);
         }
 
         gestureDetector = new GestureDetector(this, new CaptureGestureListener());
@@ -271,38 +266,6 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
         //Atualizar o menu quando a tela for reconstruida.
         setMenuItemNoteVisionKeyboardOrCamera(this.onKeyboard);
         return true;
-    }
-
-    /**
-     * Handles the requesting of the camera permission.  This includes
-     * showing a "Snackbar" message of why the permission is needed then
-     * sending the request.
-     */
-    private void requestCameraPermission() {
-        Log.w(TAG, "Camera permission is not granted. Requesting permission");
-
-        final String[] permissions = new String[]{Manifest.permission.CAMERA};
-
-        if (!ActivityCompat.shouldShowRequestPermissionRationale(this,
-                Manifest.permission.CAMERA)) {
-            ActivityCompat.requestPermissions(this, permissions, RC_HANDLE_CAMERA_PERM);
-            return;
-        }
-
-        final Activity thisActivity = this;
-
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ActivityCompat.requestPermissions(thisActivity, permissions,
-                        RC_HANDLE_CAMERA_PERM);
-            }
-        };
-
-        Snackbar.make(mGraphicOverlay, R.string.permission_camera_rationale,
-                Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.ok, listener)
-                .show();
     }
 
     @Override
@@ -439,7 +402,7 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-        if (requestCode != RC_HANDLE_CAMERA_PERM) {
+        if (requestCode != ActivityHelper.RC_HANDLE_CAMERA_PERM) {
             Log.d(TAG, "Got unexpected permission result: " + requestCode);
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
             return;
@@ -462,7 +425,7 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
         };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Multitracker sample")
+        builder.setTitle(R.string.app_name)
                 .setMessage(R.string.no_camera_permission)
                 .setPositiveButton(R.string.ok, listener)
                 .show();
@@ -479,7 +442,7 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
                 getApplicationContext());
         if (code != ConnectionResult.SUCCESS) {
             Dialog dlg =
-                    GoogleApiAvailability.getInstance().getErrorDialog(this, code, RC_HANDLE_GMS);
+                    GoogleApiAvailability.getInstance().getErrorDialog(this, code, ActivityHelper.RC_HANDLE_GMS);
             dlg.show();
         }
 
