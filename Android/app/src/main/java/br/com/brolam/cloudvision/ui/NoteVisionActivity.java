@@ -209,6 +209,7 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onBackPressed() {
+        this.setLockScreenOrientation(false);
         if ( this.noteVisionKey != null){
             Intent data = new Intent();
             data.putExtra(NOTE_VISION_KEY, this.noteVisionKey);
@@ -696,6 +697,7 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
             intent.putExtra(NOTE_VISION_KEY, this.noteVisionKey);
             intent.putExtra(NOTE_VISION_ITEM_KEY, this.noteVisionItemKey);
             setResult(Activity.RESULT_OK, intent);
+            this.setLockScreenOrientation(false);
             this.finish();
         } else {
             //Limpar a tela para a inclusão de novos itens.
@@ -830,26 +832,10 @@ public class NoteVisionActivity extends AppCompatActivity implements View.OnClic
 
     /**
      * Bloquear a rotação da tela,
-     * Origem do código: http://stackoverflow.com/a/41812971
      * @param lock
      */
     protected void setLockScreenOrientation(boolean lock) {
         setRequestedOrientation(lock?ActivityInfo.SCREEN_ORIENTATION_LOCKED:ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
-        if (Build.VERSION.SDK_INT >= 18) {
-            setRequestedOrientation(lock?ActivityInfo.SCREEN_ORIENTATION_LOCKED:ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
-            return;
-        }
-
-
-        if (lock) {
-            switch (getWindowManager().getDefaultDisplay().getRotation()) {
-                case 0: setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); break; // value 1
-                case 2: setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT); break; // value 9
-                case 1: setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE); break; // value 0
-                case 3: setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE); break; // value 8
-            }
-        } else
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR); // value 10
     }
 
     /**
