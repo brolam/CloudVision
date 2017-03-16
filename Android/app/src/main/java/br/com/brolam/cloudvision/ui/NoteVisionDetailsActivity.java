@@ -286,8 +286,13 @@ public class NoteVisionDetailsActivity extends ActivityHelper implements LoginHe
             if (this.imagesHelper != null) {
                 this.imagesHelper.onActivityResult(requestCode, resultCode, data);
             }
-            String noteVisionItemKey = data != null ? data.getStringExtra(NoteVisionActivity.NOTE_VISION_ITEM_KEY) : null;
-            setItemSelectedKey(noteVisionItemKey);
+
+            if (( data != null) && (data.hasExtra(NoteVisionActivity.NOTE_VISION_ITEM_KEY))) {
+                String noteVisionItemKey =  data.getStringExtra(NoteVisionActivity.NOTE_VISION_ITEM_KEY);
+                setItemSelectedKey(noteVisionItemKey);
+            }
+
+
         }
     }
 

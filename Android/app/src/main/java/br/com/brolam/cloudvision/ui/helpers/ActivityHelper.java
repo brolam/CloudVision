@@ -19,6 +19,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.os.PersistableBundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -51,6 +52,7 @@ public class ActivityHelper extends AppCompatActivity {
 
     //Registar a chave do item na lista principal da atividade que deve ser
     //selecionado quando a atividade for recriada.
+    private static String ITEM_SELECTED_KEY = "itemSelectedKey";
     private String itemSelectedKey;
 
     public String getItemSelectedKey() {
@@ -98,6 +100,15 @@ public class ActivityHelper extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if ( getItemSelectedKey() != null){
+            outState.putString(ITEM_SELECTED_KEY, getItemSelectedKey());
+        }
+
+    }
+
     /**
      * Recupear os states view somente dos state view salvos.
      * @param savedInstanceState
@@ -116,6 +127,10 @@ public class ActivityHelper extends AppCompatActivity {
 
         if (savedInstanceState.containsKey(NESTED_SCROLL_HELPER_VIEW_STATE)) {
             this.nestedScrollHelperViewState = savedInstanceState.getParcelable(NESTED_SCROLL_HELPER_VIEW_STATE);
+        }
+
+        if ( savedInstanceState.containsKey(ITEM_SELECTED_KEY)){
+            setItemSelectedKey(savedInstanceState.getString(ITEM_SELECTED_KEY));
         }
     }
 

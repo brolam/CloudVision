@@ -237,8 +237,11 @@ public class MainActivity extends ActivityHelper
             if (this.imagesHelper != null) {
                 this.imagesHelper.onActivityResult(requestCode, resultCode, data);
             }
-            String noteVisionKey = data != null ? data.getStringExtra(NoteVisionActivity.NOTE_VISION_KEY) : null;
-            setItemSelectedKey(noteVisionKey);
+
+            if (( data != null) && (data.hasExtra(NoteVisionActivity.NOTE_VISION_KEY))) {
+                String noteVisionKey = data.getStringExtra(NoteVisionActivity.NOTE_VISION_KEY);
+                setItemSelectedKey(noteVisionKey);
+            }
         }
     }
 
