@@ -10,9 +10,8 @@ Capturar blocos de texto utilizando a câmera fotográfica do smartphone que ser
 ## Demonstração
 [![Demonstração](http://img.youtube.com/vi/QrG-vEyAgKQ/0.jpg)](http://www.youtube.com/watch?v=QrG-vEyAgKQ)
 
-
 ## Instalação do aplicativo 
-- Android - [baixar](https://raw.githubusercontent.com/brolam/Capstone-Project/master/CloudVision.apk) e executar o apk em um smartphone ou tablet. 
+- Android - [baixar](https://raw.githubusercontent.com/brolam/Capstone-Project/master/capstone.apk) e executar o apk em um smartphone ou tablet. 
 ## Configurando o ambiente de desenvolvimento
 - Realizar o download do projeto https://github.com/brolam/Capstone-Project.git ;
 - Criar um aplicativo no [Firebase Console](https://console.firebase.google.com/);
@@ -64,7 +63,6 @@ service firebase.storage {
   }
 }
 ```
-
 ## Contribuicões 
 Cloud Vision é um projeto acadêmico desenvolvido no curso [Nanodegree Desenvolvedor Android](https://br.udacity.com/course/android-developer-nanodegree--nd801/) da [Udacity](https://br.udacity.com/) com o objetivo de desenvolver o conhecimento técnico nos assuntos abaixo:
 - Desenvolvimento de aplicativo para a plataforma Android;

@@ -1,0 +1,2 @@
+Key store password : capstone.pw
+Key alias: capstone.key 
