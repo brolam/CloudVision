@@ -33,10 +33,11 @@
 
     <ImageView
         android:id="@+id/imageViewUserPhoto"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="@dimen/picture_user_size"
+        android:layout_height="@dimen/picture_user_size"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@drawable/ic_user_white" />
+        app:srcCompat="@drawable/ic_user_white"
+        android:contentDescription="@string/talk_your_picture"/>
 
     <TextView
         android:id="@+id/textViewUserName"

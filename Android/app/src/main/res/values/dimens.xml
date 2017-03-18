@@ -29,6 +29,7 @@
     <dimen name="default_text_margin">8dp</dimen>
     <dimen name="list_item_image_button_paddingLeft">16dp</dimen>
     <dimen name="list_item_image_button_paddingRight">16dp</dimen>
+    <dimen name="picture_user_size">60dp</dimen>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
      - Cartões Notes Vision                                                             -
