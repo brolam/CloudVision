@@ -75,4 +75,5 @@
     <string name="talk_back_note_vision_item_share">Share note</string>
     <string name="talk_back_note_vision_item_delete">Delete note</string>
     <string name="talk_your_picture">Your picture</string>
+    <string name="talk_background_image">Note Vision background image</string>
 </resources>
