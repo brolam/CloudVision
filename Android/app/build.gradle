@@ -14,6 +14,14 @@ repositories {
 }
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'Capstone'
+            keyPassword 'capstone.key'
+            storeFile file('capstone.jks')
+            storePassword 'capstone.pw'
+        }
+    }
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
@@ -23,11 +31,13 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
     packagingOptions {
@@ -35,54 +45,50 @@ android {
         exclude 'META-INF/LICENSE-FIREBASE.txt'
         exclude 'META-INF/NOTICE'
     }
+    productFlavors {
+    }
 }
 
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.0.2'
     compile 'com.android.support:design:25.0.2'
     testCompile 'junit:junit:4.12'
-
     /*
-     Mobile Vision API https://developers.google.com/vision/introduction
-     Escanear blocos de texto nas imagens capturadas através da câmera fotográfica
-     do smartphone ou tablet.
-    */
+             Mobile Vision API https://developers.google.com/vision/introduction
+             Escanear blocos de texto nas imagens capturadas através da câmera fotográfica
+             do smartphone ou tablet.
+            */
     compile "com.google.android.gms:play-services-vision:$PLAY_SERVICES_VERSION"
-
     /*
-    Firebase Authentication https://firebase.google.com/docs/auth/
-     Realizar a autenticação do aplicativo em uma conta de usuário da Google ou E-mail.
-     */
+            Firebase Authentication https://firebase.google.com/docs/auth/
+             Realizar a autenticação do aplicativo em uma conta de usuário da Google ou E-mail.
+             */
     compile "com.google.firebase:firebase-auth:$PLAY_SERVICES_VERSION"
-
     /*
-    Firebase Realtime Database https://firebase.google.com/docs/database/
-    Armazenar os Notes Vision e blocos de texto.
-     */
+            Firebase Realtime Database https://firebase.google.com/docs/database/
+            Armazenar os Notes Vision e blocos de texto.
+             */
     compile "com.google.firebase:firebase-database:$PLAY_SERVICES_VERSION"
     /*
-    Firebase Storage https://firebase.google.com/docs/storage/
-    Armazenar as imagens de plano de fundo dos Notes Vision.
-     */
+            Firebase Storage https://firebase.google.com/docs/storage/
+            Armazenar as imagens de plano de fundo dos Notes Vision.
+             */
     compile "com.google.firebase:firebase-storage:$PLAY_SERVICES_VERSION"
-
     /*
-      Firebase Analytics for Android https://firebase.google.com/docs/analytics
-      Análise do perfil dos usuários e utilização do aplicativo.
-     */
+              Firebase Analytics for Android https://firebase.google.com/docs/analytics
+              Análise do perfil dos usuários e utilização do aplicativo.
+             */
     compile "com.google.firebase:firebase-core:$PLAY_SERVICES_VERSION"
-
     /*
-    FirebaseUI for Android https://github.com/firebase/FirebaseUI-Android
-    Reutilizar UIs na integração com o Firebase.
-     */
+            FirebaseUI for Android https://github.com/firebase/FirebaseUI-Android
+            Reutilizar UIs na integração com o Firebase.
+             */
     compile 'com.firebaseui:firebase-ui:1.1.1'
-
 }
 apply plugin: 'com.google.gms.google-services'
 
