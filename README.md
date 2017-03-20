@@ -13,7 +13,7 @@ Capturar blocos de texto utilizando a câmera fotográfica do smartphone que ser
 ## Instalação do aplicativo 
 - Android - [baixar](https://raw.githubusercontent.com/brolam/Capstone-Project/master/CloudVision.apk) e executar o apk em um smartphone ou tablet. 
 ## Configurando o ambiente de desenvolvimento
-- Realizar o download do projeto https://github.com/brolam/Capstone-Project.git ;
+- Realizar o download do projeto https://github.com/brolam/CloudVision.git;
 - Criar um aplicativo no [Firebase Console](https://console.firebase.google.com/);
 - Criar e copiar o arquivo google-services.json para o endereço Capstone-Project/Android/app/. [Acesse a documentação do Firebase para mais detalhes sobre esse procedimento](https://firebase.google.com/docs/android/setup#manually_add_firebase); 
 - Configurar as regras de segurança do Realtime Database:
