@@ -14,14 +14,7 @@ repositories {
 }
 
 android {
-    signingConfigs {
-        config {
-            keyAlias 'Capstone'
-            keyPassword 'capstone.key'
-            storeFile file('capstone.jks')
-            storePassword 'capstone.pw'
-        }
-    }
+
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
@@ -31,15 +24,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        signingConfig signingConfigs.config
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
-        }
-    }
+
     packagingOptions {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/LICENSE-FIREBASE.txt'
