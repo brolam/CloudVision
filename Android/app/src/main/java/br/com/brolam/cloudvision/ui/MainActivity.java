@@ -205,7 +205,7 @@ public class MainActivity extends ActivityHelper
             // Handle the camera action
         } else if ( (id == R.id.nav_ai_inputs) ||  (id == R.id.nav_ai_analysis))  {
             Toast.makeText(this, R.string.feature_not_available,Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_user_login_off) {
+        } else if (id == R.id.nav_user_log_off) {
             loginHelper.signOut();
         }
 

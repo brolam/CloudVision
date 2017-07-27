@@ -19,7 +19,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_notes_vision">Notes Vision</string>
-    <string name="nav_login_off">Login Out</string>
+    <string name="nav_log_off">Log Off</string>
     <string name="nav_inputs_model">Inputs Model</string>
     <string name="nav_analysis_model">Analysis Model</string>
     <string name="feature_not_available">This feature is not available</string>
