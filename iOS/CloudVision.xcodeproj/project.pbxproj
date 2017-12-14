@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		02E39BF68DAD69240949C0A7 /* Pods_CloudVisionUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67897FBBCFBDBD091DDD4CA9 /* Pods_CloudVisionUITests.framework */; };
-		25A6D98D055EA26E4E65A7FB /* Pods_CloudVision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F10F906DCE77AE7AC9D9B4A6 /* Pods_CloudVision.framework */; };
-		4A746A729C44A58834153B46 /* Pods_CloudVisionTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E27116280D39796836E3AC /* Pods_CloudVisionTests.framework */; };
 		4E18B72D1FDF2A4A00C1E77B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E18B72C1FDF2A4A00C1E77B /* AppDelegate.swift */; };
 		4E18B72F1FDF2A4A00C1E77B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E18B72E1FDF2A4A00C1E77B /* ViewController.swift */; };
 		4E18B7321FDF2A4A00C1E77B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E18B7301FDF2A4A00C1E77B /* Main.storyboard */; };
@@ -58,13 +55,10 @@
 		4E33A4541FE290F700BB3C7D /* Vision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vision.framework; path = System/Library/Frameworks/Vision.framework; sourceTree = SDKROOT; };
 		4E34678B1FE134C70033775C /* AppTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTestCase.swift; sourceTree = "<group>"; };
 		4EE3CC841FE0A7A900FF60D6 /* crowd-test-02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "crowd-test-02.jpg"; sourceTree = "<group>"; };
-		67897FBBCFBDBD091DDD4CA9 /* Pods_CloudVisionUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CloudVisionUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B991BA9531157124D0C58312 /* Pods-CloudVision.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloudVision.release.xcconfig"; path = "Pods/Target Support Files/Pods-CloudVision/Pods-CloudVision.release.xcconfig"; sourceTree = "<group>"; };
 		C4C5E0830C242B3034309645 /* Pods-CloudVisionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloudVisionTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CloudVisionTests/Pods-CloudVisionTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C9BCD134D2A740DD96A7FAD8 /* Pods-CloudVision.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloudVision.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CloudVision/Pods-CloudVision.debug.xcconfig"; sourceTree = "<group>"; };
 		DB165A0626432C7ED8EA1C2D /* Pods-CloudVisionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloudVisionTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CloudVisionTests/Pods-CloudVisionTests.release.xcconfig"; sourceTree = "<group>"; };
-		E3E27116280D39796836E3AC /* Pods_CloudVisionTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CloudVisionTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F10F906DCE77AE7AC9D9B4A6 /* Pods_CloudVision.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CloudVision.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,7 +67,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E33A4551FE290F800BB3C7D /* Vision.framework in Frameworks */,
-				25A6D98D055EA26E4E65A7FB /* Pods_CloudVision.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,7 +74,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A746A729C44A58834153B46 /* Pods_CloudVisionTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,7 +81,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				02E39BF68DAD69240949C0A7 /* Pods_CloudVisionUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,9 +154,6 @@
 			isa = PBXGroup;
 			children = (
 				4E33A4541FE290F700BB3C7D /* Vision.framework */,
-				F10F906DCE77AE7AC9D9B4A6 /* Pods_CloudVision.framework */,
-				E3E27116280D39796836E3AC /* Pods_CloudVisionTests.framework */,
-				67897FBBCFBDBD091DDD4CA9 /* Pods_CloudVisionUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
