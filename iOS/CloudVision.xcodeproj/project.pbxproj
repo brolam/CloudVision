@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02E39BF68DAD69240949C0A7 /* Pods_CloudVisionUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67897FBBCFBDBD091DDD4CA9 /* Pods_CloudVisionUITests.framework */; };
+		25A6D98D055EA26E4E65A7FB /* Pods_CloudVision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F10F906DCE77AE7AC9D9B4A6 /* Pods_CloudVision.framework */; };
+		4A746A729C44A58834153B46 /* Pods_CloudVisionTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E27116280D39796836E3AC /* Pods_CloudVisionTests.framework */; };
 		4E18B72D1FDF2A4A00C1E77B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E18B72C1FDF2A4A00C1E77B /* AppDelegate.swift */; };
 		4E18B72F1FDF2A4A00C1E77B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E18B72E1FDF2A4A00C1E77B /* ViewController.swift */; };
 		4E18B7321FDF2A4A00C1E77B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E18B7301FDF2A4A00C1E77B /* Main.storyboard */; };
@@ -14,8 +17,8 @@
 		4E18B7371FDF2A4A00C1E77B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E18B7351FDF2A4A00C1E77B /* LaunchScreen.storyboard */; };
 		4E18B74D1FDF2A4A00C1E77B /* AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E18B74C1FDF2A4A00C1E77B /* AppUITests.swift */; };
 		4E18B75E1FDF370800C1E77B /* crowd-test-01.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E18B75D1FDF370800C1E77B /* crowd-test-01.png */; };
+		4E33A4551FE290F800BB3C7D /* Vision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E33A4541FE290F700BB3C7D /* Vision.framework */; };
 		4E34678C1FE134C70033775C /* AppTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34678B1FE134C70033775C /* AppTestCase.swift */; };
-		4EE3CC811FDFE6B100FF60D6 /* Vision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EE3CC801FDFE6B000FF60D6 /* Vision.framework */; };
 		4EE3CC851FE0A7AA00FF60D6 /* crowd-test-02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4EE3CC841FE0A7A900FF60D6 /* crowd-test-02.jpg */; };
 /* End PBXBuildFile section */
 
@@ -52,14 +55,45 @@
 		4E18B74C1FDF2A4A00C1E77B /* AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUITests.swift; sourceTree = "<group>"; };
 		4E18B74E1FDF2A4A00C1E77B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E18B75D1FDF370800C1E77B /* crowd-test-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crowd-test-01.png"; sourceTree = "<group>"; };
+		4E33A4541FE290F700BB3C7D /* Vision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vision.framework; path = System/Library/Frameworks/Vision.framework; sourceTree = SDKROOT; };
 		4E34678B1FE134C70033775C /* AppTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTestCase.swift; sourceTree = "<group>"; };
-		4EE3CC801FDFE6B000FF60D6 /* Vision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vision.framework; path = System/Library/Frameworks/Vision.framework; sourceTree = SDKROOT; };
 		4EE3CC841FE0A7A900FF60D6 /* crowd-test-02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "crowd-test-02.jpg"; sourceTree = "<group>"; };
+		67897FBBCFBDBD091DDD4CA9 /* Pods_CloudVisionUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CloudVisionUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B991BA9531157124D0C58312 /* Pods-CloudVision.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloudVision.release.xcconfig"; path = "Pods/Target Support Files/Pods-CloudVision/Pods-CloudVision.release.xcconfig"; sourceTree = "<group>"; };
 		C4C5E0830C242B3034309645 /* Pods-CloudVisionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloudVisionTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CloudVisionTests/Pods-CloudVisionTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C9BCD134D2A740DD96A7FAD8 /* Pods-CloudVision.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloudVision.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CloudVision/Pods-CloudVision.debug.xcconfig"; sourceTree = "<group>"; };
 		DB165A0626432C7ED8EA1C2D /* Pods-CloudVisionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloudVisionTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CloudVisionTests/Pods-CloudVisionTests.release.xcconfig"; sourceTree = "<group>"; };
+		E3E27116280D39796836E3AC /* Pods_CloudVisionTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CloudVisionTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F10F906DCE77AE7AC9D9B4A6 /* Pods_CloudVision.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CloudVision.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		61A95B95EC0DD01389628206 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4E33A4551FE290F800BB3C7D /* Vision.framework in Frameworks */,
+				25A6D98D055EA26E4E65A7FB /* Pods_CloudVision.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		986B720CE50BD898A9D5C2AE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A746A729C44A58834153B46 /* Pods_CloudVisionTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C86F69B5ED1DFF8A00DE7660 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				02E39BF68DAD69240949C0A7 /* Pods_CloudVisionUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		4E18B7201FDF2A4A00C1E77B = {
@@ -70,7 +104,7 @@
 				4E18B74B1FDF2A4A00C1E77B /* AppUITests */,
 				4E18B72A1FDF2A4A00C1E77B /* Products */,
 				C42FEF259F411F1929D52AB0 /* Pods */,
-				F3DD6A2CCB9296AD28007C51 /* Frameworks */,
+				9E226787EFEE24117DC4262C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -125,6 +159,17 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		9E226787EFEE24117DC4262C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4E33A4541FE290F700BB3C7D /* Vision.framework */,
+				F10F906DCE77AE7AC9D9B4A6 /* Pods_CloudVision.framework */,
+				E3E27116280D39796836E3AC /* Pods_CloudVisionTests.framework */,
+				67897FBBCFBDBD091DDD4CA9 /* Pods_CloudVisionUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C42FEF259F411F1929D52AB0 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -147,10 +192,10 @@
 			buildPhases = (
 				6AC387481319CC111B4C337F /* [CP] Check Pods Manifest.lock */,
 				4E18B7251FDF2A4A00C1E77B /* Sources */,
-				4E18B7261FDF2A4A00C1E77B /* Frameworks */,
 				4E18B7271FDF2A4A00C1E77B /* Resources */,
 				58638B2D46F3ABAEC3C0FAFA /* [CP] Embed Pods Frameworks */,
 				7D3705B0ADE01FFE78DFD306 /* [CP] Copy Pods Resources */,
+				61A95B95EC0DD01389628206 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -167,10 +212,10 @@
 			buildPhases = (
 				8DE2BD4AA88FC552ED720F75 /* [CP] Check Pods Manifest.lock */,
 				4E18B7391FDF2A4A00C1E77B /* Sources */,
-				4E18B73A1FDF2A4A00C1E77B /* Frameworks */,
 				4E18B73B1FDF2A4A00C1E77B /* Resources */,
 				F64999D148CB26429ACA8539 /* [CP] Embed Pods Frameworks */,
 				4FB1BECD81C916025745F4CE /* [CP] Copy Pods Resources */,
+				986B720CE50BD898A9D5C2AE /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -188,10 +233,10 @@
 			buildPhases = (
 				C510F6769B5DAD1EFFF87B0E /* [CP] Check Pods Manifest.lock */,
 				4E18B7441FDF2A4A00C1E77B /* Sources */,
-				4E18B7451FDF2A4A00C1E77B /* Frameworks */,
 				4E18B7461FDF2A4A00C1E77B /* Resources */,
 				73E27C5F57010E5BE5C6412A /* [CP] Embed Pods Frameworks */,
 				7BEDDBF594EE759DBF88E096 /* [CP] Copy Pods Resources */,
+				C86F69B5ED1DFF8A00DE7660 /* Frameworks */,
 			);
 			buildRules = (
 			);
