@@ -15,7 +15,9 @@
 		4E18B74D1FDF2A4A00C1E77B /* AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E18B74C1FDF2A4A00C1E77B /* AppUITests.swift */; };
 		4E18B75E1FDF370800C1E77B /* crowd-test-01.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E18B75D1FDF370800C1E77B /* crowd-test-01.png */; };
 		4E33A4551FE290F800BB3C7D /* Vision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E33A4541FE290F700BB3C7D /* Vision.framework */; };
-		4E34678C1FE134C70033775C /* AppTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34678B1FE134C70033775C /* AppTestCase.swift */; };
+		4E34678C1FE134C70033775C /* BMFacesDetectorTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34678B1FE134C70033775C /* BMFacesDetectorTestCase.swift */; };
+		4ED70C721FE2B16200129A11 /* BMFacesDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED70C711FE2B16200129A11 /* BMFacesDetector.swift */; };
+		4ED70C731FE2B5F700129A11 /* BMFacesDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED70C711FE2B16200129A11 /* BMFacesDetector.swift */; };
 		4EE3CC851FE0A7AA00FF60D6 /* crowd-test-02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4EE3CC841FE0A7A900FF60D6 /* crowd-test-02.jpg */; };
 /* End PBXBuildFile section */
 
@@ -37,8 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		28AC5693B2733E88AB1CA5F6 /* Pods-CloudVisionUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloudVisionUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CloudVisionUITests/Pods-CloudVisionUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		33C061A80D96D7160CACBB40 /* Pods-CloudVisionUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloudVisionUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CloudVisionUITests/Pods-CloudVisionUITests.release.xcconfig"; sourceTree = "<group>"; };
+		1C83F21F7446C545E5326D9A /* Pods-CloudVisionUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloudVisionUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CloudVisionUITests/Pods-CloudVisionUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		395A857454E90C92F8173392 /* Pods-CloudVision.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloudVision.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CloudVision/Pods-CloudVision.debug.xcconfig"; sourceTree = "<group>"; };
 		4E18B7291FDF2A4A00C1E77B /* CloudVision.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CloudVision.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E18B72C1FDF2A4A00C1E77B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4E18B72E1FDF2A4A00C1E77B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -53,12 +55,13 @@
 		4E18B74E1FDF2A4A00C1E77B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E18B75D1FDF370800C1E77B /* crowd-test-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crowd-test-01.png"; sourceTree = "<group>"; };
 		4E33A4541FE290F700BB3C7D /* Vision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vision.framework; path = System/Library/Frameworks/Vision.framework; sourceTree = SDKROOT; };
-		4E34678B1FE134C70033775C /* AppTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTestCase.swift; sourceTree = "<group>"; };
+		4E34678B1FE134C70033775C /* BMFacesDetectorTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMFacesDetectorTestCase.swift; sourceTree = "<group>"; };
+		4ED70C711FE2B16200129A11 /* BMFacesDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMFacesDetector.swift; sourceTree = "<group>"; };
 		4EE3CC841FE0A7A900FF60D6 /* crowd-test-02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "crowd-test-02.jpg"; sourceTree = "<group>"; };
-		B991BA9531157124D0C58312 /* Pods-CloudVision.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloudVision.release.xcconfig"; path = "Pods/Target Support Files/Pods-CloudVision/Pods-CloudVision.release.xcconfig"; sourceTree = "<group>"; };
-		C4C5E0830C242B3034309645 /* Pods-CloudVisionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloudVisionTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CloudVisionTests/Pods-CloudVisionTests.debug.xcconfig"; sourceTree = "<group>"; };
-		C9BCD134D2A740DD96A7FAD8 /* Pods-CloudVision.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloudVision.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CloudVision/Pods-CloudVision.debug.xcconfig"; sourceTree = "<group>"; };
-		DB165A0626432C7ED8EA1C2D /* Pods-CloudVisionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloudVisionTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CloudVisionTests/Pods-CloudVisionTests.release.xcconfig"; sourceTree = "<group>"; };
+		6F42DA7B0C8A7F51ACEFAA58 /* Pods-CloudVision.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloudVision.release.xcconfig"; path = "Pods/Target Support Files/Pods-CloudVision/Pods-CloudVision.release.xcconfig"; sourceTree = "<group>"; };
+		701076AB7293BFA9D4E206E1 /* Pods-CloudVisionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloudVisionTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CloudVisionTests/Pods-CloudVisionTests.release.xcconfig"; sourceTree = "<group>"; };
+		719120C0EF5E3895377F50B4 /* Pods-CloudVisionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloudVisionTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CloudVisionTests/Pods-CloudVisionTests.debug.xcconfig"; sourceTree = "<group>"; };
+		93A3E3B53D61ACBA26AFFE27 /* Pods-CloudVisionUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloudVisionUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CloudVisionUITests/Pods-CloudVisionUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +115,7 @@
 		4E18B72B1FDF2A4A00C1E77B /* App */ = {
 			isa = PBXGroup;
 			children = (
+				4ED70C701FE2B12E00129A11 /* Helpers */,
 				4E18B75C1FDF36ED00C1E77B /* Supporting Files */,
 				4E18B72C1FDF2A4A00C1E77B /* AppDelegate.swift */,
 				4E18B72E1FDF2A4A00C1E77B /* ViewController.swift */,
@@ -127,7 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				4E18B7431FDF2A4A00C1E77B /* Info.plist */,
-				4E34678B1FE134C70033775C /* AppTestCase.swift */,
+				4E34678B1FE134C70033775C /* BMFacesDetectorTestCase.swift */,
 			);
 			path = AppTests;
 			sourceTree = "<group>";
@@ -150,6 +154,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		4ED70C701FE2B12E00129A11 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				4ED70C711FE2B16200129A11 /* BMFacesDetector.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		9E226787EFEE24117DC4262C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -161,12 +173,12 @@
 		C42FEF259F411F1929D52AB0 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				C9BCD134D2A740DD96A7FAD8 /* Pods-CloudVision.debug.xcconfig */,
-				B991BA9531157124D0C58312 /* Pods-CloudVision.release.xcconfig */,
-				C4C5E0830C242B3034309645 /* Pods-CloudVisionTests.debug.xcconfig */,
-				DB165A0626432C7ED8EA1C2D /* Pods-CloudVisionTests.release.xcconfig */,
-				28AC5693B2733E88AB1CA5F6 /* Pods-CloudVisionUITests.debug.xcconfig */,
-				33C061A80D96D7160CACBB40 /* Pods-CloudVisionUITests.release.xcconfig */,
+				395A857454E90C92F8173392 /* Pods-CloudVision.debug.xcconfig */,
+				6F42DA7B0C8A7F51ACEFAA58 /* Pods-CloudVision.release.xcconfig */,
+				719120C0EF5E3895377F50B4 /* Pods-CloudVisionTests.debug.xcconfig */,
+				701076AB7293BFA9D4E206E1 /* Pods-CloudVisionTests.release.xcconfig */,
+				1C83F21F7446C545E5326D9A /* Pods-CloudVisionUITests.debug.xcconfig */,
+				93A3E3B53D61ACBA26AFFE27 /* Pods-CloudVisionUITests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -181,9 +193,9 @@
 				6AC387481319CC111B4C337F /* [CP] Check Pods Manifest.lock */,
 				4E18B7251FDF2A4A00C1E77B /* Sources */,
 				4E18B7271FDF2A4A00C1E77B /* Resources */,
-				58638B2D46F3ABAEC3C0FAFA /* [CP] Embed Pods Frameworks */,
 				7D3705B0ADE01FFE78DFD306 /* [CP] Copy Pods Resources */,
 				61A95B95EC0DD01389628206 /* Frameworks */,
+				1D631B998085CA7382DEF238 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -313,6 +325,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1D631B998085CA7382DEF238 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CloudVision/Pods-CloudVision-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		4FB1BECD81C916025745F4CE /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -326,21 +353,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CloudVisionTests/Pods-CloudVisionTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		58638B2D46F3ABAEC3C0FAFA /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CloudVision/Pods-CloudVision-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6AC387481319CC111B4C337F /* [CP] Check Pods Manifest.lock */ = {
@@ -473,6 +485,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E18B72F1FDF2A4A00C1E77B /* ViewController.swift in Sources */,
+				4ED70C721FE2B16200129A11 /* BMFacesDetector.swift in Sources */,
 				4E18B72D1FDF2A4A00C1E77B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -481,7 +494,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E34678C1FE134C70033775C /* AppTestCase.swift in Sources */,
+				4E34678C1FE134C70033775C /* BMFacesDetectorTestCase.swift in Sources */,
+				4ED70C731FE2B5F700129A11 /* BMFacesDetector.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -637,7 +651,7 @@
 		};
 		4E18B7521FDF2A4A00C1E77B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C9BCD134D2A740DD96A7FAD8 /* Pods-CloudVision.debug.xcconfig */;
+			baseConfigurationReference = 395A857454E90C92F8173392 /* Pods-CloudVision.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -653,7 +667,7 @@
 		};
 		4E18B7531FDF2A4A00C1E77B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B991BA9531157124D0C58312 /* Pods-CloudVision.release.xcconfig */;
+			baseConfigurationReference = 6F42DA7B0C8A7F51ACEFAA58 /* Pods-CloudVision.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -669,7 +683,7 @@
 		};
 		4E18B7551FDF2A4A00C1E77B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C4C5E0830C242B3034309645 /* Pods-CloudVisionTests.debug.xcconfig */;
+			baseConfigurationReference = 719120C0EF5E3895377F50B4 /* Pods-CloudVisionTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -689,7 +703,7 @@
 		};
 		4E18B7561FDF2A4A00C1E77B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DB165A0626432C7ED8EA1C2D /* Pods-CloudVisionTests.release.xcconfig */;
+			baseConfigurationReference = 701076AB7293BFA9D4E206E1 /* Pods-CloudVisionTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -708,7 +722,7 @@
 		};
 		4E18B7581FDF2A4A00C1E77B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 28AC5693B2733E88AB1CA5F6 /* Pods-CloudVisionUITests.debug.xcconfig */;
+			baseConfigurationReference = 1C83F21F7446C545E5326D9A /* Pods-CloudVisionUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -725,7 +739,7 @@
 		};
 		4E18B7591FDF2A4A00C1E77B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 33C061A80D96D7160CACBB40 /* Pods-CloudVisionUITests.release.xcconfig */;
+			baseConfigurationReference = 93A3E3B53D61ACBA26AFFE27 /* Pods-CloudVisionUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

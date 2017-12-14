@@ -8,10 +8,12 @@
 
 import XCTest
 
-class AppTestCase: XCTestCase {
+class BMFacesDetectorTestCase: XCTestCase {
+    var bmFacesDetector: BMFacesDetector!
     
     override func setUp() {
         super.setUp()
+        bmFacesDetector = BMFacesDetector()
     }
     
     override func tearDown() {
