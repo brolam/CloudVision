@@ -10,40 +10,42 @@ import XCTest
 
 class BMFacesDetectorTestCase: XCTestCase {
     var bmFacesDetector: BMFacesDetector!
+    var uiImageCrowd01: UIImage!
+    var uiImageCrowd02: UIImage!
     
     override func setUp() {
         super.setUp()
-        bmFacesDetector = BMFacesDetector()
+        self.bmFacesDetector = BMFacesDetector()
+        self.uiImageCrowd01 = UIImage(named: "crowd-test-01.png")!
+        self.uiImageCrowd02 = UIImage(named: "crowd-test-02.jpg")!
     }
     
     override func tearDown() {
         super.tearDown()
         self.bmFacesDetector = nil
+        self.uiImageCrowd01 = nil
+        self.uiImageCrowd02 = nil
     }
     
     func testTrackFacesCrowd01Count() {
-        let uiImage = UIImage(named: "crowd-test-01.png")
-        bmFacesDetector.trackFaces(uiImage: uiImage!)
+        bmFacesDetector.trackFaces(uiImage: self.uiImageCrowd01)
         XCTAssertEqual(bmFacesDetector.countFaces(), 9)
     }
     
     func testTrackFacesCrowd02Count() {
-        let uiImage = UIImage(named: "crowd-test-02.jpg")
-        bmFacesDetector.trackFaces(uiImage: uiImage!)
+        bmFacesDetector.trackFaces(uiImage: self.uiImageCrowd02)
         XCTAssertEqual(bmFacesDetector.countFaces(), 19)
     }
     
     func testGetFacesPictures(){
-        let uiImage = UIImage(named: "crowd-test-02.jpg")
-        bmFacesDetector.trackFaces(uiImage: uiImage!)
+        self.testTrackFacesCrowd02Count()
         let facesPictures: [UIImage]  = bmFacesDetector.getFacesPictures()
         XCTAssertEqual(facesPictures.count , 19)
     }
     
     func testPerformanceTrackFaces() {
         self.measure {
-            let uiImage = UIImage(named: "crowd-test-01.png")
-            bmFacesDetector.trackFaces(uiImage: uiImage!)
+            self.testTrackFacesCrowd01Count()
         }
     }
     
