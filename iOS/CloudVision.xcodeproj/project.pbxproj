@@ -16,8 +16,11 @@
 		4E18B75E1FDF370800C1E77B /* crowd-test-01.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E18B75D1FDF370800C1E77B /* crowd-test-01.png */; };
 		4E33A4551FE290F800BB3C7D /* Vision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E33A4541FE290F700BB3C7D /* Vision.framework */; };
 		4E34678C1FE134C70033775C /* BMFacesDetectorTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34678B1FE134C70033775C /* BMFacesDetectorTestCase.swift */; };
+		4E355DB31FE3D9C9003B200D /* BMImageUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E355DB21FE3D9C9003B200D /* BMImageUtilities.swift */; };
+		4E355DB41FE3D9C9003B200D /* BMImageUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E355DB21FE3D9C9003B200D /* BMImageUtilities.swift */; };
 		4ED70C721FE2B16200129A11 /* BMFacesDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED70C711FE2B16200129A11 /* BMFacesDetector.swift */; };
 		4ED70C731FE2B5F700129A11 /* BMFacesDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED70C711FE2B16200129A11 /* BMFacesDetector.swift */; };
+		4ED70C751FE3570800129A11 /* BMImageUtilitiesTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED70C741FE3570800129A11 /* BMImageUtilitiesTestCase.swift */; };
 		4EE3CC851FE0A7AA00FF60D6 /* crowd-test-02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4EE3CC841FE0A7A900FF60D6 /* crowd-test-02.jpg */; };
 /* End PBXBuildFile section */
 
@@ -56,7 +59,9 @@
 		4E18B75D1FDF370800C1E77B /* crowd-test-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crowd-test-01.png"; sourceTree = "<group>"; };
 		4E33A4541FE290F700BB3C7D /* Vision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vision.framework; path = System/Library/Frameworks/Vision.framework; sourceTree = SDKROOT; };
 		4E34678B1FE134C70033775C /* BMFacesDetectorTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMFacesDetectorTestCase.swift; sourceTree = "<group>"; };
+		4E355DB21FE3D9C9003B200D /* BMImageUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMImageUtilities.swift; sourceTree = "<group>"; };
 		4ED70C711FE2B16200129A11 /* BMFacesDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMFacesDetector.swift; sourceTree = "<group>"; };
+		4ED70C741FE3570800129A11 /* BMImageUtilitiesTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMImageUtilitiesTestCase.swift; sourceTree = "<group>"; };
 		4EE3CC841FE0A7A900FF60D6 /* crowd-test-02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "crowd-test-02.jpg"; sourceTree = "<group>"; };
 		6F42DA7B0C8A7F51ACEFAA58 /* Pods-CloudVision.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloudVision.release.xcconfig"; path = "Pods/Target Support Files/Pods-CloudVision/Pods-CloudVision.release.xcconfig"; sourceTree = "<group>"; };
 		701076AB7293BFA9D4E206E1 /* Pods-CloudVisionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloudVisionTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CloudVisionTests/Pods-CloudVisionTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -132,6 +137,7 @@
 			children = (
 				4E18B7431FDF2A4A00C1E77B /* Info.plist */,
 				4E34678B1FE134C70033775C /* BMFacesDetectorTestCase.swift */,
+				4ED70C741FE3570800129A11 /* BMImageUtilitiesTestCase.swift */,
 			);
 			path = AppTests;
 			sourceTree = "<group>";
@@ -158,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				4ED70C711FE2B16200129A11 /* BMFacesDetector.swift */,
+				4E355DB21FE3D9C9003B200D /* BMImageUtilities.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -487,6 +494,7 @@
 				4E18B72F1FDF2A4A00C1E77B /* ViewController.swift in Sources */,
 				4ED70C721FE2B16200129A11 /* BMFacesDetector.swift in Sources */,
 				4E18B72D1FDF2A4A00C1E77B /* AppDelegate.swift in Sources */,
+				4E355DB31FE3D9C9003B200D /* BMImageUtilities.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -495,7 +503,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E34678C1FE134C70033775C /* BMFacesDetectorTestCase.swift in Sources */,
+				4ED70C751FE3570800129A11 /* BMImageUtilitiesTestCase.swift in Sources */,
 				4ED70C731FE2B5F700129A11 /* BMFacesDetector.swift in Sources */,
+				4E355DB41FE3D9C9003B200D /* BMImageUtilities.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

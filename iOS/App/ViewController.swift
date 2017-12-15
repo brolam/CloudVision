@@ -93,15 +93,18 @@ class ViewController: UIViewController {
     }
     
     func showOneFace( imageFaces: UIImage, index :Int) {
+        /*
         //twenty percent in width
         let dx = ((facesRect[index].width * 20.00) / 100.00) * -1
         //thirty percent in height
         let dy = ((facesRect[index].height * 30.00) / 100.00) * -1
         let rect =  facesRect[index].insetBy( dx: dx, dy: dy)
-        uiImageOneFace.image = cropImage(
-            image: imageFaces,
-            toRect: rect
-        )
+        */
+        uiImageOneFace.image = BMImageUtilities.crop(
+            uiImage: imageFaces,
+            toRect: facesRect[index],
+            enlargeWidthInPercent: 20,
+            enlargeHeightInPercent: 30)
         uiLabelIndex.text = "Index: \(index + 1) /  \(facesRect.count - 1) "
     }
     
