@@ -33,6 +33,13 @@ class BMFacesDetectorTestCase: XCTestCase {
         XCTAssertEqual(bmFacesDetector.countFaces(), 19)
     }
     
+    func testGetFacesPictures(){
+        let uiImage = UIImage(named: "crowd-test-02.jpg")
+        bmFacesDetector.trackFaces(uiImage: uiImage!)
+        let facesPictures: [UIImage]  = bmFacesDetector.getFacesPictures()
+        XCTAssertEqual(facesPictures.count , 19)
+    }
+    
     func testPerformanceTrackFaces() {
         self.measure {
             let uiImage = UIImage(named: "crowd-test-01.png")

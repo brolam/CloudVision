@@ -12,6 +12,7 @@ import GoogleMobileVision
 class BMFacesDetector {
     let gmvDetector:GMVDetector!
     var trackingFaces:[GMVFeature]!
+    var trackedUIImage: UIImage?
     
     
     init() {
@@ -27,7 +28,8 @@ class BMFacesDetector {
         self.trackingFaces = [GMVFeature]()
     }
     
-    func trackFaces( uiImage: UIImage ){
+    func trackFaces(uiImage: UIImage ){
+        self.trackedUIImage = uiImage
         self.trackingFaces = gmvDetector.features(
             in: uiImage,
             options: nil
@@ -37,6 +39,22 @@ class BMFacesDetector {
     
     func countFaces() -> Int {
         return trackingFaces.count
+    }
+    
+    func getFacesPictures() -> [UIImage]{
+        if (( self.trackedUIImage == nil ) || (self.trackingFaces.count == 0 ) ){
+            return [UIImage]()
+        }
+        
+        let facesPictures = trackingFaces.map { (trackFace) -> UIImage in
+            BMImageUtilities.crop(
+                uiImage: self.trackedUIImage!,
+                toRect: trackFace.bounds,
+                enlargeWidthInPercent:20,
+                enlargeHeightInPercent: 30
+            )
+        }
+        return facesPictures
     }
     
     private func removeInvalidFaces(){
