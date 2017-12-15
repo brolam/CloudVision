@@ -36,11 +36,11 @@ class ViewController: UIViewController {
     fileprivate func doDetectFaces(_ imageFaces: UIImage!) {
         facesRect = [CGRect]()
         if (gmvDetector != nil) {
-            if let faces =  gmvDetector.features(in: imageFaces, options: nil){
+            if let faces =  gmvDetector.features( in: imageFaces, options: nil){
                 NSLog("Detected %lu face(s).", faces.count )
                 var item = 0
-                for fase in faces{
-                    let rect:CGRect = fase.bounds;
+                for face in faces{
+                    let rect:CGRect = face.bounds;
                     facesRect.append(rect)
                     print("item \(item) origin \( rect.origin.debugDescription  ) size : \(rect.size.debugDescription)")
                     item = item + 1

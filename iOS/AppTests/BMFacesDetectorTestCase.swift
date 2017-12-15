@@ -18,11 +18,13 @@ class BMFacesDetectorTestCase: XCTestCase {
     
     override func tearDown() {
         super.tearDown()
+        self.bmFacesDetector = nil
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testTrackFacesCrowd01Count() {
+        let uiImage = UIImage(named: "crowd-test-01.png")
+        bmFacesDetector.trackFaces(uiImage: uiImage!)
+        XCTAssertEqual(bmFacesDetector.countFaces(), 9)
     }
     
     func testPerformanceExample() {
