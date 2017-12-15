@@ -27,10 +27,10 @@ class BMFacesDetectorTestCase: XCTestCase {
         XCTAssertEqual(bmFacesDetector.countFaces(), 9)
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
+    func testPerformanceTrackFaces() {
         self.measure {
-            // Put the code you want to measure the time of here.
+            let uiImage = UIImage(named: "crowd-test-01.png")
+            bmFacesDetector.trackFaces(uiImage: uiImage!)
         }
     }
     
