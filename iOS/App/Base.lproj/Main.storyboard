@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9Vk-dn-HsN">
     <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -10,7 +10,26 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Navigation Controller-->
+        <scene sceneID="KjE-gD-ar2">
+            <objects>
+                <navigationController id="9Vk-dn-HsN" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="qn5-wa-bri">
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="3Hm-Mf-60B"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yKw-sH-SeL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-653" y="-41"/>
+        </scene>
+        <!--Cloud Vision-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="CloudVision" customModuleProvider="target" sceneMemberID="viewController">
@@ -19,14 +38,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="crowd-test-02.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="kj8-cU-bL5" userLabel="ImageFaces">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <rect key="frame" x="0.0" y="44" width="320" height="392"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="320" id="0g5-84-OiH"/>
-                                    <constraint firstAttribute="height" constant="480" id="tTG-S9-55e"/>
+                                    <constraint firstAttribute="height" constant="392" id="tTG-S9-55e"/>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0xS-Vn-mnC">
-                                <rect key="frame" x="16" y="421" width="288" height="34"/>
+                                <rect key="frame" x="16" y="373" width="288" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hue-4I-8MW" userLabel="buttonFaceDetectCrowd01">
@@ -55,7 +74,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.06274757922535211" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FfX-nn-Xxb" userLabel="UIOnFace">
-                                <rect key="frame" x="16" y="317" width="288" height="102"/>
+                                <rect key="frame" x="16" y="261" width="288" height="102"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4JZ-FU-Gh1" userLabel="ImageOneFace">
@@ -94,16 +113,30 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.011840187823834225" green="0.011840187823834225" blue="0.011840187823834225" alpha="0.064590669014084501" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kbe-Ds-ZOW">
+                                <rect key="frame" x="0.0" y="436" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem image="photo-library" id="WmE-zg-gdl"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="ZLo-6r-xjS"/>
+                                    <barButtonItem image="camera" id="j7S-Wd-Spq"/>
+                                </items>
+                                <color key="barTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="kj8-cU-bL5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Amy-lh-dvP"/>
-                            <constraint firstItem="kj8-cU-bL5" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Cyd-vd-rXw"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="kj8-cU-bL5" secondAttribute="bottom" id="KXE-eu-BpG"/>
+                            <constraint firstItem="kj8-cU-bL5" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="44" id="Cyd-vd-rXw"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="kj8-cU-bL5" secondAttribute="bottom" constant="44" id="KXE-eu-BpG"/>
                             <constraint firstItem="kj8-cU-bL5" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Mmq-El-ipm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Cloud Vision" id="cnn-6G-ZJy">
+                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="dEi-rm-Av4"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="gPu-eb-JMu"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="uiImageFaces" destination="kj8-cU-bL5" id="wez-Qe-0fR"/>
                         <outlet property="uiImageOneFace" destination="4JZ-FU-Gh1" id="u46-Fp-rAE"/>
@@ -112,10 +145,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="131.25" y="131.25"/>
+            <point key="canvasLocation" x="83" y="-41"/>
         </scene>
     </scenes>
     <resources>
+        <image name="camera" width="24" height="24"/>
         <image name="crowd-test-02.jpg" width="960" height="717"/>
+        <image name="photo-library" width="24" height="24"/>
     </resources>
 </document>
