@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController , UIImagePickerControllerDelegate , UINavigationControllerDelegate {
+class MainViewController: UIViewController , UIImagePickerControllerDelegate , UINavigationControllerDelegate {
     let bmFacesDetector = BMFacesDetector()
     @IBOutlet weak var uiImageFaces: UIImageView!
     @IBOutlet weak var uiImageOneFace: UIImageView!
