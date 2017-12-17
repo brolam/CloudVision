@@ -12,12 +12,12 @@
 		4E18B7321FDF2A4A00C1E77B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E18B7301FDF2A4A00C1E77B /* Main.storyboard */; };
 		4E18B7341FDF2A4A00C1E77B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E18B7331FDF2A4A00C1E77B /* Assets.xcassets */; };
 		4E18B7371FDF2A4A00C1E77B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E18B7351FDF2A4A00C1E77B /* LaunchScreen.storyboard */; };
-		4E18B74D1FDF2A4A00C1E77B /* AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E18B74C1FDF2A4A00C1E77B /* AppUITests.swift */; };
 		4E18B75E1FDF370800C1E77B /* crowd-test-01.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E18B75D1FDF370800C1E77B /* crowd-test-01.png */; };
 		4E33A4551FE290F800BB3C7D /* Vision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E33A4541FE290F700BB3C7D /* Vision.framework */; };
 		4E34678C1FE134C70033775C /* BMFacesDetectorTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34678B1FE134C70033775C /* BMFacesDetectorTestCase.swift */; };
 		4E355DB31FE3D9C9003B200D /* BMImageUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E355DB21FE3D9C9003B200D /* BMImageUtilities.swift */; };
 		4E355DB41FE3D9C9003B200D /* BMImageUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E355DB21FE3D9C9003B200D /* BMImageUtilities.swift */; };
+		4E3626FE1FE5AB6100FA1C6F /* AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E18B74C1FDF2A4A00C1E77B /* AppUITests.swift */; };
 		4ED70C721FE2B16200129A11 /* BMFacesDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED70C711FE2B16200129A11 /* BMFacesDetector.swift */; };
 		4ED70C731FE2B5F700129A11 /* BMFacesDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED70C711FE2B16200129A11 /* BMFacesDetector.swift */; };
 		4ED70C751FE3570800129A11 /* BMImageUtilitiesTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED70C741FE3570800129A11 /* BMImageUtilitiesTestCase.swift */; };
@@ -54,7 +54,7 @@
 		4E18B73D1FDF2A4A00C1E77B /* CloudVisionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CloudVisionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E18B7431FDF2A4A00C1E77B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E18B7481FDF2A4A00C1E77B /* CloudVisionUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CloudVisionUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4E18B74C1FDF2A4A00C1E77B /* AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUITests.swift; sourceTree = "<group>"; };
+		4E18B74C1FDF2A4A00C1E77B /* AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUITests.swift; sourceTree = "<group>"; usesTabs = 0; };
 		4E18B74E1FDF2A4A00C1E77B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E18B75D1FDF370800C1E77B /* crowd-test-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crowd-test-01.png"; sourceTree = "<group>"; };
 		4E33A4541FE290F700BB3C7D /* Vision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vision.framework; path = System/Library/Frameworks/Vision.framework; sourceTree = SDKROOT; };
@@ -106,6 +106,7 @@
 				9E226787EFEE24117DC4262C /* Frameworks */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		4E18B72A1FDF2A4A00C1E77B /* Products */ = {
 			isa = PBXGroup;
@@ -261,6 +262,7 @@
 		4E18B7211FDF2A4A00C1E77B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = BM;
 				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "Breno Marques";
@@ -513,7 +515,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E18B74D1FDF2A4A00C1E77B /* AppUITests.swift in Sources */,
+				4E3626FE1FE5AB6100FA1C6F /* AppUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -671,7 +673,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.brolam.CloudVision;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -687,7 +689,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.brolam.CloudVision;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -741,9 +743,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.brolam.AppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = App;
+				TEST_TARGET_NAME = CloudVision;
 			};
 			name = Debug;
 		};
@@ -758,9 +761,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.brolam.AppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = App;
+				TEST_TARGET_NAME = CloudVision;
 			};
 			name = Release;
 		};

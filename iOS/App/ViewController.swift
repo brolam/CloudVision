@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController , UIImagePickerControllerDelegate , UINavigationControllerDelegate {
     let bmFacesDetector = BMFacesDetector()
     @IBOutlet weak var uiImageFaces: UIImageView!
     @IBOutlet weak var uiImageOneFace: UIImageView!
@@ -20,12 +20,35 @@ class ViewController: UIViewController {
         self.bmFacesDetector.trackFaces(uiImage: imageFaces)
         self.facesFictures = self.bmFacesDetector.getFacesPictures()
         if ( !facesFictures.isEmpty ){
-            selectedfacesIndex = 0
+            self.selectedfacesIndex = 0
             showOneFace(index: selectedfacesIndex)
         } else {
+            self.selectedfacesIndex = -1
             NSLog("Detected %s.", "Error" );
         }
     }
+    
+    @IBAction func onTapPictureLibraryButton(_ sender: UIBarButtonItem) {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.delegate = self
+        present(imagePickerController, animated: true, completion: nil)
+    }
+    
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController){
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
+        guard let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage else {
+            fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
+        }
+        uiImageFaces.image = selectedImage
+        doDetectFaces(selectedImage)
+        dismiss(animated: true, completion: nil)
+    }
+    
     
     @IBAction func onDetectCrowd01(_ sender: UIButton) {
         uiImageFaces.image = UIImage(named: "crowd-test-01.png")!
