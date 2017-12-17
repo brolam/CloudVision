@@ -35,6 +35,13 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
         present(imagePickerController, animated: true, completion: nil)
     }
     
+    @IBAction func onTapCameraButton(_ sender: UIBarButtonItem) {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.sourceType = .camera
+        imagePickerController.delegate = self
+        present(imagePickerController, animated: true, completion: nil)
+    }
+    
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController){
         dismiss(animated: true, completion: nil)

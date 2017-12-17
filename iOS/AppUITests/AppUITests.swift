@@ -13,6 +13,7 @@ class AppUITests: XCTestCase {
    
     
     let PICTURE_LIBRARY_BUTTON = 0
+    let CAMERA_BUTTON = 1
     var app: XCUIApplication!
     
     override func setUp() {
@@ -31,6 +32,11 @@ class AppUITests: XCTestCase {
     func testShowPhotoLibrary() {
      app.launch()
      app.toolbars.buttons.element(boundBy:PICTURE_LIBRARY_BUTTON).tap()
+    }
+    
+    func testShowCamera() {
+        app.launch()
+        app.toolbars.buttons.element(boundBy:CAMERA_BUTTON).tap()
     }
     
 }

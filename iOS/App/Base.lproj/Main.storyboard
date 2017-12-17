@@ -123,7 +123,11 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="ZLo-6r-xjS"/>
-                                    <barButtonItem image="camera" id="j7S-Wd-Spq"/>
+                                    <barButtonItem image="camera" id="j7S-Wd-Spq" userLabel="CameraButton">
+                                        <connections>
+                                            <action selector="onTapCameraButton:" destination="BYZ-38-t0r" id="DaC-Hp-Szv"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                                 <color key="barTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </toolbar>
