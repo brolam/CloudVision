@@ -14,12 +14,9 @@
         <scene sceneID="KjE-gD-ar2">
             <objects>
                 <navigationController id="9Vk-dn-HsN" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="qn5-wa-bri">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="qn5-wa-bri">
                         <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="3Hm-Mf-60B"/>
@@ -129,7 +126,6 @@
                                         </connections>
                                     </barButtonItem>
                                 </items>
-                                <color key="barTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -149,15 +145,115 @@
                         <outlet property="uiImageFaces" destination="kj8-cU-bL5" id="wez-Qe-0fR"/>
                         <outlet property="uiImageOneFace" destination="4JZ-FU-Gh1" id="u46-Fp-rAE"/>
                         <outlet property="uiLabelIndex" destination="xv6-Hd-3u5" id="72P-kl-rgx"/>
+                        <segue destination="Fcf-1W-GxR" kind="show" identifier="SequeFacesViewController" id="3NL-Hk-Zh6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="83" y="-41"/>
         </scene>
+        <!--Crowd-->
+        <scene sceneID="efz-JN-H6Q">
+            <objects>
+                <collectionViewController storyboardIdentifier="FacesViewController" title="Crowd" id="Fcf-1W-GxR" customClass="FacesViewController" customModule="CloudVision" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="scrollableAxes" dataMode="prototypes" id="84f-Tp-KGj">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" sectionInsetReference="layoutMargins" id="bVH-04-xeq">
+                            <size key="itemSize" width="76" height="76"/>
+                            <size key="headerReferenceSize" width="50" height="50"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="OneFaceViewCell" reuseIdentifier="OneFaceViewCell" id="2BB-5M-ggy" customClass="BMOneFaceViewCell" customModule="CloudVision">
+                                <rect key="frame" x="8" y="58" width="76" height="76"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                    <rect key="frame" x="0.0" y="0.0" width="76" height="76"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yV0-BZ-yll" userLabel="FaceUIImageView">
+                                            <rect key="frame" x="0.0" y="0.0" width="76" height="76"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="76" id="BNX-Tr-eh3"/>
+                                                <constraint firstAttribute="width" constant="76" id="tDY-0E-FLi"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="yV0-BZ-yll" secondAttribute="trailing" id="gTA-gv-Lsp"/>
+                                    <constraint firstAttribute="bottom" secondItem="yV0-BZ-yll" secondAttribute="bottom" id="p1N-jr-8Bg"/>
+                                    <constraint firstItem="yV0-BZ-yll" firstAttribute="leading" secondItem="2BB-5M-ggy" secondAttribute="leading" id="pGt-5U-gt6"/>
+                                    <constraint firstItem="yV0-BZ-yll" firstAttribute="top" secondItem="2BB-5M-ggy" secondAttribute="top" id="rSN-ew-4sR"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="faceUIImageView" destination="yV0-BZ-yll" id="rtk-n4-vE0"/>
+                                </connections>
+                            </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="TrackedImageViewCell" reuseIdentifier="TrackedImageViewCell" id="NUf-pu-LXk" userLabel="TrackedImageViewCell" customClass="BMTrackedImageViewCell" customModule="CloudVision">
+                                <rect key="frame" x="84" y="58" width="76" height="76"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                    <rect key="frame" x="0.0" y="0.0" width="76" height="76"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="crowd-test-01.png" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LQB-s2-nQ2" userLabel="UIImageView">
+                                            <rect key="frame" x="0.0" y="0.0" width="76" height="76"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="76" id="if8-y6-Loe"/>
+                                                <constraint firstAttribute="width" constant="76" id="y4b-OF-GYt"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="LQB-s2-nQ2" firstAttribute="leading" secondItem="NUf-pu-LXk" secondAttribute="leading" id="1Q8-80-huy"/>
+                                    <constraint firstAttribute="bottom" secondItem="LQB-s2-nQ2" secondAttribute="bottom" id="Alg-RB-4S2"/>
+                                    <constraint firstAttribute="trailing" secondItem="LQB-s2-nQ2" secondAttribute="trailing" id="Gol-5J-JD3"/>
+                                    <constraint firstItem="LQB-s2-nQ2" firstAttribute="top" secondItem="NUf-pu-LXk" secondAttribute="top" id="RmI-dA-4Cq"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="uiImageView" destination="LQB-s2-nQ2" id="1b0-Af-9VV"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="FacesHearderView" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="FacesHearderView" id="LJl-js-gXQ" userLabel="FacesHearderView" customClass="BMFacesHearderView" customModule="CloudVision">
+                            <rect key="frame" x="0.0" y="8" width="320" height="50"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Everyone" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lWj-aP-s80">
+                                    <rect key="frame" x="8" y="15" width="304" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <connections>
+                                <outlet property="titleUILabel" destination="lWj-aP-s80" id="Qy4-JR-VEm"/>
+                            </connections>
+                        </collectionReusableView>
+                        <connections>
+                            <outlet property="dataSource" destination="Fcf-1W-GxR" id="RYw-x3-KJ6"/>
+                            <outlet property="delegate" destination="Fcf-1W-GxR" id="syP-8x-xS9"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Crowd" id="ACm-wG-DGj">
+                        <barButtonItem key="rightBarButtonItem" image="clover" id="BHu-cM-bVb"/>
+                    </navigationItem>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cXa-sZ-jJt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="911.25" y="-41.25"/>
+        </scene>
     </scenes>
     <resources>
         <image name="camera" width="24" height="24"/>
+        <image name="clover" width="26" height="26"/>
+        <image name="crowd-test-01.png" width="414" height="414"/>
         <image name="crowd-test-02.jpg" width="960" height="717"/>
         <image name="photo-library" width="24" height="24"/>
     </resources>

@@ -26,6 +26,17 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
             self.selectedfacesIndex = -1
             NSLog("Detected %s.", "Error" );
         }
+        performSegue(
+            withIdentifier: "SequeFacesViewController",
+            sender: self
+        )
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if ( segue.identifier == "SequeFacesViewController"){
+            let facesViewController = segue.destination  as! FacesViewController
+            facesViewController.bmFacesDetector = self.bmFacesDetector
+        }
     }
     
     @IBAction func onTapPictureLibraryButton(_ sender: UIBarButtonItem) {

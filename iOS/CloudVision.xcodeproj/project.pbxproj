@@ -15,9 +15,13 @@
 		4E18B75E1FDF370800C1E77B /* crowd-test-01.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E18B75D1FDF370800C1E77B /* crowd-test-01.png */; };
 		4E33A4551FE290F800BB3C7D /* Vision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E33A4541FE290F700BB3C7D /* Vision.framework */; };
 		4E34678C1FE134C70033775C /* BMFacesDetectorTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34678B1FE134C70033775C /* BMFacesDetectorTestCase.swift */; };
+		4E34F0E41FE7C04A003873BE /* FacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34F0E31FE7C04A003873BE /* FacesViewController.swift */; };
+		4E34F0E71FE8091D003873BE /* BMOneFaceViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34F0E61FE8091D003873BE /* BMOneFaceViewCell.swift */; };
+		4E34F0E91FE813F1003873BE /* BMTrackedImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34F0E81FE813F1003873BE /* BMTrackedImageViewCell.swift */; };
 		4E355DB31FE3D9C9003B200D /* BMImageUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E355DB21FE3D9C9003B200D /* BMImageUtilities.swift */; };
 		4E355DB41FE3D9C9003B200D /* BMImageUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E355DB21FE3D9C9003B200D /* BMImageUtilities.swift */; };
 		4E3626FE1FE5AB6100FA1C6F /* AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E18B74C1FDF2A4A00C1E77B /* AppUITests.swift */; };
+		4E5E648F1FE84BAA00120374 /* BMFacesHearderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5E648E1FE84BAA00120374 /* BMFacesHearderView.swift */; };
 		4ED70C721FE2B16200129A11 /* BMFacesDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED70C711FE2B16200129A11 /* BMFacesDetector.swift */; };
 		4ED70C731FE2B5F700129A11 /* BMFacesDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED70C711FE2B16200129A11 /* BMFacesDetector.swift */; };
 		4ED70C751FE3570800129A11 /* BMImageUtilitiesTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED70C741FE3570800129A11 /* BMImageUtilitiesTestCase.swift */; };
@@ -59,7 +63,11 @@
 		4E18B75D1FDF370800C1E77B /* crowd-test-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crowd-test-01.png"; sourceTree = "<group>"; };
 		4E33A4541FE290F700BB3C7D /* Vision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vision.framework; path = System/Library/Frameworks/Vision.framework; sourceTree = SDKROOT; };
 		4E34678B1FE134C70033775C /* BMFacesDetectorTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMFacesDetectorTestCase.swift; sourceTree = "<group>"; };
+		4E34F0E31FE7C04A003873BE /* FacesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacesViewController.swift; sourceTree = "<group>"; };
+		4E34F0E61FE8091D003873BE /* BMOneFaceViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMOneFaceViewCell.swift; sourceTree = "<group>"; };
+		4E34F0E81FE813F1003873BE /* BMTrackedImageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTrackedImageViewCell.swift; sourceTree = "<group>"; };
 		4E355DB21FE3D9C9003B200D /* BMImageUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMImageUtilities.swift; sourceTree = "<group>"; };
+		4E5E648E1FE84BAA00120374 /* BMFacesHearderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMFacesHearderView.swift; sourceTree = "<group>"; };
 		4ED70C711FE2B16200129A11 /* BMFacesDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMFacesDetector.swift; sourceTree = "<group>"; };
 		4ED70C741FE3570800129A11 /* BMImageUtilitiesTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMImageUtilitiesTestCase.swift; sourceTree = "<group>"; };
 		4EE3CC841FE0A7A900FF60D6 /* crowd-test-02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "crowd-test-02.jpg"; sourceTree = "<group>"; };
@@ -121,10 +129,12 @@
 		4E18B72B1FDF2A4A00C1E77B /* App */ = {
 			isa = PBXGroup;
 			children = (
+				4E34F0E51FE80894003873BE /* Components */,
 				4ED70C701FE2B12E00129A11 /* Helpers */,
 				4E18B75C1FDF36ED00C1E77B /* Supporting Files */,
 				4E18B72C1FDF2A4A00C1E77B /* AppDelegate.swift */,
 				4E18B72E1FDF2A4A00C1E77B /* MainViewController.swift */,
+				4E34F0E31FE7C04A003873BE /* FacesViewController.swift */,
 				4E18B7301FDF2A4A00C1E77B /* Main.storyboard */,
 				4E18B7331FDF2A4A00C1E77B /* Assets.xcassets */,
 				4E18B7351FDF2A4A00C1E77B /* LaunchScreen.storyboard */,
@@ -159,6 +169,16 @@
 				4EE3CC841FE0A7A900FF60D6 /* crowd-test-02.jpg */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4E34F0E51FE80894003873BE /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				4E34F0E61FE8091D003873BE /* BMOneFaceViewCell.swift */,
+				4E34F0E81FE813F1003873BE /* BMTrackedImageViewCell.swift */,
+				4E5E648E1FE84BAA00120374 /* BMFacesHearderView.swift */,
+			);
+			name = Components;
 			sourceTree = "<group>";
 		};
 		4ED70C701FE2B12E00129A11 /* Helpers */ = {
@@ -495,8 +515,12 @@
 			files = (
 				4E18B72F1FDF2A4A00C1E77B /* MainViewController.swift in Sources */,
 				4ED70C721FE2B16200129A11 /* BMFacesDetector.swift in Sources */,
+				4E34F0E41FE7C04A003873BE /* FacesViewController.swift in Sources */,
 				4E18B72D1FDF2A4A00C1E77B /* AppDelegate.swift in Sources */,
 				4E355DB31FE3D9C9003B200D /* BMImageUtilities.swift in Sources */,
+				4E34F0E91FE813F1003873BE /* BMTrackedImageViewCell.swift in Sources */,
+				4E5E648F1FE84BAA00120374 /* BMFacesHearderView.swift in Sources */,
+				4E34F0E71FE8091D003873BE /* BMOneFaceViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
