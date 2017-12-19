@@ -10,8 +10,6 @@ import XCTest
 
 class AppUITests: XCTestCase {
     
-   
-    
     let PICTURE_LIBRARY_BUTTON = 0
     let CAMERA_BUTTON = 1
     var app: XCUIApplication!
@@ -20,23 +18,24 @@ class AppUITests: XCTestCase {
         super.setUp()
         continueAfterFailure = false
         self.app = XCUIApplication()
-        self.app.launchArguments.append("--uitesting")
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
         self.app = nil
     }
     
-    func testShowPhotoLibrary() {
-     app.launch()
-     app.toolbars.buttons.element(boundBy:PICTURE_LIBRARY_BUTTON).tap()
+    func testSelectOnePhotoByPhotoLibrary() {
+        app.launchEnvironment[BMImagePicker.FAKER_IMAGE_SELECTED]  = "crowd-test-01.png"
+        app.launch()
+        app.toolbars.buttons.element(boundBy:PICTURE_LIBRARY_BUTTON).tap()
+        XCTAssertEqual(app.collectionViews.cells.count, 10)
     }
     
-    func testShowCamera() {
+    func testSelectOnePhotoByCamera() {
+        app.launchEnvironment[BMImagePicker.FAKER_IMAGE_SELECTED]  = "crowd-test-02.jpg"
         app.launch()
         app.toolbars.buttons.element(boundBy:CAMERA_BUTTON).tap()
+        XCTAssertEqual(app.collectionViews.cells.count, 20)
     }
-    
 }

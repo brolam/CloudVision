@@ -40,17 +40,13 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
     }
     
     @IBAction func onTapPictureLibraryButton(_ sender: UIBarButtonItem) {
-        let imagePickerController = UIImagePickerController()
-        imagePickerController.sourceType = .photoLibrary
-        imagePickerController.delegate = self
-        present(imagePickerController, animated: true, completion: nil)
+        let imagePicker =  BMImagePicker(delegate: self, sourceType: .photoLibrary)
+        imagePicker.show()
     }
     
     @IBAction func onTapCameraButton(_ sender: UIBarButtonItem) {
-        let imagePickerController = UIImagePickerController()
-        imagePickerController.sourceType = .camera
-        imagePickerController.delegate = self
-        present(imagePickerController, animated: true, completion: nil)
+        let imagePicker =  BMImagePicker(delegate: self, sourceType: .camera)
+        imagePicker.show()
     }
     
     
