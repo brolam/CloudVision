@@ -34,82 +34,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="crowd-test-02.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="kj8-cU-bL5" userLabel="ImageFaces">
-                                <rect key="frame" x="0.0" y="44" width="320" height="392"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="320" id="0g5-84-OiH"/>
-                                    <constraint firstAttribute="height" constant="392" id="tTG-S9-55e"/>
-                                </constraints>
-                            </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0xS-Vn-mnC">
-                                <rect key="frame" x="16" y="373" width="288" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hue-4I-8MW" userLabel="buttonFaceDetectCrowd01">
-                                        <rect key="frame" x="8" y="2" width="130" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                        <state key="normal" title="Test Crowd 01">
-                                            <color key="titleColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="onDetectCrowd01:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JC3-0A-w3t"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lzj-nq-Gdd" userLabel="buttonFaceDetectCrowd02">
-                                        <rect key="frame" x="146" y="2" width="134" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                        <state key="normal" title="Test Crowd 02">
-                                            <color key="titleColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="onDetectCrowd02:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ayl-wP-YW8"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.06274757922535211" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FfX-nn-Xxb" userLabel="UIOnFace">
-                                <rect key="frame" x="16" y="260" width="288" height="102"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4JZ-FU-Gh1" userLabel="ImageOneFace">
-                                        <rect key="frame" x="94" y="8" width="100" height="91"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xv6-Hd-3u5" userLabel="LabelImageIndex">
-                                        <rect key="frame" x="202" y="0.0" width="86" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <color key="textColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zUr-8x-UVa" userLabel="buttonBack">
-                                        <rect key="frame" x="25" y="36" width="30" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="41"/>
-                                        <state key="normal" title="&lt;">
-                                            <color key="titleColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="onBackOnFace:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4OU-Gj-qry"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GZx-UA-WnL" userLabel="buttonNext">
-                                        <rect key="frame" x="230" y="38" width="30" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="41"/>
-                                        <state key="normal" title="&gt;">
-                                            <color key="titleColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="onNextFace:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Egv-v2-6HO"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.011840187823834225" green="0.011840187823834225" blue="0.011840187823834225" alpha="0.064590669014084501" colorSpace="custom" customColorSpace="sRGB"/>
-                            </view>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kbe-Ds-ZOW">
                                 <rect key="frame" x="0.0" y="436" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -129,12 +53,6 @@
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="kj8-cU-bL5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Amy-lh-dvP"/>
-                            <constraint firstItem="kj8-cU-bL5" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="44" id="Cyd-vd-rXw"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="kj8-cU-bL5" secondAttribute="bottom" constant="44" id="KXE-eu-BpG"/>
-                            <constraint firstItem="kj8-cU-bL5" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Mmq-El-ipm"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Cloud Vision" id="cnn-6G-ZJy">
@@ -142,9 +60,6 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="trash" id="gPu-eb-JMu"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="uiImageFaces" destination="kj8-cU-bL5" id="wez-Qe-0fR"/>
-                        <outlet property="uiImageOneFace" destination="4JZ-FU-Gh1" id="u46-Fp-rAE"/>
-                        <outlet property="uiLabelIndex" destination="xv6-Hd-3u5" id="72P-kl-rgx"/>
                         <segue destination="Fcf-1W-GxR" kind="show" identifier="SequeFacesViewController" id="3NL-Hk-Zh6"/>
                     </connections>
                 </viewController>
@@ -254,7 +169,6 @@
         <image name="camera" width="24" height="24"/>
         <image name="clover" width="26" height="26"/>
         <image name="crowd-test-01.png" width="414" height="414"/>
-        <image name="crowd-test-02.jpg" width="960" height="717"/>
         <image name="photo-library" width="24" height="24"/>
     </resources>
 </document>
