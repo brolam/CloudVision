@@ -14,7 +14,6 @@ class BMFacesDetector {
     var trackingFaces:[GMVFeature]!
     var trackedUIImage: UIImage?
     
-    
     init() {
         self.gmvDetector = GMVDetector(
             ofType: GMVDetectorTypeFace,
@@ -28,13 +27,21 @@ class BMFacesDetector {
         self.trackingFaces = [GMVFeature]()
     }
     
-    func trackFaces(uiImage: UIImage ){
-        self.trackedUIImage = uiImage
-        self.trackingFaces = gmvDetector.features(
+    private func getTrackFacesByOptions(_ uiImage: UIImage,_ options:[String:String] ) -> [GMVFeature]! {
+        return gmvDetector.features(
             in: uiImage,
-            options: nil
+            options: options
         )
-        self.removeInvalidFaces()
+    }
+    
+    func trackFaces(uiImage: UIImage){
+        self.trackedUIImage = BMImageUtilities.normalizeOrientation(uiImage)
+        let gmvDetectorOptions = [GMVDetectorImageOrientation : String.init(GMVImageOrientation.topLeft.rawValue)]
+        if let newTrackinFaces = getTrackFacesByOptions(self.trackedUIImage! , gmvDetectorOptions) {
+            self.trackingFaces = parseFaces(faces: newTrackinFaces )
+        } else {
+            self.trackingFaces = [GMVFeature]()
+        }
     }
     
     func countFaces() -> Int {
@@ -42,31 +49,28 @@ class BMFacesDetector {
     }
     
     func getFacesPictures() -> [UIImage]{
-        if (( self.trackedUIImage == nil ) || (self.trackingFaces.count == 0 ) ){
-            return [UIImage]()
-        }
-        
+        if ( self.trackingFaces.count == 0 ){ return [UIImage]() }
         let facesPictures = trackingFaces.map { (trackFace) -> UIImage in
             BMImageUtilities.crop(
                 uiImage: self.trackedUIImage!,
                 toRect: trackFace.bounds,
-                enlargeWidthInPercent:20,
-                enlargeHeightInPercent: 30
+                enlargeWidthInPercent: 20,
+                enlargeHeightInPercent:30
             )
         }
         return facesPictures
     }
     
-    private func removeInvalidFaces(){
-        if (self.trackingFaces.count == 0 ) { return }
-        let maxFaceWidth = trackingFaces.reduce(0.0, { (maxWidth: CGFloat , oneFace: GMVFeature ) -> CGFloat in
+    private func parseFaces(faces: [GMVFeature]) -> [GMVFeature]!{
+        if ( faces.count == 0 ) { return [GMVFeature]() }
+        let maxFaceWidth = faces.reduce(0.0, { (maxWidth: CGFloat , oneFace: GMVFeature ) -> CGFloat in
             maxWidth <  oneFace.bounds.width
                 ? oneFace.bounds.width
                 : maxWidth
         })
-        trackingFaces = trackingFaces.filter({ (oneFace) -> Bool in
+        //removes faces less than 50% of the maximum size
+        return faces.filter({ (oneFace) -> Bool in
             oneFace.bounds.width > ( maxFaceWidth / 2.0 )
         })
-        
     }
 }

@@ -21,4 +21,15 @@ class BMImageUtilitiesTestCase: XCTestCase {
         )
         XCTAssertEqual(cropedUiImage.size , CGSize(width: 120, height: 120))
     }
+    
+    func testAllNormalizeOrientation(){
+        let uiImage = UIImage(named: "crowd-test-01.png")!
+        for indexOrientation in 0...7{
+            let imageOrientation = UIImageOrientation.init(rawValue: indexOrientation)
+            let uiImageNewOrientation = UIImage(cgImage: uiImage.cgImage!, scale:1.0, orientation: imageOrientation!)
+            let normalizedImage = BMImageUtilities.normalizeOrientation(uiImageNewOrientation)
+            XCTAssertEqual(normalizedImage.imageOrientation, UIImageOrientation.up)
+        }
+    }
+    
 }

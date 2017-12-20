@@ -16,4 +16,15 @@ class BMImageUtilities {
         let cropedCGImage = uiImage.cgImage!.cropping(to: toRect.insetBy( dx: enlargeDx, dy: enlargeDy))
         return UIImage(cgImage: cropedCGImage!)
     }
+    
+    static func normalizeOrientation(_ uiImage: UIImage) -> UIImage {
+        if uiImage.imageOrientation == .up {
+            return uiImage
+        }
+        UIGraphicsBeginImageContextWithOptions(uiImage.size, false, uiImage.scale)
+        uiImage.draw(in: CGRect(origin: CGPoint.zero, size: uiImage.size))
+        let normalizedImage: UIImage? = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return normalizedImage!
+    }
 }
