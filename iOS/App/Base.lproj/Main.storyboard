@@ -157,12 +157,62 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="Crowd" id="ACm-wG-DGj">
-                        <barButtonItem key="rightBarButtonItem" image="clover" id="BHu-cM-bVb"/>
+                        <barButtonItem key="rightBarButtonItem" image="clover" id="BHu-cM-bVb">
+                            <connections>
+                                <segue destination="RuS-Dr-B0P" kind="presentation" identifier="SequeRaffleViewController" modalPresentationStyle="overCurrentContext" id="Mgm-sk-SQc"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cXa-sZ-jJt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="911.25" y="-41.25"/>
+        </scene>
+        <!--Raffle-->
+        <scene sceneID="Bgk-we-YSN">
+            <objects>
+                <viewController storyboardIdentifier="RaffleViewController" title="Raffle" modalPresentationStyle="overCurrentContext" id="RuS-Dr-B0P" customClass="RaffleViewController" customModule="CloudVision" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="BhR-1K-YJ6">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FWt-eM-mCQ" userLabel="ViewModal" customClass="BMViewModal" customModule="CloudVision" customModuleProvider="target">
+                                <rect key="frame" x="85" y="165" width="150" height="150"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="crowd-test-01.png" translatesAutoresizingMaskIntoConstraints="NO" id="Tjd-xg-72Q" userLabel="FaceUIImageView">
+                                        <rect key="frame" x="1" y="1" width="148" height="147"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="147" id="9Z4-0L-4pq"/>
+                                            <constraint firstAttribute="width" constant="148" id="JUn-5k-Nee"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="Tjd-xg-72Q" firstAttribute="leading" secondItem="FWt-eM-mCQ" secondAttribute="leading" constant="1" id="1TB-so-D0x"/>
+                                    <constraint firstAttribute="height" constant="150" id="32b-53-toI"/>
+                                    <constraint firstItem="Tjd-xg-72Q" firstAttribute="top" secondItem="FWt-eM-mCQ" secondAttribute="top" constant="1" id="66Z-8g-ofm"/>
+                                    <constraint firstAttribute="trailing" secondItem="Tjd-xg-72Q" secondAttribute="trailing" constant="1" id="QK1-z7-GAB"/>
+                                    <constraint firstAttribute="bottom" secondItem="Tjd-xg-72Q" secondAttribute="bottom" constant="2" id="S12-Vf-Ivd"/>
+                                    <constraint firstAttribute="width" constant="150" id="S6Z-CC-Y4W"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.078730193661971828" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="FWt-eM-mCQ" firstAttribute="centerY" secondItem="BhR-1K-YJ6" secondAttribute="centerY" id="jXT-m9-ctn"/>
+                            <constraint firstItem="FWt-eM-mCQ" firstAttribute="centerX" secondItem="BhR-1K-YJ6" secondAttribute="centerX" id="wIp-c6-lDY"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="yXi-fj-Hv4"/>
+                    </view>
+                    <connections>
+                        <outlet property="faceUIImageView" destination="Tjd-xg-72Q" id="F0R-gb-QD8"/>
+                        <outlet property="viewModal" destination="FWt-eM-mCQ" id="Vl4-K7-G05"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ulr-zn-ciM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1668.75" y="-41.25"/>
         </scene>
     </scenes>
     <resources>

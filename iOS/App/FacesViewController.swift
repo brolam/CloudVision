@@ -21,10 +21,12 @@ class FacesViewController: UICollectionViewController {
     
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        //TODO: incomplete code
         return 1
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+       //TODO: incomplete code
         return self.facesFictures.count + 1
     }
     
@@ -59,8 +61,15 @@ class FacesViewController: UICollectionViewController {
             facesHearderView.titleUILabel.text = "Everyone"
             return facesHearderView
         default:
-            //4
+            //TODO: incomplete code
             assert(false, "Unexpected element kind")
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if ( segue.identifier == "SequeRaffleViewController"){
+            let  raffleViewController = segue.destination  as! RaffleViewController
+            raffleViewController.facesFictures = self.facesFictures
         }
     }
 }

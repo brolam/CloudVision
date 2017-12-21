@@ -12,6 +12,7 @@ class AppUITests: XCTestCase {
     
     let PICTURE_LIBRARY_BUTTON = 0
     let CAMERA_BUTTON = 1
+    let RAFFLE_BUTTON = 1
     var app: XCUIApplication!
     
     override func setUp() {
@@ -37,5 +38,10 @@ class AppUITests: XCTestCase {
         app.launch()
         app.toolbars.buttons.element(boundBy:CAMERA_BUTTON).tap()
         XCTAssertEqual(app.collectionViews.cells.count, 20)
+    }
+   
+    func testRaffleOneCompetitor(){
+        testSelectOnePhotoByPhotoLibrary()
+        app.navigationBars.buttons.element(boundBy:RAFFLE_BUTTON).tap()
     }
 }
