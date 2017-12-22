@@ -29,6 +29,9 @@
 		4E3626FE1FE5AB6100FA1C6F /* AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E18B74C1FDF2A4A00C1E77B /* AppUITests.swift */; };
 		4E38CC991FE911CA002F8002 /* BMImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E38CC981FE911CA002F8002 /* BMImagePicker.swift */; };
 		4E38CC9D1FE9191B002F8002 /* BMImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E38CC981FE911CA002F8002 /* BMImagePicker.swift */; };
+		4E443DD81FEBF34A00EF0065 /* BMCrowdTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E443DD71FEBF34A00EF0065 /* BMCrowdTestCase.swift */; };
+		4E443DDB1FEBF9F700EF0065 /* BMCrowd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E443DDA1FEBF9F700EF0065 /* BMCrowd.swift */; };
+		4E443DDC1FEBF9F700EF0065 /* BMCrowd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E443DDA1FEBF9F700EF0065 /* BMCrowd.swift */; };
 		4E5E648F1FE84BAA00120374 /* BMFacesHearderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5E648E1FE84BAA00120374 /* BMFacesHearderView.swift */; };
 		4ED70C721FE2B16200129A11 /* BMFacesDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED70C711FE2B16200129A11 /* BMFacesDetector.swift */; };
 		4ED70C731FE2B5F700129A11 /* BMFacesDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED70C711FE2B16200129A11 /* BMFacesDetector.swift */; };
@@ -80,6 +83,8 @@
 		4E34F0E81FE813F1003873BE /* BMTrackedImageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTrackedImageViewCell.swift; sourceTree = "<group>"; };
 		4E355DB21FE3D9C9003B200D /* BMImageUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMImageUtilities.swift; sourceTree = "<group>"; };
 		4E38CC981FE911CA002F8002 /* BMImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMImagePicker.swift; sourceTree = "<group>"; };
+		4E443DD71FEBF34A00EF0065 /* BMCrowdTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMCrowdTestCase.swift; sourceTree = "<group>"; };
+		4E443DDA1FEBF9F700EF0065 /* BMCrowd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMCrowd.swift; sourceTree = "<group>"; };
 		4E5E648E1FE84BAA00120374 /* BMFacesHearderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMFacesHearderView.swift; sourceTree = "<group>"; };
 		4ED70C711FE2B16200129A11 /* BMFacesDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMFacesDetector.swift; sourceTree = "<group>"; };
 		4ED70C741FE3570800129A11 /* BMImageUtilitiesTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMImageUtilitiesTestCase.swift; sourceTree = "<group>"; };
@@ -142,6 +147,7 @@
 		4E18B72B1FDF2A4A00C1E77B /* App */ = {
 			isa = PBXGroup;
 			children = (
+				4E443DD91FEBF9C500EF0065 /* Models */,
 				4E34F0E51FE80894003873BE /* Components */,
 				4ED70C701FE2B12E00129A11 /* Helpers */,
 				4E18B75C1FDF36ED00C1E77B /* Supporting Files */,
@@ -164,6 +170,7 @@
 				4E34678B1FE134C70033775C /* BMFacesDetectorTestCase.swift */,
 				4ED70C741FE3570800129A11 /* BMImageUtilitiesTestCase.swift */,
 				4E3257171FEAA25A0013E621 /* BMRaffleTestCase.swift */,
+				4E443DD71FEBF34A00EF0065 /* BMCrowdTestCase.swift */,
 			);
 			path = AppTests;
 			sourceTree = "<group>";
@@ -195,6 +202,14 @@
 				4E0EACB61FEBBAFF00AFB704 /* BMViewModal.swift */,
 			);
 			name = Components;
+			sourceTree = "<group>";
+		};
+		4E443DD91FEBF9C500EF0065 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4E443DDA1FEBF9F700EF0065 /* BMCrowd.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		4ED70C701FE2B12E00129A11 /* Helpers */ = {
@@ -532,6 +547,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E18B72F1FDF2A4A00C1E77B /* MainViewController.swift in Sources */,
+				4E443DDB1FEBF9F700EF0065 /* BMCrowd.swift in Sources */,
 				4ED70C721FE2B16200129A11 /* BMFacesDetector.swift in Sources */,
 				4E32571E1FEAF1330013E621 /* RaffleViewController.swift in Sources */,
 				4E0EACB71FEBBAFF00AFB704 /* BMViewModal.swift in Sources */,
@@ -550,8 +566,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E443DDC1FEBF9F700EF0065 /* BMCrowd.swift in Sources */,
 				4E34678C1FE134C70033775C /* BMFacesDetectorTestCase.swift in Sources */,
 				4ED70C751FE3570800129A11 /* BMImageUtilitiesTestCase.swift in Sources */,
+				4E443DD81FEBF34A00EF0065 /* BMCrowdTestCase.swift in Sources */,
 				4ED70C731FE2B5F700129A11 /* BMFacesDetector.swift in Sources */,
 				4E3257181FEAA25A0013E621 /* BMRaffleTestCase.swift in Sources */,
 				4E32571C1FEAB4F80013E621 /* BMRaffle.swift in Sources */,
