@@ -10,15 +10,13 @@ import Foundation
 import UIKit
 
 class FacesViewController: UICollectionViewController {
-    var bmFacesDetector:BMFacesDetector!
+    var bmCrowf: BMCrowd!
     var facesFictures = [UIImage]()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.facesFictures = bmFacesDetector.getFacesPictures()
+        self.facesFictures = bmCrowf.getFacesPictures()
     }
-    
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         //TODO: incomplete code
@@ -41,7 +39,7 @@ class FacesViewController: UICollectionViewController {
             let trackedImageViewCell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: "TrackedImageViewCell",
                 for: indexPath) as! BMTrackedImageViewCell
-            trackedImageViewCell.uiImageView.image = self.bmFacesDetector.trackedUIImage
+            trackedImageViewCell.uiImageView.image = self.bmCrowf.trackedUIImage
             return trackedImageViewCell
             
         }

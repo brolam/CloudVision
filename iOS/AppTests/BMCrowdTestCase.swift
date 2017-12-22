@@ -14,18 +14,17 @@ class BMCrowdTestCase: XCTestCase {
         title: "Dec 31 2017 00:00:00",
         created : Date(),
         trackedUIImage: UIImage(),
-        facesLocation: [0:CGRect(x: 100, y: 100, width: 0, height: 100)],
-        winnersIndex: [0]
+        people: [
+            BMCrowd.Person(key:1 , faceImageLocation: CGRect(x:0, y:0, width: 60 , height:60 ), winnerPosition: 0)
+        ]
     )
     
     func testInit() {
-        let uiImage = UIImage(named: "crowd-test-01.png")!
         let bmCrowd = BMCrowd(
-            title: "Dec 31 2017 00:00:00",
-            created : Date(),
-            trackedUIImage: uiImage,
-            facesLocation: [0:CGRect(x: 100, y: 100, width: 0, height: 100)],
-            winnersIndex: [0]
+            title: crowdFields.title,
+            created : crowdFields.created,
+            trackedUIImage: crowdFields.trackedUIImage,
+            people: crowdFields.people
         )
         XCTAssertNotNil(bmCrowd)
     }
@@ -34,10 +33,9 @@ class BMCrowdTestCase: XCTestCase {
         XCTAssertNil(
             BMCrowd(
                 title:"",
-                created: crowdFields.created,
+                created : crowdFields.created,
                 trackedUIImage: crowdFields.trackedUIImage,
-                facesLocation: crowdFields.facesLocation,
-                winnersIndex: crowdFields.winnersIndex),
+                people: crowdFields.people),
             "Title it is required"
         )
         
@@ -46,19 +44,26 @@ class BMCrowdTestCase: XCTestCase {
                 title: crowdFields.title,
                 created: crowdFields.created,
                 trackedUIImage: nil,
-                facesLocation: crowdFields.facesLocation,
-                winnersIndex: crowdFields.winnersIndex),
+                people: crowdFields.people),
             "TrackedUIImage it is required"
+        )
+        
+        XCTAssertNil(
+            BMCrowd(
+                title: crowdFields.title,
+                created: crowdFields.created,
+                trackedUIImage: crowdFields.trackedUIImage,
+                people: nil ),
+            "People it is required"
         )
     }
     
     func testSaveAndLoadOneCrowd(){
         let oneBMCrowd = BMCrowd(
-            title:crowdFields.title,
-            created: crowdFields.created,
+            title: crowdFields.title,
+            created : crowdFields.created,
             trackedUIImage: crowdFields.trackedUIImage,
-            facesLocation: crowdFields.facesLocation,
-            winnersIndex: crowdFields.winnersIndex)
+            people: crowdFields.people)
         XCTAssertTrue(BMCrowd.save(crowds:[oneBMCrowd!]), "Failed to save crowds...")
         let crowds: [BMCrowd]? = BMCrowd.load()
         XCTAssertNotNil(crowds)

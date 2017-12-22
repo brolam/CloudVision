@@ -28,19 +28,19 @@ class BMFacesDetectorTestCase: XCTestCase {
     }
     
     func testTrackFacesCrowd01Count() {
-        bmFacesDetector.trackFaces(uiImage: self.uiImageCrowd01)
+        XCTAssertTrue(bmFacesDetector.trackFaces(uiImage: self.uiImageCrowd01))
         XCTAssertEqual(bmFacesDetector.countFaces(), 9)
     }
     
     func testTrackFacesCrowd02Count() {
-        bmFacesDetector.trackFaces(uiImage: self.uiImageCrowd02)
+        XCTAssertTrue(bmFacesDetector.trackFaces(uiImage: self.uiImageCrowd02))
         XCTAssertEqual(bmFacesDetector.countFaces(), 19)
     }
     
-    func testGetFacesPictures(){
+    func testGetFacesLocation(){
         self.testTrackFacesCrowd02Count()
-        let facesPictures: [UIImage]  = bmFacesDetector.getFacesPictures()
-        XCTAssertEqual(facesPictures.count , 19)
+        let facesLocation: [CGRect]  = bmFacesDetector.getFacesLocation()
+        XCTAssertEqual(facesLocation.count , 19)
     }
     
     func testPerformanceTrackFaces() {

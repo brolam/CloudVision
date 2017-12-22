@@ -34,7 +34,7 @@ class BMFacesDetector {
         )
     }
     
-    func trackFaces(uiImage: UIImage){
+    func trackFaces(uiImage: UIImage) -> Bool{
         self.trackedUIImage = BMImageUtilities.normalizeOrientation(uiImage)
         let gmvDetectorOptions = [GMVDetectorImageOrientation : String.init(GMVImageOrientation.topLeft.rawValue)]
         if let newTrackinFaces = getTrackFacesByOptions(self.trackedUIImage! , gmvDetectorOptions) {
@@ -42,23 +42,17 @@ class BMFacesDetector {
         } else {
             self.trackingFaces = [GMVFeature]()
         }
+        return countFaces() > 0
     }
     
     func countFaces() -> Int {
         return trackingFaces.count
     }
     
-    func getFacesPictures() -> [UIImage]{
-        if ( self.trackingFaces.count == 0 ){ return [UIImage]() }
-        let facesPictures = trackingFaces.map { (trackFace) -> UIImage in
-            BMImageUtilities.crop(
-                uiImage: self.trackedUIImage!,
-                toRect: trackFace.bounds,
-                enlargeWidthInPercent: 20,
-                enlargeHeightInPercent:30
-            )
-        }
-        return facesPictures
+    func getFacesLocation() -> [CGRect]{
+        if ( self.trackingFaces.count == 0 ){ return [CGRect]() }
+        let facesLocation = trackingFaces.enumerated().map{ (index, element ) in element.bounds }
+        return facesLocation
     }
     
     private func parseFaces(faces: [GMVFeature]) -> [GMVFeature]!{

@@ -32,10 +32,12 @@
 		4E443DD81FEBF34A00EF0065 /* BMCrowdTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E443DD71FEBF34A00EF0065 /* BMCrowdTestCase.swift */; };
 		4E443DDB1FEBF9F700EF0065 /* BMCrowd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E443DDA1FEBF9F700EF0065 /* BMCrowd.swift */; };
 		4E443DDC1FEBF9F700EF0065 /* BMCrowd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E443DDA1FEBF9F700EF0065 /* BMCrowd.swift */; };
+		4E4F8D501FED0B40004D71CC /* BMCrowd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E443DDA1FEBF9F700EF0065 /* BMCrowd.swift */; };
 		4E5E648F1FE84BAA00120374 /* BMFacesHearderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5E648E1FE84BAA00120374 /* BMFacesHearderView.swift */; };
 		4ED70C721FE2B16200129A11 /* BMFacesDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED70C711FE2B16200129A11 /* BMFacesDetector.swift */; };
 		4ED70C731FE2B5F700129A11 /* BMFacesDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED70C711FE2B16200129A11 /* BMFacesDetector.swift */; };
 		4ED70C751FE3570800129A11 /* BMImageUtilitiesTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED70C741FE3570800129A11 /* BMImageUtilitiesTestCase.swift */; };
+		4EE28C2A1FED2E4700F8BC56 /* BMImageUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E355DB21FE3D9C9003B200D /* BMImageUtilities.swift */; };
 		4EE3CC851FE0A7AA00FF60D6 /* crowd-test-02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4EE3CC841FE0A7A900FF60D6 /* crowd-test-02.jpg */; };
 /* End PBXBuildFile section */
 
@@ -582,8 +584,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E4F8D501FED0B40004D71CC /* BMCrowd.swift in Sources */,
 				4E38CC9D1FE9191B002F8002 /* BMImagePicker.swift in Sources */,
 				4E3626FE1FE5AB6100FA1C6F /* AppUITests.swift in Sources */,
+				4EE28C2A1FED2E4700F8BC56 /* BMImageUtilities.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

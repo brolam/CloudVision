@@ -11,46 +11,90 @@ import UIKit
 import os.log
 
 class BMCrowd: NSObject, NSCoding {
-   
     //MARK: Archiving Paths
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("crowds")
-    var title: String!
-    let created: Date!
-    var trackedUIImage: UIImage!
-    var facesLocation: [Int:CGRect]
-    var winnersIndex:[Int]
     //MARK: Types
     struct PropertyKey {
         static let title = "title"
         static let created = "created"
         static let trackedUIImage = "trackedUIImage"
-        static let facesLocation = "facesLocation"
-        static let winnersIndex = "winnersIndex"
+        static let people = "people"
+        struct People {
+            static let key = "key"
+            static let faceImageLocation = "faceImageLocation"
+            static let winnerPosition = "winnerPosition"
+        }
     }
     
-    init?(
-        title: String!,
-        created : Date!,
-        trackedUIImage: UIImage!,
-        facesLocation: [Int:CGRect] = [Int:CGRect]() ,
-        winnersIndex: [Int] = [Int]()) {
+    @objc(BMCrowdPerson)
+    class Person :  NSObject, NSCoding {
+        var key: Int!
+        var faceImageLocation: CGRect!
+        var winnerPosition: Int!
+        
+        init(key: Int!, faceImageLocation: CGRect!, winnerPosition: Int!) {
+            self.key = key
+            self.faceImageLocation = faceImageLocation
+            self.winnerPosition = winnerPosition
+        }
+        
+        func encode(with aCoder: NSCoder) {
+            aCoder.encode(self.key, forKey: PropertyKey.People.key)
+            aCoder.encode(self.faceImageLocation, forKey: PropertyKey.People.faceImageLocation)
+            aCoder.encode(self.winnerPosition, forKey: PropertyKey.People.winnerPosition)
+        }
+        
+        convenience required init?(coder aDecoder: NSCoder) {
+            guard let decoderKey = aDecoder.decodeObject(forKey: PropertyKey.People.key) as? Int else {
+                os_log("Unable to decode the Person Key for a Crowd object.", log: OSLog.default, type: .debug)
+                return nil
+            }
+            
+            guard let decoderFaceImageLocation = aDecoder.decodeObject(
+                forKey: PropertyKey.People.faceImageLocation) as? CGRect else{
+                os_log("Unable to decode the Person FaceImageLocation for a Crowd object.", log: OSLog.default, type: .debug)
+                return nil
+            }
+            
+            guard let decoderWinnerPosition = aDecoder.decodeObject(
+                forKey: PropertyKey.People.winnerPosition) as? Int else{
+                    os_log("Unable to decode the Person WinnerPosition for a Crowd object.",
+                           log: OSLog.default, type: .debug)
+                    return nil
+            }
+            self.init(
+                key: decoderKey,
+                faceImageLocation: decoderFaceImageLocation,
+                winnerPosition: decoderWinnerPosition
+            )
+            
+        }
+    }
+    
+    var title: String!
+    let created: Date!
+    var trackedUIImage: UIImage!
+    var people: [Person]
+    
+    init?(title: String, created : Date, trackedUIImage: UIImage! , people: [Person]!) {
         guard title.isEmpty == false else { return nil }
         guard trackedUIImage != nil else { return nil }
+        guard people != nil else { return nil }
+        guard people.count > 0  else { return nil }
         
         self.title = title
         self.created = created
         self.trackedUIImage = trackedUIImage
-        self.facesLocation = facesLocation
-        self.winnersIndex = winnersIndex
+        self.people = people
+        
     }
     
     func encode(with aCoder: NSCoder) {
         aCoder.encode(self.title, forKey: PropertyKey.title)
         aCoder.encode(self.created, forKey: PropertyKey.created)
         aCoder.encode(self.trackedUIImage, forKey: PropertyKey.trackedUIImage)
-        aCoder.encode(self.facesLocation, forKey: PropertyKey.facesLocation)
-        aCoder.encode(self.winnersIndex, forKey: PropertyKey.winnersIndex)
+        aCoder.encode(self.people, forKey: PropertyKey.people)
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
@@ -69,20 +113,29 @@ class BMCrowd: NSObject, NSCoding {
             return nil
         }
         
-        guard let decodeFacesLocation = aDecoder.decodeObject(forKey: PropertyKey.facesLocation) as? [Int: CGRect] else {
-            os_log("Unable to decode the facesLocation for a Crowd object.", log: OSLog.default, type: .debug)
+        guard let decodePeople = aDecoder.decodeObject(forKey: PropertyKey.people) as? [Person] else {
+            os_log("Unable to decode the People for a Crowd object.", log: OSLog.default, type: .debug)
             return nil
         }
-        
-        let decodeWinnersIndex = aDecoder.decodeObject(forKey: PropertyKey.winnersIndex) as! [Int]
         
         self.init(
             title: decodeTitle,
             created: decodeCreated,
             trackedUIImage: decodeTrackedUIImage,
-            facesLocation: decodeFacesLocation,
-            winnersIndex: decodeWinnersIndex
+            people: decodePeople
         )
+    }
+    
+    func getFacesPictures() -> [UIImage]{
+        let facesPictures = people.map { (person) -> UIImage in
+            BMImageUtilities.crop(
+                uiImage: self.trackedUIImage!,
+                toRect: person.faceImageLocation,
+                enlargeWidthInPercent: 20,
+                enlargeHeightInPercent:30
+            )
+        }
+        return facesPictures
     }
     
     static func save(crowds:[BMCrowd]) -> Bool{
@@ -92,5 +145,4 @@ class BMCrowd: NSObject, NSCoding {
     static func load() -> [BMCrowd]?{
         return (NSKeyedUnarchiver.unarchiveObject(withFile: BMCrowd.ArchiveURL.path) as? [BMCrowd])
     }
-    
 }

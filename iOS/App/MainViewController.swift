@@ -12,17 +12,23 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
     let bmFacesDetector = BMFacesDetector()
     
     func doDetectFaces(_ imageFaces: UIImage!) {
-        self.bmFacesDetector.trackFaces(uiImage: imageFaces)
-        performSegue(
-            withIdentifier: "SequeFacesViewController",
-            sender: self
-        )
+        if ( self.bmFacesDetector.trackFaces(uiImage: imageFaces) ){
+            guard let crowd = self.saveOneCrowd(self.bmFacesDetector) else {
+                //TODO: incomplete code
+                fatalError("One crowd was not saved with successful")
+            }
+            performSegue(
+                withIdentifier: "SequeFacesViewController",
+                sender: crowd
+            )
+            
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if ( segue.identifier == "SequeFacesViewController"){
             let facesViewController = segue.destination  as! FacesViewController
-            facesViewController.bmFacesDetector = self.bmFacesDetector
+            facesViewController.bmCrowf = sender as! BMCrowd
         }
     }
     
@@ -47,6 +53,24 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
         }
         doDetectFaces(selectedImage)
         dismiss(animated: true, completion: nil)
+    }
+    
+    func saveOneCrowd(_ bmFacesDetector: BMFacesDetector! ) -> BMCrowd? {
+        let created = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .full
+        dateFormatter.timeStyle = .medium
+        let people = bmFacesDetector.getFacesLocation().enumerated().map{
+            (index, cgRect) in BMCrowd.Person(key: index, faceImageLocation: cgRect, winnerPosition: 0)
+        }
+        let bmCrowd = BMCrowd(
+            title: dateFormatter.string(from: created),
+            created: created,
+            trackedUIImage: bmFacesDetector.trackedUIImage,
+            people: people
+        )
+        
+        return BMCrowd.save(crowds: [bmCrowd!]) ? bmCrowd : nil
     }
 }
 
