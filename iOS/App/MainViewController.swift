@@ -8,8 +8,15 @@
 
 import UIKit
 
-class MainViewController: UIViewController , UIImagePickerControllerDelegate , UINavigationControllerDelegate {
+class MainViewController: UIViewController , UIImagePickerControllerDelegate , UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
+    
+    @IBOutlet weak var tableCardsView: UITableView!
     let bmFacesDetector = BMFacesDetector()
+    var crowds:[BMCrowd] = [BMCrowd]()
+    
+    override func viewDidLoad() {
+        self.loadCrowds()
+    }
     
     func doDetectFaces(_ imageFaces: UIImage!) {
         if ( self.bmFacesDetector.trackFaces(uiImage: imageFaces) ){
@@ -17,15 +24,44 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
                 //TODO: incomplete code
                 fatalError("One crowd was not saved with successful")
             }
-            performSegue(
+            self.performSegue(
                 withIdentifier: "SequeFacesViewController",
                 sender: crowd
             )
-            
         }
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        //TODO: incomplete code
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return crowds.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let bmCrowdCardView = tableView.dequeueReusableCell(withIdentifier: "BMCrowdCardView", for: indexPath) as? BMCrowdCardView  else {
+            //TODO: incomplete code
+            fatalError("The dequeued cell is not an instance of BMCrowdCardView.")
+        }
+        let bmCrowd = self.crowds[indexPath.item]
+        bmCrowdCardView.BackgroundUIImage.image = bmCrowd.trackedUIImage
+        bmCrowdCardView.titleLabel.text = bmCrowd.title
+        return bmCrowdCardView
+    }
+    
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        let crowd =  self.crowds[indexPath.item]
+        performSegue(
+            withIdentifier: "SequeFacesViewController",
+            sender: crowd
+        )
+        return indexPath
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
         if ( segue.identifier == "SequeFacesViewController"){
             let facesViewController = segue.destination  as! FacesViewController
             facesViewController.bmCrowf = sender as! BMCrowd
@@ -55,6 +91,11 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
         dismiss(animated: true, completion: nil)
     }
     
+    func loadCrowds() {
+        self.crowds = BMCrowd.load()
+        self.tableCardsView.reloadData()
+    }
+    
     func saveOneCrowd(_ bmFacesDetector: BMFacesDetector! ) -> BMCrowd? {
         let created = Date()
         let dateFormatter = DateFormatter()
@@ -69,8 +110,12 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
             trackedUIImage: bmFacesDetector.trackedUIImage,
             people: people
         )
-        
-        return BMCrowd.save(crowds: [bmCrowd!]) ? bmCrowd : nil
+        self.crowds.insert(bmCrowd!, at:0 )
+        if BMCrowd.save(crowds: self.crowds) {
+            self.tableCardsView.reloadData()
+            return bmCrowd
+        }
+        return nil
     }
 }
 

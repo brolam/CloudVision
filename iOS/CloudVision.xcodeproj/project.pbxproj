@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4E0EACB71FEBBAFF00AFB704 /* BMViewModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0EACB61FEBBAFF00AFB704 /* BMViewModal.swift */; };
+		4E1097CF1FEE63D5009B69F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E18B72C1FDF2A4A00C1E77B /* AppDelegate.swift */; };
+		4E1097D01FEE63D6009B69F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E18B72C1FDF2A4A00C1E77B /* AppDelegate.swift */; };
 		4E18B72D1FDF2A4A00C1E77B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E18B72C1FDF2A4A00C1E77B /* AppDelegate.swift */; };
 		4E18B72F1FDF2A4A00C1E77B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E18B72E1FDF2A4A00C1E77B /* MainViewController.swift */; };
 		4E18B7321FDF2A4A00C1E77B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E18B7301FDF2A4A00C1E77B /* Main.storyboard */; };
@@ -38,6 +40,7 @@
 		4ED70C731FE2B5F700129A11 /* BMFacesDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED70C711FE2B16200129A11 /* BMFacesDetector.swift */; };
 		4ED70C751FE3570800129A11 /* BMImageUtilitiesTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED70C741FE3570800129A11 /* BMImageUtilitiesTestCase.swift */; };
 		4EE28C2A1FED2E4700F8BC56 /* BMImageUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E355DB21FE3D9C9003B200D /* BMImageUtilities.swift */; };
+		4EE28C2C1FEDC6EA00F8BC56 /* BMCrowdCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE28C2B1FEDC6EA00F8BC56 /* BMCrowdCardView.swift */; };
 		4EE3CC851FE0A7AA00FF60D6 /* crowd-test-02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4EE3CC841FE0A7A900FF60D6 /* crowd-test-02.jpg */; };
 /* End PBXBuildFile section */
 
@@ -90,6 +93,7 @@
 		4E5E648E1FE84BAA00120374 /* BMFacesHearderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMFacesHearderView.swift; sourceTree = "<group>"; };
 		4ED70C711FE2B16200129A11 /* BMFacesDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMFacesDetector.swift; sourceTree = "<group>"; };
 		4ED70C741FE3570800129A11 /* BMImageUtilitiesTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMImageUtilitiesTestCase.swift; sourceTree = "<group>"; };
+		4EE28C2B1FEDC6EA00F8BC56 /* BMCrowdCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMCrowdCardView.swift; sourceTree = "<group>"; };
 		4EE3CC841FE0A7A900FF60D6 /* crowd-test-02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "crowd-test-02.jpg"; sourceTree = "<group>"; };
 		6F42DA7B0C8A7F51ACEFAA58 /* Pods-CloudVision.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloudVision.release.xcconfig"; path = "Pods/Target Support Files/Pods-CloudVision/Pods-CloudVision.release.xcconfig"; sourceTree = "<group>"; };
 		701076AB7293BFA9D4E206E1 /* Pods-CloudVisionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloudVisionTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CloudVisionTests/Pods-CloudVisionTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -202,6 +206,7 @@
 				4E34F0E81FE813F1003873BE /* BMTrackedImageViewCell.swift */,
 				4E5E648E1FE84BAA00120374 /* BMFacesHearderView.swift */,
 				4E0EACB61FEBBAFF00AFB704 /* BMViewModal.swift */,
+				4EE28C2B1FEDC6EA00F8BC56 /* BMCrowdCardView.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -549,6 +554,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E18B72F1FDF2A4A00C1E77B /* MainViewController.swift in Sources */,
+				4EE28C2C1FEDC6EA00F8BC56 /* BMCrowdCardView.swift in Sources */,
 				4E443DDB1FEBF9F700EF0065 /* BMCrowd.swift in Sources */,
 				4ED70C721FE2B16200129A11 /* BMFacesDetector.swift in Sources */,
 				4E32571E1FEAF1330013E621 /* RaffleViewController.swift in Sources */,
@@ -576,6 +582,7 @@
 				4E3257181FEAA25A0013E621 /* BMRaffleTestCase.swift in Sources */,
 				4E32571C1FEAB4F80013E621 /* BMRaffle.swift in Sources */,
 				4E32571F1FEAF1330013E621 /* RaffleViewController.swift in Sources */,
+				4E1097CF1FEE63D5009B69F7 /* AppDelegate.swift in Sources */,
 				4E355DB41FE3D9C9003B200D /* BMImageUtilities.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -587,6 +594,7 @@
 				4E4F8D501FED0B40004D71CC /* BMCrowd.swift in Sources */,
 				4E38CC9D1FE9191B002F8002 /* BMImagePicker.swift in Sources */,
 				4E3626FE1FE5AB6100FA1C6F /* AppUITests.swift in Sources */,
+				4E1097D01FEE63D6009B69F7 /* AppDelegate.swift in Sources */,
 				4EE28C2A1FED2E4700F8BC56 /* BMImageUtilities.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

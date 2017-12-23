@@ -24,7 +24,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yKw-sH-SeL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-653" y="-41"/>
+            <point key="canvasLocation" x="-998" y="-45"/>
         </scene>
         <!--Cloud Vision-->
         <scene sceneID="tne-QT-ifu">
@@ -34,6 +34,76 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="230" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Z05-RZ-QFF" userLabel="TableCardsView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="480" id="JDw-5i-kSD"/>
+                                    <constraint firstAttribute="width" constant="320" id="oM5-2t-U5G"/>
+                                </constraints>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="BMCrowdCardView" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BMCrowdCardView" rowHeight="230" id="1hb-bb-1Ww" customClass="BMCrowdCardView" customModule="CloudVision">
+                                        <rect key="frame" x="0.0" y="28" width="320" height="230"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1hb-bb-1Ww" id="AJH-ce-Nef">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="229.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="crowd-test-02.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Alw-RH-nbQ" userLabel="BackgroundUIImage">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="228"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="320" id="aTN-EE-WMR"/>
+                                                        <constraint firstAttribute="height" constant="228" id="iJK-gk-juT"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mhr-m0-Co4">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="230"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saturday, December 23, 2017 at 6:28:31 AM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4hh-YR-qCO">
+                                                            <rect key="frame" x="8" y="201" width="304" height="21"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="21" id="8M7-hL-IXz"/>
+                                                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="304" id="Utc-Yg-hX0"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <color key="shadowColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.31940470950704225" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="230" id="Uhd-oi-7WO"/>
+                                                        <constraint firstAttribute="width" constant="320" id="a0t-Py-T0h"/>
+                                                        <constraint firstAttribute="trailing" secondItem="4hh-YR-qCO" secondAttribute="trailing" constant="8" id="hgh-2b-jSK"/>
+                                                        <constraint firstItem="4hh-YR-qCO" firstAttribute="leading" secondItem="mhr-m0-Co4" secondAttribute="leading" constant="8" id="lug-pR-43v"/>
+                                                        <constraint firstAttribute="bottom" secondItem="4hh-YR-qCO" secondAttribute="bottom" constant="8" id="qXD-9V-3iS"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Alw-RH-nbQ" firstAttribute="top" secondItem="AJH-ce-Nef" secondAttribute="top" id="IjH-xZ-Y1Z"/>
+                                                <constraint firstAttribute="bottom" secondItem="mhr-m0-Co4" secondAttribute="bottom" constant="-0.5" id="JYR-Ka-Jrk"/>
+                                                <constraint firstItem="mhr-m0-Co4" firstAttribute="leading" secondItem="AJH-ce-Nef" secondAttribute="leading" id="KFF-Ie-4eR"/>
+                                                <constraint firstAttribute="bottom" secondItem="Alw-RH-nbQ" secondAttribute="bottom" constant="1.5" id="Rw6-kP-Aju"/>
+                                                <constraint firstItem="mhr-m0-Co4" firstAttribute="top" secondItem="AJH-ce-Nef" secondAttribute="top" id="aM8-AG-bnL"/>
+                                                <constraint firstAttribute="trailing" secondItem="mhr-m0-Co4" secondAttribute="trailing" id="d3R-gp-jPr"/>
+                                                <constraint firstAttribute="trailing" secondItem="Alw-RH-nbQ" secondAttribute="trailing" id="ib6-Rx-2dL"/>
+                                                <constraint firstItem="Alw-RH-nbQ" firstAttribute="leading" secondItem="AJH-ce-Nef" secondAttribute="leading" id="sjE-7D-wDG"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="BackgroundUIImage" destination="Alw-RH-nbQ" id="ipz-Hq-hzF"/>
+                                            <outlet property="titleLabel" destination="4hh-YR-qCO" id="JKn-WX-e4o"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <sections/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="kYT-TO-sbw"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="DOv-Cv-wAn"/>
+                                </connections>
+                            </tableView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kbe-Ds-ZOW">
                                 <rect key="frame" x="0.0" y="436" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -53,6 +123,12 @@
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Z05-RZ-QFF" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="5yK-2x-tUp"/>
+                            <constraint firstItem="Z05-RZ-QFF" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="IZN-BD-gCl"/>
+                            <constraint firstItem="Z05-RZ-QFF" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Jla-He-re1"/>
+                            <constraint firstItem="Z05-RZ-QFF" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Yh3-84-eWw"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Cloud Vision" id="cnn-6G-ZJy">
@@ -60,12 +136,13 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="trash" id="gPu-eb-JMu"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="tableCardsView" destination="Z05-RZ-QFF" id="qOB-k9-CNa"/>
                         <segue destination="Fcf-1W-GxR" kind="show" identifier="SequeFacesViewController" id="3NL-Hk-Zh6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="83" y="-41"/>
+            <point key="canvasLocation" x="-210" y="-45"/>
         </scene>
         <!--Crowd-->
         <scene sceneID="efz-JN-H6Q">
@@ -166,7 +243,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cXa-sZ-jJt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="911.25" y="-41.25"/>
+            <point key="canvasLocation" x="660" y="-45"/>
         </scene>
         <!--Raffle-->
         <scene sceneID="Bgk-we-YSN">
@@ -212,13 +289,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ulr-zn-ciM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1668.75" y="-41.25"/>
+            <point key="canvasLocation" x="1511" y="-45"/>
         </scene>
     </scenes>
     <resources>
         <image name="camera" width="24" height="24"/>
         <image name="clover" width="26" height="26"/>
         <image name="crowd-test-01.png" width="414" height="414"/>
+        <image name="crowd-test-02.jpg" width="960" height="717"/>
         <image name="photo-library" width="24" height="24"/>
     </resources>
 </document>

@@ -19,6 +19,16 @@ class BMCrowdTestCase: XCTestCase {
         ]
     )
     
+    override func setUp() {
+        super.setUp()
+        BMCrowd.deleteAll()
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        BMCrowd.deleteAll()
+    }
+    
     func testInit() {
         let bmCrowd = BMCrowd(
             title: crowdFields.title,

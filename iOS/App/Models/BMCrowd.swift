@@ -53,8 +53,8 @@ class BMCrowd: NSObject, NSCoding {
             
             guard let decoderFaceImageLocation = aDecoder.decodeObject(
                 forKey: PropertyKey.People.faceImageLocation) as? CGRect else{
-                os_log("Unable to decode the Person FaceImageLocation for a Crowd object.", log: OSLog.default, type: .debug)
-                return nil
+                    os_log("Unable to decode the Person FaceImageLocation for a Crowd object.", log: OSLog.default, type: .debug)
+                    return nil
             }
             
             guard let decoderWinnerPosition = aDecoder.decodeObject(
@@ -142,7 +142,20 @@ class BMCrowd: NSObject, NSCoding {
         return NSKeyedArchiver.archiveRootObject(crowds, toFile: BMCrowd.ArchiveURL.path)
     }
     
-    static func load() -> [BMCrowd]?{
-        return (NSKeyedUnarchiver.unarchiveObject(withFile: BMCrowd.ArchiveURL.path) as? [BMCrowd])
+    static func load() -> [BMCrowd]{
+        if  let crowds = (NSKeyedUnarchiver.unarchiveObject(withFile: BMCrowd.ArchiveURL.path) as? [BMCrowd]) {
+            return crowds
+        }
+        return [BMCrowd]()
     }
+    
+    static func deleteAll()  {
+        let path = BMCrowd.ArchiveURL.path
+        if FileManager.default.fileExists(atPath: path) {
+            do{
+                try FileManager.default.removeItem(atPath: path)
+            } catch{}
+        }
+    }
+    
 }
