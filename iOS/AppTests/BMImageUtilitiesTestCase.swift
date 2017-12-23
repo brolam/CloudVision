@@ -9,9 +9,9 @@
 import XCTest
 
 class BMImageUtilitiesTestCase: XCTestCase {
+    let uiImage = UIImage(named: "crowd-test-01.png")!
     
     func testCrop() {
-        let uiImage = UIImage(named: "crowd-test-01.png")!
         let cgRect = CGRect(x: 100, y: 100, width: 100, height: 100)
         let cropedUiImage =  BMImageUtilities.crop(
             uiImage: uiImage,
@@ -23,13 +23,19 @@ class BMImageUtilitiesTestCase: XCTestCase {
     }
     
     func testAllNormalizeOrientation(){
-        let uiImage = UIImage(named: "crowd-test-01.png")!
         for indexOrientation in 0...7{
             let imageOrientation = UIImageOrientation.init(rawValue: indexOrientation)
             let uiImageNewOrientation = UIImage(cgImage: uiImage.cgImage!, scale:1.0, orientation: imageOrientation!)
             let normalizedImage = BMImageUtilities.normalizeOrientation(uiImageNewOrientation)
             XCTAssertEqual(normalizedImage.imageOrientation, UIImageOrientation.up)
         }
+    }
+    
+    func testResizeImage(){
+        let resizedImage = BMImageUtilities.resizeImage(uiImage: uiImage, newSize: 800)
+        XCTAssertEqual(resizedImage.size.width, 800)
+        XCTAssertEqual(resizedImage.size.height, 800)
+        
     }
     
 }

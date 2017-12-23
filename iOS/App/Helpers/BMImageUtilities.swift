@@ -27,4 +27,14 @@ class BMImageUtilities {
         UIGraphicsEndImageContext()
         return normalizedImage!
     }
+    
+    static func resizeImage(uiImage: UIImage, newSize: CGFloat) -> UIImage {
+        let scale = newSize / uiImage.size.width
+        let newHeight = uiImage.size.height * scale
+        UIGraphicsBeginImageContext(CGSize(width: newSize, height: newHeight))
+        uiImage.draw(in: CGRect(x: 0, y: 0, width: newSize, height: newHeight))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage!
+    }
 }

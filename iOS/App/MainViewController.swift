@@ -9,6 +9,7 @@
 import UIKit
 
 class MainViewController: UIViewController , UIImagePickerControllerDelegate , UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
+    let ImageFacesSize: CGFloat = 800
     
     @IBOutlet weak var tableCardsView: UITableView!
     let bmFacesDetector = BMFacesDetector()
@@ -19,7 +20,8 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
     }
     
     func doDetectFaces(_ imageFaces: UIImage!) {
-        if ( self.bmFacesDetector.trackFaces(uiImage: imageFaces) ){
+        let resizedImage = BMImageUtilities.resizeImage(uiImage: imageFaces, newSize: ImageFacesSize)
+        if ( self.bmFacesDetector.trackFaces(uiImage: resizedImage) ){
             guard let crowd = self.saveOneCrowd(self.bmFacesDetector) else {
                 //TODO: incomplete code
                 fatalError("One crowd was not saved with successful")
