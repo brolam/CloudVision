@@ -154,15 +154,20 @@ class BMCrowd: NSObject, NSCoding {
         return singletonCrowds!
     }
     
+    static func persistCrowds() -> Bool{
+        loadCrowdsIfNotLoadedYet()
+        return NSKeyedArchiver.archiveRootObject(singletonCrowds!, toFile: BMCrowd.ArchiveURL.path)
+    }
+    
     static func add(_ bmCrowd:BMCrowd) -> Bool{
         loadCrowdsIfNotLoadedYet()
         singletonCrowds!.insert(bmCrowd, at:0 )
-        return NSKeyedArchiver.archiveRootObject(singletonCrowds!, toFile: BMCrowd.ArchiveURL.path)
+        return persistCrowds()
     }
     
     static func deleteAll()  {
         let path = BMCrowd.ArchiveURL.path
-        BMCrowd.singletonCrowds = nil
+        singletonCrowds = nil
         if FileManager.default.fileExists(atPath: path) {
             do{
                 try FileManager.default.removeItem(atPath: path)

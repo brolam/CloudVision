@@ -78,7 +78,7 @@ class BMCrowdTestCase: XCTestCase {
         XCTAssertEqual(BMCrowd.getCrowds().count, 0)
     }
     
-    func testSaveAndGetOneCrowd(){
+    func testAddAndGetOneCrowd(){
         BMCrowd.loadCrowdsIfNotLoadedYet()
         let oneBMCrowd = BMCrowd(
             title: crowdFields.title,
@@ -88,5 +88,14 @@ class BMCrowdTestCase: XCTestCase {
         XCTAssertTrue(BMCrowd.add(oneBMCrowd!), "Failed to save crowds...")
         XCTAssertNotNil(BMCrowd.getCrowds())
         XCTAssertEqual(BMCrowd.getCrowds().count, 1)
+    }
+    
+    func testUpdateAndGetOneCrowd(){
+       testAddAndGetOneCrowd()
+       let addedCrowd = BMCrowd.getCrowds()[0]
+       addedCrowd.people[0].winnerPosition = 1
+       XCTAssertTrue(BMCrowd.persistCrowds())
+       let updatedCrowd  = BMCrowd.getCrowds()[0]
+       XCTAssertEqual(updatedCrowd.people[0].winnerPosition, 1 )
     }
 }
