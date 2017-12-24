@@ -10,27 +10,44 @@ import UIKit
 
 class MainViewController: UIViewController , UIImagePickerControllerDelegate , UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
     let ImageFacesSize: CGFloat = 800
+    let main = DispatchQueue.main
+    let background = DispatchQueue.global()
     
     @IBOutlet weak var tableCardsView: UITableView!
+    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     let bmFacesDetector = BMFacesDetector()
     var crowds:[BMCrowd] = [BMCrowd]()
     
     override func viewDidLoad() {
-        self.loadCrowds()
+        self.loadCrowdsAsync()
     }
     
-    func doDetectFaces(_ imageFaces: UIImage!) {
-        let resizedImage = BMImageUtilities.resizeImage(uiImage: imageFaces, newSize: ImageFacesSize)
-        if ( self.bmFacesDetector.trackFaces(uiImage: resizedImage) ){
-            guard let crowd = self.saveOneCrowd(self.bmFacesDetector) else {
-                //TODO: incomplete code
-                fatalError("One crowd was not saved with successful")
+    func doDetectFacesAsync(_ imageFaces: UIImage!) {
+        startActivityIndicator()
+        self.background.async {
+            defer{ self.stopActivityIndicatorMainSync() }
+            let resizedImage = BMImageUtilities.resizeImage(uiImage: imageFaces, newSize: self.ImageFacesSize)
+            if ( self.bmFacesDetector.trackFaces(uiImage: resizedImage) ){
+                guard let crowd = self.saveOneCrowd(self.bmFacesDetector) else {
+                    //TODO: incomplete code
+                    fatalError("One crowd was not saved with successful")
+                }
+                self.main.sync {
+                    self.performSegue(
+                        withIdentifier: "SequeFacesViewController",
+                        sender: crowd
+                    )
+                }
             }
-            self.performSegue(
-                withIdentifier: "SequeFacesViewController",
-                sender: crowd
-            )
         }
+    }
+    
+    func startActivityIndicator(){
+        self.activityIndicatorView.startAnimating()
+    }
+    
+    func stopActivityIndicatorMainSync(){
+        self.main.sync { self.activityIndicatorView.stopAnimating() }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -89,13 +106,19 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
             //TODO: incomplete code
             fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
         }
-        doDetectFaces(selectedImage)
+        doDetectFacesAsync(selectedImage)
         dismiss(animated: true, completion: nil)
     }
     
-    func loadCrowds() {
-        self.crowds = BMCrowd.load()
-        self.tableCardsView.reloadData()
+    func loadCrowdsAsync() {
+        self.startActivityIndicator()
+        self.background.async {
+            defer{ self.stopActivityIndicatorMainSync() }
+            self.crowds = BMCrowd.load()
+            self.main.sync {
+                self.tableCardsView.reloadData()
+            }
+        }
     }
     
     func saveOneCrowd(_ bmFacesDetector: BMFacesDetector! ) -> BMCrowd? {
@@ -114,7 +137,7 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
         )
         self.crowds.insert(bmCrowd!, at:0 )
         if BMCrowd.save(crowds: self.crowds) {
-            self.tableCardsView.reloadData()
+            self.main.sync { self.tableCardsView.reloadData() }
             return bmCrowd
         }
         return nil

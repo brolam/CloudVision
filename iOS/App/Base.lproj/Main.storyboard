@@ -121,12 +121,23 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <activityIndicatorView hidden="YES" verifyAmbiguity="off" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="70d-9C-jXt">
+                                <rect key="frame" x="142" y="350" width="37" height="37"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="37" id="Gcb-JV-79a"/>
+                                    <constraint firstAttribute="height" constant="37" id="Hxg-8r-ULD"/>
+                                </constraints>
+                                <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Z05-RZ-QFF" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="5yK-2x-tUp"/>
                             <constraint firstItem="Z05-RZ-QFF" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="IZN-BD-gCl"/>
                             <constraint firstItem="Z05-RZ-QFF" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Jla-He-re1"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="70d-9C-jXt" secondAttribute="bottom" constant="93" id="R3z-h9-7cV"/>
+                            <constraint firstItem="70d-9C-jXt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="142" id="V8w-Ji-9ou"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="70d-9C-jXt" secondAttribute="trailing" constant="141" id="WQN-8e-ob7"/>
                             <constraint firstItem="Z05-RZ-QFF" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Yh3-84-eWw"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -136,6 +147,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="trash" id="gPu-eb-JMu"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="activityIndicatorView" destination="70d-9C-jXt" id="xWa-9C-L6Z"/>
                         <outlet property="tableCardsView" destination="Z05-RZ-QFF" id="qOB-k9-CNa"/>
                         <segue destination="Fcf-1W-GxR" kind="show" identifier="SequeFacesViewController" id="3NL-Hk-Zh6"/>
                     </connections>

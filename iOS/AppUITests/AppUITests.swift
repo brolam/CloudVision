@@ -18,39 +18,50 @@ class AppUITests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        BMCrowd.deleteAll()
         continueAfterFailure = false
         self.app = XCUIApplication()
+        self.app.launchArguments.append("XCTestCase")
     }
     
     override func tearDown() {
         super.tearDown()
-        BMCrowd.deleteAll()
         self.app = nil
     }
     
-    func testSelectOnePhotoByPhotoLibrary() {
+    func testAddOnePhotoByPhotoLibrary() {
         app.launchEnvironment[BMImagePicker.FAKER_IMAGE_SELECTED]  = "crowd-test-01.png"
         app.launch()
         app.toolbars.buttons.element(boundBy:PICTURE_LIBRARY_BUTTON).tap()
+        XCTAssertTrue(waiterResultWithExpextation(app.collectionViews.element ) == .completed)
         XCTAssertEqual(app.collectionViews.cells.count, 10)
     }
     
-    func testSelectOnePhotoByCamera() {
+    func testAddOnePhotoByCamera() {
         app.launchEnvironment[BMImagePicker.FAKER_IMAGE_SELECTED]  = "crowd-test-02.jpg"
         app.launch()
         app.toolbars.buttons.element(boundBy:CAMERA_BUTTON).tap()
+        XCTAssertTrue(waiterResultWithExpextation(app.collectionViews.element ) == .completed)
         XCTAssertEqual(app.collectionViews.cells.count, 20)
     }
     
     func testRaffleOneCompetitor(){
-        testSelectOnePhotoByPhotoLibrary()
+        testAddOnePhotoByPhotoLibrary()
         app.navigationBars.buttons.element(boundBy:RAFFLE_BUTTON).tap()
     }
     
     func testAddAndShowOneCrowdTableVeiw() {
-        self.testSelectOnePhotoByPhotoLibrary()
+        self.testAddOnePhotoByPhotoLibrary()
         app.navigationBars.buttons.element(boundBy:BACK_BUTTON).tap()
         XCTAssertEqual(app.tables.cells.count, 1)
     }
+    
+    //Source: https://github.com/Shashikant86/Xcode83_Demo/blob/master/Xcode83_DemoUITests/Xcode83_DemoUITests.swift
+    func waiterResultWithExpextation(_ element: XCUIElement) -> XCTWaiter.Result {
+        let myPredicate = NSPredicate(format: "exists == true")
+        let myExpectation = expectation(for: myPredicate, evaluatedWith: element,
+                                        handler: nil)
+        let result = XCTWaiter().wait(for: [myExpectation], timeout: 5)
+        return result
+    }
+
 }
