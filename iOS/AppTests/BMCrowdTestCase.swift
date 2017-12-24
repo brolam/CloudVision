@@ -68,15 +68,25 @@ class BMCrowdTestCase: XCTestCase {
         )
     }
     
-    func testSaveAndLoadOneCrowd(){
+    func testLoadCrowdsIfNotLoadedYet(){
+        BMCrowd.loadCrowdsIfNotLoadedYet()
+        XCTAssertNotNil(BMCrowd.getCrowds())
+        XCTAssertEqual(BMCrowd.getCrowds().count, 0)
+    }
+    
+    func testGetCrowds(){
+        XCTAssertEqual(BMCrowd.getCrowds().count, 0)
+    }
+    
+    func testSaveAndGetOneCrowd(){
+        BMCrowd.loadCrowdsIfNotLoadedYet()
         let oneBMCrowd = BMCrowd(
             title: crowdFields.title,
             created : crowdFields.created,
             trackedUIImage: crowdFields.trackedUIImage,
             people: crowdFields.people)
-        XCTAssertTrue(BMCrowd.save(crowds:[oneBMCrowd!]), "Failed to save crowds...")
-        let crowds: [BMCrowd]? = BMCrowd.load()
-        XCTAssertNotNil(crowds)
-        XCTAssertEqual(crowds?.count, 1)
+        XCTAssertTrue(BMCrowd.add(oneBMCrowd!), "Failed to save crowds...")
+        XCTAssertNotNil(BMCrowd.getCrowds())
+        XCTAssertEqual(BMCrowd.getCrowds().count, 1)
     }
 }

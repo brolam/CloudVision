@@ -12,8 +12,9 @@ import os.log
 
 class BMCrowd: NSObject, NSCoding {
     //MARK: Archiving Paths
-    static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
-    static let ArchiveURL = DocumentsDirectory.appendingPathComponent("crowds")
+    fileprivate static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
+    fileprivate static let ArchiveURL = DocumentsDirectory.appendingPathComponent("crowds")
+    fileprivate static var singletonCrowds:[BMCrowd]? = nil
     //MARK: Types
     struct PropertyKey {
         static let title = "title"
@@ -63,6 +64,7 @@ class BMCrowd: NSObject, NSCoding {
                            log: OSLog.default, type: .debug)
                     return nil
             }
+            
             self.init(
                 key: decoderKey,
                 faceImageLocation: decoderFaceImageLocation,
@@ -138,24 +140,33 @@ class BMCrowd: NSObject, NSCoding {
         return facesPictures
     }
     
-    static func save(crowds:[BMCrowd]) -> Bool{
-        return NSKeyedArchiver.archiveRootObject(crowds, toFile: BMCrowd.ArchiveURL.path)
+    static func loadCrowdsIfNotLoadedYet() {
+        if ( singletonCrowds != nil) { return }
+        if  let crowds = (NSKeyedUnarchiver.unarchiveObject(withFile: BMCrowd.ArchiveURL.path) as? [BMCrowd]) {
+            singletonCrowds = crowds
+        } else {
+            singletonCrowds = [BMCrowd]()
+        }
     }
     
-    static func load() -> [BMCrowd]{
-        if  let crowds = (NSKeyedUnarchiver.unarchiveObject(withFile: BMCrowd.ArchiveURL.path) as? [BMCrowd]) {
-            return crowds
-        }
-        return [BMCrowd]()
+    static func getCrowds() -> [BMCrowd]{
+        loadCrowdsIfNotLoadedYet()
+        return singletonCrowds!
+    }
+    
+    static func add(_ bmCrowd:BMCrowd) -> Bool{
+        loadCrowdsIfNotLoadedYet()
+        singletonCrowds!.insert(bmCrowd, at:0 )
+        return NSKeyedArchiver.archiveRootObject(singletonCrowds!, toFile: BMCrowd.ArchiveURL.path)
     }
     
     static func deleteAll()  {
         let path = BMCrowd.ArchiveURL.path
+        BMCrowd.singletonCrowds = nil
         if FileManager.default.fileExists(atPath: path) {
             do{
                 try FileManager.default.removeItem(atPath: path)
             } catch{}
         }
     }
-    
 }

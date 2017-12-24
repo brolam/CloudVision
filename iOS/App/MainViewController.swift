@@ -16,7 +16,6 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
     @IBOutlet weak var tableCardsView: UITableView!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     let bmFacesDetector = BMFacesDetector()
-    var crowds:[BMCrowd] = [BMCrowd]()
     
     override func viewDidLoad() {
         self.loadCrowdsAsync()
@@ -56,7 +55,7 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return crowds.count
+        return BMCrowd.getCrowds().count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -64,14 +63,14 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
             //TODO: incomplete code
             fatalError("The dequeued cell is not an instance of BMCrowdCardView.")
         }
-        let bmCrowd = self.crowds[indexPath.item]
+        let bmCrowd = BMCrowd.getCrowds()[indexPath.item]
         bmCrowdCardView.BackgroundUIImage.image = bmCrowd.trackedUIImage
         bmCrowdCardView.titleLabel.text = bmCrowd.title
         return bmCrowdCardView
     }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        let crowd =  self.crowds[indexPath.item]
+        let crowd =  BMCrowd.getCrowds()[indexPath.item]
         performSegue(
             withIdentifier: "SequeFacesViewController",
             sender: crowd
@@ -114,7 +113,7 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
         self.startActivityIndicator()
         self.background.async {
             defer{ self.stopActivityIndicatorMainSync() }
-            self.crowds = BMCrowd.load()
+            BMCrowd.loadCrowdsIfNotLoadedYet()
             self.main.sync {
                 self.tableCardsView.reloadData()
             }
@@ -135,8 +134,7 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
             trackedUIImage: bmFacesDetector.trackedUIImage,
             people: people
         )
-        self.crowds.insert(bmCrowd!, at:0 )
-        if BMCrowd.save(crowds: self.crowds) {
+        if BMCrowd.add(bmCrowd!) {
             self.main.sync { self.tableCardsView.reloadData() }
             return bmCrowd
         }
