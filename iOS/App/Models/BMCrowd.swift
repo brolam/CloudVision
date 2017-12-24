@@ -140,6 +140,14 @@ class BMCrowd: NSObject, NSCoding {
         return facesPictures
     }
     
+    func getWinnersOrdered() -> [Person] {
+        let winners = self.people.filter { (person) -> Bool in person.winnerPosition > 0 }
+        let winnersOrdered = winners.sorted(by: { ( beforePerson, nextPerson) -> Bool in
+            return beforePerson.winnerPosition > nextPerson.winnerPosition
+        })
+        return winnersOrdered
+    }
+    
     static func loadCrowdsIfNotLoadedYet() {
         if ( singletonCrowds != nil) { return }
         if  let crowds = (NSKeyedUnarchiver.unarchiveObject(withFile: BMCrowd.ArchiveURL.path) as? [BMCrowd]) {

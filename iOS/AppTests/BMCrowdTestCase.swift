@@ -15,7 +15,9 @@ class BMCrowdTestCase: XCTestCase {
         created : Date(),
         trackedUIImage: UIImage(),
         people: [
-            BMCrowd.Person(key:1 , faceImageLocation: CGRect(x:0, y:0, width: 60 , height:60 ), winnerPosition: 0)
+            BMCrowd.Person(key:1 , faceImageLocation: CGRect(x:0, y:0, width: 60 , height:60 ), winnerPosition: 0),
+            BMCrowd.Person(key:2 , faceImageLocation: CGRect(x:0, y:0, width: 60 , height:60 ), winnerPosition: 0),
+            BMCrowd.Person(key:3 , faceImageLocation: CGRect(x:0, y:0, width: 60 , height:60 ), winnerPosition: 0)
         ]
     )
     
@@ -91,11 +93,27 @@ class BMCrowdTestCase: XCTestCase {
     }
     
     func testUpdateAndGetOneCrowd(){
-       testAddAndGetOneCrowd()
-       let addedCrowd = BMCrowd.getCrowds()[0]
-       addedCrowd.people[0].winnerPosition = 1
-       XCTAssertTrue(BMCrowd.persistCrowds())
-       let updatedCrowd  = BMCrowd.getCrowds()[0]
-       XCTAssertEqual(updatedCrowd.people[0].winnerPosition, 1 )
+        testAddAndGetOneCrowd()
+        let addedCrowd = BMCrowd.getCrowds()[0]
+        addedCrowd.people[0].winnerPosition = 1
+        XCTAssertTrue(BMCrowd.persistCrowds())
+        let updatedCrowd  = BMCrowd.getCrowds()[0]
+        XCTAssertEqual(updatedCrowd.people[0].winnerPosition, 1 )
+    }
+    
+    func testGetWinnersOrdered(){
+        let person1 = 0, person2 = 1, person3 = 2
+        let first = 1,  second = 2, third = 3
+        testAddAndGetOneCrowd()
+        let firstCrowd  = BMCrowd.getCrowds()[0]
+        firstCrowd.people[person1].winnerPosition = third
+        firstCrowd.people[person2].winnerPosition = second
+        firstCrowd.people[person3].winnerPosition = first
+        XCTAssertTrue(BMCrowd.persistCrowds())
+        let winnersOrdered = firstCrowd.getWinnersOrdered()
+        XCTAssertEqual(winnersOrdered.count,3)
+        XCTAssertEqual(winnersOrdered[person3].winnerPosition, first)
+        XCTAssertEqual(winnersOrdered[person2].winnerPosition, second)
+        XCTAssertEqual(winnersOrdered[person1].winnerPosition, third)
     }
 }
