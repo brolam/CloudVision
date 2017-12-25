@@ -53,6 +53,15 @@ class AppUITests: XCTestCase {
         XCTAssertFalse(waiterResultWithExpextation(app.alerts.element) == .completed)
     }
     
+    func testTryAddPhotoWithoutFacesByPhotoLibrary() {
+        app.launchEnvironment[BMImagePicker.FAKER_IMAGE_SELECTED]  = "clover"
+        app.launch()
+        app.toolbars.buttons.element(boundBy:PICTURE_LIBRARY_BUTTON).tap()
+        XCTAssertTrue(waiterResultWithExpextation(app.alerts.element) == .completed)
+        XCTAssertTrue(app.staticTexts["Sorry, but I could not find faces in this photo."].exists)
+        XCTAssertFalse(waiterResultWithExpextation(app.alerts.element, timeout: 10) == .completed)
+    }
+    
     func testRaffleOnePerson(){
         testAddOnePhotoByCamera()
         app.navigationBars.buttons.element(boundBy:RAFFLE_BUTTON).tap()

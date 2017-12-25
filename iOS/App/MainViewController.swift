@@ -37,6 +37,16 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
                         sender: crowd
                     )
                 }
+            } else {
+                let alert = UIAlertController(
+                    title: "CloudVision",
+                    message: "Sorry, but I could not find faces in this photo.",
+                    preferredStyle: .alert
+                )
+                self.present(alert, animated: true, completion: nil)
+                self.main.asyncAfter(deadline: .now() + .milliseconds(2000)) {
+                    alert.dismiss(animated: true, completion: nil)
+                }
             }
         }
     }
