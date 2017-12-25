@@ -70,7 +70,10 @@ class BMCrowd: NSObject, NSCoding {
                 faceImageLocation: decoderFaceImageLocation,
                 winnerPosition: decoderWinnerPosition
             )
-            
+        }
+        
+        func isRaffled() -> Bool{
+            return self.winnerPosition != 0
         }
     }
     
@@ -146,6 +149,21 @@ class BMCrowd: NSObject, NSCoding {
             return beforePerson.winnerPosition > nextPerson.winnerPosition
         })
         return winnersOrdered
+    }
+    
+    func getNotWinners() -> [Person] {
+        let notWinners = self.people.filter { (person) -> Bool in person.winnerPosition == 0 }
+        return notWinners
+    }
+    
+    func setNextWinner(person: Person){
+        if ( person.isRaffled()) { return }
+        let nextPosition = self.people.reduce(0) { (lastPosition, person) -> Int in
+            return (lastPosition <= person.winnerPosition)
+                ? person.winnerPosition + 1
+                : lastPosition
+        }
+        person.winnerPosition = nextPosition
     }
     
     static func loadCrowdsIfNotLoadedYet() {

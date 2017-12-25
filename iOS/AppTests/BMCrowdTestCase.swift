@@ -116,4 +116,49 @@ class BMCrowdTestCase: XCTestCase {
         XCTAssertEqual(winnersOrdered[person2].winnerPosition, second)
         XCTAssertEqual(winnersOrdered[person1].winnerPosition, third)
     }
+    
+    func testGetZeroWinnersOrdered(){
+        testAddAndGetOneCrowd()
+        let firstCrowd  = BMCrowd.getCrowds()[0]
+        let winnersOrdered = firstCrowd.getWinnersOrdered()
+        XCTAssertEqual(winnersOrdered.count,0)
+    }
+    
+    func testGetNotWinners(){
+        let person1 = 0, person2 = 1, person3 = 2
+        let first = 1, notWinner = 0
+        testAddAndGetOneCrowd()
+        let firstCrowd  = BMCrowd.getCrowds()[0]
+        firstCrowd.people[person3].winnerPosition = first
+        XCTAssertTrue(BMCrowd.persistCrowds())
+        let notWinners = firstCrowd.getNotWinners()
+        XCTAssertEqual(notWinners.count,2)
+        XCTAssertEqual(notWinners[person2].winnerPosition, notWinner)
+        XCTAssertEqual(notWinners[person1].winnerPosition, notWinner)
+    }
+    
+    func testSetNextWinner(){
+        let person1 = 0, person2 = 1, person3 = 2
+        let first = 1, second = 2, notWinner = 0
+        testAddAndGetOneCrowd()
+        let firstCrowd  = BMCrowd.getCrowds()[0]
+        let people  = BMCrowd.getCrowds()[0].people
+        firstCrowd.setNextWinner(person: people[person1])
+        firstCrowd.setNextWinner(person: people[person2])
+        XCTAssertTrue(BMCrowd.persistCrowds())
+        XCTAssertEqual(people[person1].winnerPosition, first)
+        XCTAssertEqual(people[person2].winnerPosition, second)
+        XCTAssertEqual(people[person3].winnerPosition, notWinner)
+    }
+    
+    func testSetNextWinnerOnePersonRaffled(){
+        let person1 = 0, first = 1
+        testAddAndGetOneCrowd()
+        let firstCrowd  = BMCrowd.getCrowds()[0]
+        let people  = BMCrowd.getCrowds()[0].people
+        firstCrowd.setNextWinner(person: people[person1])
+        firstCrowd.setNextWinner(person: people[person1])
+        XCTAssertTrue(BMCrowd.persistCrowds())
+        XCTAssertEqual(people[person1].winnerPosition, first)
+    }
 }

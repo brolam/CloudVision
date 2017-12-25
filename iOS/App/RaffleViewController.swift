@@ -12,7 +12,7 @@ import UIKit
 class RaffleViewController: UIViewController {
     @IBOutlet weak var viewModal: UIView!
     @IBOutlet weak var faceUIImageView: UIImageView!
-    let amountOfRaffles = 30
+    let amountOfRaffles = 10
     var countReafflesRealised = 0
     var competitors = [Int]()
     var facesFictures = [UIImage]()
