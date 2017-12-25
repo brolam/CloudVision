@@ -44,9 +44,13 @@ class AppUITests: XCTestCase {
         XCTAssertEqual(app.collectionViews.cells.count, 20)
     }
     
-    func testRaffleOneCompetitor(){
-        testAddOnePhotoByPhotoLibrary()
+    func testRaffleOnePerson(){
+        testAddOnePhotoByCamera()
         app.navigationBars.buttons.element(boundBy:RAFFLE_BUTTON).tap()
+        XCTAssertTrue(
+            waiterResultWithExpextation(app.collectionViews.staticTexts["Winners"] , timeout: 10 ) == .completed
+        )
+        XCTAssertEqual(app.collectionViews.cells.count, 21)
     }
     
     func testAddAndShowOneCrowdTableVeiw() {
@@ -56,11 +60,11 @@ class AppUITests: XCTestCase {
     }
     
     //Source: https://github.com/Shashikant86/Xcode83_Demo/blob/master/Xcode83_DemoUITests/Xcode83_DemoUITests.swift
-    func waiterResultWithExpextation(_ element: XCUIElement) -> XCTWaiter.Result {
+    func waiterResultWithExpextation(_ element: XCUIElement, timeout:Double = 5 ) -> XCTWaiter.Result {
         let myPredicate = NSPredicate(format: "exists == true")
         let myExpectation = expectation(for: myPredicate, evaluatedWith: element,
                                         handler: nil)
-        let result = XCTWaiter().wait(for: [myExpectation], timeout: 5)
+        let result = XCTWaiter().wait(for: [myExpectation], timeout: timeout)
         return result
     }
 

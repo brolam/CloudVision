@@ -9,9 +9,9 @@
 import Foundation
 
 class BMRaffle {
-    static func chooseOne(competitors:[Int]!) -> Int  {
-        if ( competitors.count == 0 ) { return -1 }
-        let winner = competitors[Int(arc4random_uniform(UInt32(competitors.count)))]
-        return winner
+    static func chooseOne<T>(competitors:[T]) -> T?  {
+        if ( competitors.count == 0 ) { return nil  }
+        let indexWinner = Int(arc4random_uniform(UInt32(competitors.count)))
+        return competitors[indexWinner]
     }
 }

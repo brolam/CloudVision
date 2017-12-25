@@ -9,12 +9,19 @@
 import Foundation
 import UIKit
 
+protocol RaffleViewControllerDelegate {
+    func onDoneRaffle(winner:BMCrowd.Person)
+}
+
 class RaffleViewController: UIViewController {
+    
     @IBOutlet weak var viewModal: UIView!
     @IBOutlet weak var faceUIImageView: UIImageView!
+    var bmCrowd: BMCrowd!
+    var delegate : RaffleViewControllerDelegate?
     let amountOfRaffles = 10
     var countReafflesRealised = 0
-    var competitors = [Int]()
+    var competitors = [BMCrowd.Person]()
     var facesFictures = [UIImage]()
     let main = DispatchQueue.main
     let background = DispatchQueue.global()
@@ -24,7 +31,7 @@ class RaffleViewController: UIViewController {
     }
     
     func startRaffle(){
-        self.competitors = [Int](0...facesFictures.count - 1)
+        self.competitors = bmCrowd.getNotWinners()
         doRaffle()
     }
     
@@ -35,7 +42,10 @@ class RaffleViewController: UIViewController {
     
     func doRaffle()  {
         self.background.async {
-            let partialWinner = BMRaffle.chooseOne( competitors: self.competitors )
+            guard let partialWinner = BMRaffle.chooseOne( competitors: self.competitors ) else {
+                //TODO: incomplete code
+                fatalError("One partialWinner was not found with successful")
+            }
             self.main.sync {
                 self.hideFaceAnimate(
                     completion: {(finished: Bool) -> Void in
@@ -52,14 +62,17 @@ class RaffleViewController: UIViewController {
             
             if ( self.isDoneRaffle() ){
                 self.main.asyncAfter(deadline: .now() + .milliseconds(2000)) {
-                    self.doneRaffle(winner: partialWinner)
+                    self.doneRaffle(person: partialWinner)
                 }
             }
         }
     }
     
-    func doneRaffle(winner: Int) {
-        self.dismiss(animated: true, completion: nil)
+    func doneRaffle(person: BMCrowd.Person) {
+        defer { self.dismiss(animated: true, completion: nil) }
+        if self.delegate != nil {
+            self.delegate!.onDoneRaffle(winner: person)
+        }
     }
     
     func isLastRaffle() -> Bool {
@@ -82,8 +95,8 @@ class RaffleViewController: UIViewController {
         )
     }
     
-    func showFaceAnimate(_ partialWinner:Int, completion: @escaping ((Bool) -> Swift.Void)){
-        self.faceUIImageView.image = self.facesFictures[partialWinner]
+    func showFaceAnimate(_ partialWinner:BMCrowd.Person, completion: @escaping ((Bool) -> Swift.Void)){
+        self.faceUIImageView.image = getFaceFictureByPerson(partialWinner)
         let duration = self.isLastRaffle() ? 1.0 : 0.4
         UIView.animate(
             withDuration: duration,
@@ -94,6 +107,11 @@ class RaffleViewController: UIViewController {
         },
             completion: completion
         )
+    }
+    
+    func getFaceFictureByPerson(_ person:BMCrowd.Person) -> UIImage{
+        let indexPerson = self.bmCrowd.people.index(of: person)
+        return self.facesFictures[indexPerson!]
     }
     
 }

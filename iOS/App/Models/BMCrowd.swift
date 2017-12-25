@@ -146,7 +146,7 @@ class BMCrowd: NSObject, NSCoding {
     func getWinnersOrdered() -> [Person] {
         let winners = self.people.filter { (person) -> Bool in person.winnerPosition > 0 }
         let winnersOrdered = winners.sorted(by: { ( beforePerson, nextPerson) -> Bool in
-            return beforePerson.winnerPosition > nextPerson.winnerPosition
+            return beforePerson.winnerPosition < nextPerson.winnerPosition
         })
         return winnersOrdered
     }

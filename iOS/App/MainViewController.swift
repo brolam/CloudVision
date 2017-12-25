@@ -82,7 +82,7 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
         super.prepare(for: segue, sender: sender)
         if ( segue.identifier == "SequeFacesViewController"){
             let facesViewController = segue.destination  as! FacesViewController
-            facesViewController.bmCrowf = sender as! BMCrowd
+            facesViewController.bmCrowd = sender as! BMCrowd
         }
     }
     

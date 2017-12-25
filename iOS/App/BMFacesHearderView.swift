@@ -12,5 +12,6 @@ import UIKit
 
 class BMFacesHearderView: UICollectionReusableView {
     @IBOutlet weak var titleUILabel: UILabel!
+    @IBOutlet weak var amountUILabel : UILabel!
     
 }

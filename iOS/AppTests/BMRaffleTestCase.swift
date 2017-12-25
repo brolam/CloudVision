@@ -13,13 +13,13 @@ class BMPickerTestCase: XCTestCase {
     func testChooseOne() {
         let competitors = [Int](0...10)
         let winner = BMRaffle.chooseOne(competitors: competitors)
-        XCTAssertGreaterThanOrEqual(competitors.count, winner)
-        XCTAssertLessThanOrEqual(winner, competitors.count)
+        XCTAssertGreaterThanOrEqual(competitors.count, winner!)
+        XCTAssertLessThanOrEqual(winner!, competitors.count)
     }
     
     func testChooseOneWithoutCompetitors() {
         let competitors = [Int]()
         let winner = BMRaffle.chooseOne(competitors: competitors)
-        XCTAssertEqual(winner,-1)
+        XCTAssertNil(winner)
     }
 }

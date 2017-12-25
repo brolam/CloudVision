@@ -112,9 +112,9 @@ class BMCrowdTestCase: XCTestCase {
         XCTAssertTrue(BMCrowd.persistCrowds())
         let winnersOrdered = firstCrowd.getWinnersOrdered()
         XCTAssertEqual(winnersOrdered.count,3)
-        XCTAssertEqual(winnersOrdered[person3].winnerPosition, first)
-        XCTAssertEqual(winnersOrdered[person2].winnerPosition, second)
-        XCTAssertEqual(winnersOrdered[person1].winnerPosition, third)
+        XCTAssertEqual(winnersOrdered[0], firstCrowd.people[person3])
+        XCTAssertEqual(winnersOrdered[1], firstCrowd.people[person2])
+        XCTAssertEqual(winnersOrdered[2], firstCrowd.people[person1])
     }
     
     func testGetZeroWinnersOrdered(){
