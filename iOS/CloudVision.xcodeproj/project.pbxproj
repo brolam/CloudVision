@@ -31,6 +31,7 @@
 		4E3626FE1FE5AB6100FA1C6F /* AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E18B74C1FDF2A4A00C1E77B /* AppUITests.swift */; };
 		4E38CC991FE911CA002F8002 /* BMImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E38CC981FE911CA002F8002 /* BMImagePicker.swift */; };
 		4E38CC9D1FE9191B002F8002 /* BMImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E38CC981FE911CA002F8002 /* BMImagePicker.swift */; };
+		4E3A66A71FF17DDE00C5FAB0 /* BMAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3A66A61FF17DDE00C5FAB0 /* BMAlert.swift */; };
 		4E443DD81FEBF34A00EF0065 /* BMCrowdTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E443DD71FEBF34A00EF0065 /* BMCrowdTestCase.swift */; };
 		4E443DDB1FEBF9F700EF0065 /* BMCrowd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E443DDA1FEBF9F700EF0065 /* BMCrowd.swift */; };
 		4E443DDC1FEBF9F700EF0065 /* BMCrowd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E443DDA1FEBF9F700EF0065 /* BMCrowd.swift */; };
@@ -88,6 +89,7 @@
 		4E34F0E81FE813F1003873BE /* BMTrackedImageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTrackedImageViewCell.swift; sourceTree = "<group>"; };
 		4E355DB21FE3D9C9003B200D /* BMImageUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMImageUtilities.swift; sourceTree = "<group>"; };
 		4E38CC981FE911CA002F8002 /* BMImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMImagePicker.swift; sourceTree = "<group>"; };
+		4E3A66A61FF17DDE00C5FAB0 /* BMAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMAlert.swift; sourceTree = "<group>"; };
 		4E443DD71FEBF34A00EF0065 /* BMCrowdTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMCrowdTestCase.swift; sourceTree = "<group>"; };
 		4E443DDA1FEBF9F700EF0065 /* BMCrowd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMCrowd.swift; sourceTree = "<group>"; };
 		4E5E648E1FE84BAA00120374 /* BMFacesHearderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMFacesHearderView.swift; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 				4E355DB21FE3D9C9003B200D /* BMImageUtilities.swift */,
 				4E38CC981FE911CA002F8002 /* BMImagePicker.swift */,
 				4E3257191FEAB3490013E621 /* BMRaffle.swift */,
+				4E3A66A61FF17DDE00C5FAB0 /* BMAlert.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -562,6 +565,7 @@
 				4E34F0E41FE7C04A003873BE /* FacesViewController.swift in Sources */,
 				4E18B72D1FDF2A4A00C1E77B /* AppDelegate.swift in Sources */,
 				4E355DB31FE3D9C9003B200D /* BMImageUtilities.swift in Sources */,
+				4E3A66A71FF17DDE00C5FAB0 /* BMAlert.swift in Sources */,
 				4E34F0E91FE813F1003873BE /* BMTrackedImageViewCell.swift in Sources */,
 				4E32571A1FEAB3490013E621 /* BMRaffle.swift in Sources */,
 				4E38CC991FE911CA002F8002 /* BMImagePicker.swift in Sources */,

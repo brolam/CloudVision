@@ -38,15 +38,7 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
                     )
                 }
             } else {
-                let alert = UIAlertController(
-                    title: "CloudVision",
-                    message: "Sorry, but I could not find faces in this photo.",
-                    preferredStyle: .alert
-                )
-                self.present(alert, animated: true, completion: nil)
-                self.main.asyncAfter(deadline: .now() + .milliseconds(2000)) {
-                    alert.dismiss(animated: true, completion: nil)
-                }
+                BMAlert.withShortTime(self,"Sorry, but I could not find faces in this photo.")
             }
         }
     }
@@ -112,15 +104,7 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
         guard let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage else {
-            let alert = UIAlertController(
-                title: "CloudVision",
-                message: "Sorry, this picture is not valid.",
-                preferredStyle: .alert
-            )
-            self.present(alert, animated: true, completion: nil)
-            self.main.asyncAfter(deadline: .now() + .milliseconds(2000)) {
-                 alert.dismiss(animated: true, completion: nil)
-            }
+            BMAlert.withShortTime(self, "Sorry, this picture is not valid.")
             return
         }
         doDetectFacesAsync(selectedImage)
