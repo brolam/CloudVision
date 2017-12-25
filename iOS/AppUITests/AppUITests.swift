@@ -43,6 +43,15 @@ class AppUITests: XCTestCase {
         XCTAssertTrue(waiterResultWithExpextation(app.collectionViews.element ) == .completed)
         XCTAssertEqual(app.collectionViews.cells.count, 20)
     }
+
+    func testTryAddInvalidPhotoByPhotoLibrary() {
+        app.launchEnvironment[BMImagePicker.FAKER_IMAGE_SELECTED]  = "invaliIdPhoto.jpg"
+        app.launch()
+        app.toolbars.buttons.element(boundBy:PICTURE_LIBRARY_BUTTON).tap()
+        XCTAssertTrue(waiterResultWithExpextation(app.alerts.element) == .completed)
+        XCTAssertTrue(app.staticTexts["Sorry, this picture is not valid."].exists)
+        XCTAssertFalse(waiterResultWithExpextation(app.alerts.element) == .completed)
+    }
     
     func testRaffleOnePerson(){
         testAddOnePhotoByCamera()

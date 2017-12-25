@@ -102,8 +102,16 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
         guard let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage else {
-            //TODO: incomplete code
-            fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
+            let alert = UIAlertController(
+                title: "CloudVision",
+                message: "Sorry, this picture is not valid.",
+                preferredStyle: .alert
+            )
+            self.present(alert, animated: true, completion: nil)
+            self.main.asyncAfter(deadline: .now() + .milliseconds(2000)) {
+                 alert.dismiss(animated: true, completion: nil)
+            }
+            return
         }
         doDetectFacesAsync(selectedImage)
         dismiss(animated: true, completion: nil)
