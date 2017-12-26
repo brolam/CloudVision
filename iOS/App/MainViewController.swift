@@ -27,10 +27,7 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
             defer{ self.stopActivityIndicatorMainSync() }
             let resizedImage = BMImageUtilities.resizeImage(uiImage: imageFaces, newSize: self.ImageFacesSize)
             if ( self.bmFacesDetector.trackFaces(uiImage: resizedImage) ){
-                guard let crowd = self.saveOneCrowd(self.bmFacesDetector) else {
-                    //TODO: incomplete code
-                    fatalError("One crowd was not saved with successful")
-                }
+                let crowd = self.saveOneCrowd(self.bmFacesDetector)
                 self.main.sync {
                     self.performSegue(
                         withIdentifier: "SequeFacesViewController",
@@ -122,7 +119,7 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
         }
     }
     
-    func saveOneCrowd(_ bmFacesDetector: BMFacesDetector! ) -> BMCrowd? {
+    func saveOneCrowd(_ bmFacesDetector: BMFacesDetector! ) -> BMCrowd {
         let created = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .full
@@ -136,11 +133,9 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
             trackedUIImage: bmFacesDetector.trackedUIImage,
             people: people
         )
-        if BMCrowd.add(bmCrowd!) {
-            self.main.sync { self.tableCardsView.reloadData() }
-            return bmCrowd
-        }
-        return nil
+        BMCrowd.add(bmCrowd!)
+        self.main.sync { self.tableCardsView.reloadData() }
+        return bmCrowd!
     }
 }
 

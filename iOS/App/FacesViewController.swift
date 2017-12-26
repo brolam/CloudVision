@@ -22,10 +22,9 @@ class FacesViewController: UICollectionViewController, RaffleViewControllerDeleg
     
     func onDoneRaffle(winner: BMCrowd.Person) {
         self.bmCrowd.setNextWinner(person: winner)
-        if ( BMCrowd.persistCrowds() ){
-            self.winners = self.bmCrowd.getWinnersOrdered()
-            self.collectionView?.reloadData()
-        }
+        BMCrowd.persistCrowds()
+        self.winners = self.bmCrowd.getWinnersOrdered()
+        self.collectionView?.reloadData()
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {

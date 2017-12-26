@@ -180,15 +180,15 @@ class BMCrowd: NSObject, NSCoding {
         return singletonCrowds!
     }
     
-    static func persistCrowds() -> Bool{
+    static func persistCrowds(){
         loadCrowdsIfNotLoadedYet()
-        return NSKeyedArchiver.archiveRootObject(singletonCrowds!, toFile: BMCrowd.ArchiveURL.path)
+        NSKeyedArchiver.archiveRootObject(singletonCrowds!, toFile: BMCrowd.ArchiveURL.path)
     }
     
-    static func add(_ bmCrowd:BMCrowd) -> Bool{
+    static func add(_ bmCrowd:BMCrowd){
         loadCrowdsIfNotLoadedYet()
         singletonCrowds!.insert(bmCrowd, at:0 )
-        return persistCrowds()
+        persistCrowds()
     }
     
     static func deleteAll()  {

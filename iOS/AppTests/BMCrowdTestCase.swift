@@ -87,7 +87,7 @@ class BMCrowdTestCase: XCTestCase {
             created : crowdFields.created,
             trackedUIImage: crowdFields.trackedUIImage,
             people: crowdFields.people)
-        XCTAssertTrue(BMCrowd.add(oneBMCrowd!), "Failed to save crowds...")
+        BMCrowd.add(oneBMCrowd!)
         XCTAssertNotNil(BMCrowd.getCrowds())
         XCTAssertEqual(BMCrowd.getCrowds().count, 1)
     }
@@ -96,7 +96,7 @@ class BMCrowdTestCase: XCTestCase {
         testAddAndGetOneCrowd()
         let addedCrowd = BMCrowd.getCrowds()[0]
         addedCrowd.people[0].winnerPosition = 1
-        XCTAssertTrue(BMCrowd.persistCrowds())
+        BMCrowd.persistCrowds()
         let updatedCrowd  = BMCrowd.getCrowds()[0]
         XCTAssertEqual(updatedCrowd.people[0].winnerPosition, 1 )
     }
@@ -109,7 +109,7 @@ class BMCrowdTestCase: XCTestCase {
         firstCrowd.people[person1].winnerPosition = third
         firstCrowd.people[person2].winnerPosition = second
         firstCrowd.people[person3].winnerPosition = first
-        XCTAssertTrue(BMCrowd.persistCrowds())
+        BMCrowd.persistCrowds()
         let winnersOrdered = firstCrowd.getWinnersOrdered()
         XCTAssertEqual(winnersOrdered.count,3)
         XCTAssertEqual(winnersOrdered[0], firstCrowd.people[person3])
@@ -130,7 +130,7 @@ class BMCrowdTestCase: XCTestCase {
         testAddAndGetOneCrowd()
         let firstCrowd  = BMCrowd.getCrowds()[0]
         firstCrowd.people[person3].winnerPosition = first
-        XCTAssertTrue(BMCrowd.persistCrowds())
+        BMCrowd.persistCrowds()
         let notWinners = firstCrowd.getNotWinners()
         XCTAssertEqual(notWinners.count,2)
         XCTAssertEqual(notWinners[person2].winnerPosition, notWinner)
@@ -145,7 +145,7 @@ class BMCrowdTestCase: XCTestCase {
         let people  = BMCrowd.getCrowds()[0].people
         firstCrowd.setNextWinner(person: people[person1])
         firstCrowd.setNextWinner(person: people[person2])
-        XCTAssertTrue(BMCrowd.persistCrowds())
+        BMCrowd.persistCrowds()
         XCTAssertEqual(people[person1].winnerPosition, first)
         XCTAssertEqual(people[person2].winnerPosition, second)
         XCTAssertEqual(people[person3].winnerPosition, notWinner)
@@ -158,7 +158,7 @@ class BMCrowdTestCase: XCTestCase {
         let people  = BMCrowd.getCrowds()[0].people
         firstCrowd.setNextWinner(person: people[person1])
         firstCrowd.setNextWinner(person: people[person1])
-        XCTAssertTrue(BMCrowd.persistCrowds())
+        BMCrowd.persistCrowds()
         XCTAssertEqual(people[person1].winnerPosition, first)
     }
 }
