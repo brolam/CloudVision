@@ -101,6 +101,24 @@ class BMCrowdTestCase: XCTestCase {
         XCTAssertEqual(updatedCrowd.people[0].winnerPosition, 1 )
     }
     
+    func testDeleteOneCrowd(){
+        self.testAddAndGetOneCrowd()
+        let firstCrowd = BMCrowd.getCrowds()[0]
+        BMCrowd.delete(firstCrowd)
+        XCTAssertEqual(BMCrowd.getCrowds().count, 0)
+    }
+    
+    func testDeleteInvalidCrowd(){
+        let bmCrowdNotAdded = BMCrowd(
+            title: crowdFields.title,
+            created : crowdFields.created,
+            trackedUIImage: crowdFields.trackedUIImage,
+            people: crowdFields.people
+        )
+        BMCrowd.delete(bmCrowdNotAdded!)
+        XCTAssertEqual(BMCrowd.getCrowds().count, 0)
+    }
+    
     func testGetWinnersOrdered(){
         let person1 = 0, person2 = 1, person3 = 2
         let first = 1,  second = 2, third = 3

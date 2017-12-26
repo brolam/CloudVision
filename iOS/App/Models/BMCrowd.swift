@@ -191,6 +191,13 @@ class BMCrowd: NSObject, NSCoding {
         persistCrowds()
     }
     
+    static func delete(_ bmCrowd:BMCrowd){
+        if let indexCrowd = getCrowds().index(of: bmCrowd){
+            singletonCrowds!.remove(at: indexCrowd)
+            persistCrowds()
+        }
+    }
+    
     static func deleteAll()  {
         let path = BMCrowd.ArchiveURL.path
         singletonCrowds = nil
