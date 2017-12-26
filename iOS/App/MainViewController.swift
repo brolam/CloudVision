@@ -9,7 +9,6 @@
 import UIKit
 
 class MainViewController: UIViewController , UIImagePickerControllerDelegate , UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
-    let ImageFacesSize: CGFloat = 800
     let main = DispatchQueue.main
     let background = DispatchQueue.global()
     
@@ -25,8 +24,7 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
         startActivityIndicator()
         self.background.async {
             defer{ self.stopActivityIndicatorMainSync() }
-            let resizedImage = BMImageUtilities.resizeImage(uiImage: imageFaces, newSize: self.ImageFacesSize)
-            if ( self.bmFacesDetector.trackFaces(uiImage: resizedImage) ){
+            if ( self.bmFacesDetector.trackFaces(uiImage: imageFaces) ){
                 let crowd = self.saveOneCrowd(self.bmFacesDetector)
                 self.main.sync {
                     self.performSegue(

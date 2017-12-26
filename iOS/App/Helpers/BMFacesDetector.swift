@@ -10,6 +10,7 @@ import Foundation
 import GoogleMobileVision
 
 class BMFacesDetector {
+    let ImageFacesSize: CGFloat = 800
     let gmvDetector:GMVDetector!
     var trackingFaces:[GMVFeature]!
     var trackedUIImage: UIImage?
@@ -35,7 +36,7 @@ class BMFacesDetector {
     }
     
     func trackFaces(uiImage: UIImage) -> Bool{
-        self.trackedUIImage = BMImageUtilities.normalizeOrientation(uiImage)
+        self.trackedUIImage = self.parseImage(uiImage)
         let gmvDetectorOptions = [GMVDetectorImageOrientation : String.init(GMVImageOrientation.topLeft.rawValue)]
         if let newTrackinFaces = getTrackFacesByOptions(self.trackedUIImage! , gmvDetectorOptions) {
             self.trackingFaces = parseFaces(faces: newTrackinFaces )
@@ -66,5 +67,11 @@ class BMFacesDetector {
         return faces.filter({ (oneFace) -> Bool in
             oneFace.bounds.width > ( maxFaceWidth / 2.0 )
         })
+    }
+    
+    private func parseImage(_ uiImage:UIImage) -> UIImage {
+        let resizedImage = BMImageUtilities.resizeImage(uiImage: uiImage, newSize: self.ImageFacesSize)
+        let normalizedImage = BMImageUtilities.normalizeOrientation(resizedImage)
+        return normalizedImage
     }
 }
