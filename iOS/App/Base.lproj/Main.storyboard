@@ -280,6 +280,10 @@
                                         <rect key="frame" x="1" y="1" width="286" height="286"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <accessibility key="accessibilityConfiguration" identifier="PictureUIImageView"/>
+                                        <gestureRecognizers/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="7kS-2g-j1M" appends="YES" id="hQc-AG-iDU"/>
+                                        </connections>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -287,6 +291,9 @@
                                     <constraint firstAttribute="width" constant="288" id="NhN-iu-t5R"/>
                                     <constraint firstAttribute="height" constant="288" id="Rbm-NY-5n3"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="7kS-2g-j1M" appends="YES" id="K51-5S-IpV"/>
+                                </connections>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f9b-jI-0MG">
                                 <rect key="frame" x="16" y="389" width="288" height="33"/>
@@ -312,6 +319,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c0l-PF-3n2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="7kS-2g-j1M">
+                    <connections>
+                        <action selector="done:" destination="RNp-AO-zBl" id="BQU-8w-Sjt"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="660" y="762.5"/>
         </scene>
