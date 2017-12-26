@@ -11,6 +11,7 @@ import XCTest
 class AppUITests: XCTestCase {
     
     let BACK_BUTTON = 0
+    let EDIT_RIGHT_BUTTON = 0
     let PICTURE_LIBRARY_BUTTON = 0
     let CAMERA_BUTTON = 1
     let RAFFLE_BUTTON = 1
@@ -75,6 +76,16 @@ class AppUITests: XCTestCase {
         self.testAddOnePhotoByPhotoLibrary()
         app.navigationBars.buttons.element(boundBy:BACK_BUTTON).tap()
         XCTAssertEqual(app.tables.cells.count, 1)
+    }
+    
+    func testDeleteOneCrowd() {
+        let SHOW_DELETE_BUTTON = 0, DELETE_BUTTON = 1
+        self.testAddAndShowOneCrowdTableVeiw()
+        app.navigationBars.buttons.element(boundBy:EDIT_RIGHT_BUTTON).tap()
+        let firstCell = app.tables.cells.element(boundBy: 0)
+        firstCell.buttons.element(boundBy: SHOW_DELETE_BUTTON).tap()
+        firstCell.buttons.element(boundBy: DELETE_BUTTON).tap()
+        XCTAssertEqual(app.tables.cells.count, 0)
     }
     
     //Source: https://github.com/Shashikant86/Xcode83_Demo/blob/master/Xcode83_DemoUITests/Xcode83_DemoUITests.swift

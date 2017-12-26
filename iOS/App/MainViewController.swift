@@ -17,6 +17,7 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
     let bmFacesDetector = BMFacesDetector()
     
     override func viewDidLoad() {
+        navigationItem.rightBarButtonItem = editButtonItem
         self.loadCrowdsAsync()
     }
     
@@ -104,6 +105,23 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
         }
         doDetectFacesAsync(selectedImage)
         dismiss(animated: true, completion: nil)
+    }
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        tableCardsView.setEditing(editing, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            self.startActivityIndicator()
+            self.background.async {
+                defer{ self.stopActivityIndicatorMainSync() }
+                let bmCrowd = BMCrowd.getCrowds()[indexPath.row]
+                BMCrowd.delete(bmCrowd)
+                self.main.sync { tableView.deleteRows(at: [indexPath], with: .fade) }
+            }
+        }
     }
     
     func loadCrowdsAsync() {

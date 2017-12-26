@@ -142,10 +142,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Cloud Vision" id="cnn-6G-ZJy">
-                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="dEi-rm-Av4"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="gPu-eb-JMu"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Cloud Vision" id="cnn-6G-ZJy"/>
                     <connections>
                         <outlet property="activityIndicatorView" destination="70d-9C-jXt" id="xWa-9C-L6Z"/>
                         <outlet property="tableCardsView" destination="Z05-RZ-QFF" id="qOB-k9-CNa"/>
