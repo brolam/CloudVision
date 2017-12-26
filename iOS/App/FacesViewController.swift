@@ -109,6 +109,14 @@ class FacesViewController: UICollectionViewController, RaffleViewControllerDeleg
         }
     }
     
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if ( identifier == "SequeRaffleViewController"){
+            let notWinners = self.bmCrowd.getNotWinners()
+            return RaffleViewController.parse(self, competidors: notWinners)
+        }
+        return true
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if ( segue.identifier == "SequeRaffleViewController"){
             let  raffleViewController = segue.destination  as! RaffleViewController

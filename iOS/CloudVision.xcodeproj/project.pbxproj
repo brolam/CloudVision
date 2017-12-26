@@ -20,7 +20,6 @@
 		4E32571A1FEAB3490013E621 /* BMRaffle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3257191FEAB3490013E621 /* BMRaffle.swift */; };
 		4E32571C1FEAB4F80013E621 /* BMRaffle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3257191FEAB3490013E621 /* BMRaffle.swift */; };
 		4E32571E1FEAF1330013E621 /* RaffleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E32571D1FEAF1330013E621 /* RaffleViewController.swift */; };
-		4E32571F1FEAF1330013E621 /* RaffleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E32571D1FEAF1330013E621 /* RaffleViewController.swift */; };
 		4E33A4551FE290F800BB3C7D /* Vision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E33A4541FE290F700BB3C7D /* Vision.framework */; };
 		4E34678C1FE134C70033775C /* BMFacesDetectorTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34678B1FE134C70033775C /* BMFacesDetectorTestCase.swift */; };
 		4E34F0E41FE7C04A003873BE /* FacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34F0E31FE7C04A003873BE /* FacesViewController.swift */; };
@@ -37,6 +36,12 @@
 		4E443DDC1FEBF9F700EF0065 /* BMCrowd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E443DDA1FEBF9F700EF0065 /* BMCrowd.swift */; };
 		4E4F8D501FED0B40004D71CC /* BMCrowd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E443DDA1FEBF9F700EF0065 /* BMCrowd.swift */; };
 		4E59582A1FF291C3003F4381 /* ShowPictureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5958291FF291C3003F4381 /* ShowPictureController.swift */; };
+		4E59582C1FF2EA72003F4381 /* crowd-test-03.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E59582B1FF2EA71003F4381 /* crowd-test-03.png */; };
+		4E59582D1FF30000003F4381 /* BMAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3A66A61FF17DDE00C5FAB0 /* BMAlert.swift */; };
+		4E59582E1FF30037003F4381 /* RaffleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E32571D1FEAF1330013E621 /* RaffleViewController.swift */; };
+		4E59582F1FF30045003F4381 /* RaffleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E32571D1FEAF1330013E621 /* RaffleViewController.swift */; };
+		4E5958301FF300B3003F4381 /* BMAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3A66A61FF17DDE00C5FAB0 /* BMAlert.swift */; };
+		4E5958311FF300E3003F4381 /* BMRaffle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3257191FEAB3490013E621 /* BMRaffle.swift */; };
 		4E5E648F1FE84BAA00120374 /* BMFacesHearderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5E648E1FE84BAA00120374 /* BMFacesHearderView.swift */; };
 		4ED70C721FE2B16200129A11 /* BMFacesDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED70C711FE2B16200129A11 /* BMFacesDetector.swift */; };
 		4ED70C731FE2B5F700129A11 /* BMFacesDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED70C711FE2B16200129A11 /* BMFacesDetector.swift */; };
@@ -94,6 +99,7 @@
 		4E443DD71FEBF34A00EF0065 /* BMCrowdTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMCrowdTestCase.swift; sourceTree = "<group>"; };
 		4E443DDA1FEBF9F700EF0065 /* BMCrowd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMCrowd.swift; sourceTree = "<group>"; };
 		4E5958291FF291C3003F4381 /* ShowPictureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPictureController.swift; sourceTree = "<group>"; };
+		4E59582B1FF2EA71003F4381 /* crowd-test-03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crowd-test-03.png"; sourceTree = "<group>"; };
 		4E5E648E1FE84BAA00120374 /* BMFacesHearderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMFacesHearderView.swift; sourceTree = "<group>"; };
 		4ED70C711FE2B16200129A11 /* BMFacesDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMFacesDetector.swift; sourceTree = "<group>"; };
 		4ED70C741FE3570800129A11 /* BMImageUtilitiesTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMImageUtilitiesTestCase.swift; sourceTree = "<group>"; };
@@ -200,6 +206,7 @@
 			children = (
 				4E18B75D1FDF370800C1E77B /* crowd-test-01.png */,
 				4EE3CC841FE0A7A900FF60D6 /* crowd-test-02.jpg */,
+				4E59582B1FF2EA71003F4381 /* crowd-test-03.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -376,6 +383,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E18B75E1FDF370800C1E77B /* crowd-test-01.png in Resources */,
+				4E59582C1FF2EA72003F4381 /* crowd-test-03.png in Resources */,
 				4E18B7371FDF2A4A00C1E77B /* LaunchScreen.storyboard in Resources */,
 				4EE3CC851FE0A7AA00FF60D6 /* crowd-test-02.jpg in Resources */,
 				4E18B7341FDF2A4A00C1E77B /* Assets.xcassets in Resources */,
@@ -586,10 +594,11 @@
 				4E34678C1FE134C70033775C /* BMFacesDetectorTestCase.swift in Sources */,
 				4ED70C751FE3570800129A11 /* BMImageUtilitiesTestCase.swift in Sources */,
 				4E443DD81FEBF34A00EF0065 /* BMCrowdTestCase.swift in Sources */,
+				4E59582F1FF30045003F4381 /* RaffleViewController.swift in Sources */,
 				4ED70C731FE2B5F700129A11 /* BMFacesDetector.swift in Sources */,
+				4E5958301FF300B3003F4381 /* BMAlert.swift in Sources */,
 				4E3257181FEAA25A0013E621 /* BMRaffleTestCase.swift in Sources */,
 				4E32571C1FEAB4F80013E621 /* BMRaffle.swift in Sources */,
-				4E32571F1FEAF1330013E621 /* RaffleViewController.swift in Sources */,
 				4E1097CF1FEE63D5009B69F7 /* AppDelegate.swift in Sources */,
 				4E355DB41FE3D9C9003B200D /* BMImageUtilities.swift in Sources */,
 			);
@@ -599,10 +608,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E5958311FF300E3003F4381 /* BMRaffle.swift in Sources */,
 				4E4F8D501FED0B40004D71CC /* BMCrowd.swift in Sources */,
 				4E38CC9D1FE9191B002F8002 /* BMImagePicker.swift in Sources */,
 				4E3626FE1FE5AB6100FA1C6F /* AppUITests.swift in Sources */,
+				4E59582D1FF30000003F4381 /* BMAlert.swift in Sources */,
 				4E1097D01FEE63D6009B69F7 /* AppDelegate.swift in Sources */,
+				4E59582E1FF30037003F4381 /* RaffleViewController.swift in Sources */,
 				4EE28C2A1FED2E4700F8BC56 /* BMImageUtilities.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

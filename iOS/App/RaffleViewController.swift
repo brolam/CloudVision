@@ -26,7 +26,19 @@ class RaffleViewController: UIViewController {
     let main = DispatchQueue.main
     let background = DispatchQueue.global()
     
+    static func parse(_ faffleViewControllerDelegate: UIViewController & RaffleViewControllerDelegate, competidors:[BMCrowd.Person]) -> Bool{
+        if ( competidors.count <= 1){
+            BMAlert.withShortTime(faffleViewControllerDelegate, "All raffles have already been made.")
+            if ( competidors.count == 1){
+                faffleViewControllerDelegate.onDoneRaffle(winner: competidors[0])
+            }
+            return false
+        }
+        return true
+    }
+    
     override func viewDidLoad() {
+        self.faceUIImageView.image = nil
         self.startRaffle()
     }
     
@@ -42,10 +54,7 @@ class RaffleViewController: UIViewController {
     
     func doRaffle()  {
         self.background.async {
-            guard let partialWinner = BMRaffle.chooseOne( competitors: self.competitors ) else {
-                //TODO: incomplete code
-                fatalError("One partialWinner was not found with successful")
-            }
+            let partialWinner = BMRaffle.chooseOne( competitors: self.competitors )!
             self.main.sync {
                 self.hideFaceAnimate(
                     completion: {(finished: Bool) -> Void in

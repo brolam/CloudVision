@@ -281,9 +281,6 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <accessibility key="accessibilityConfiguration" identifier="PictureUIImageView"/>
                                         <gestureRecognizers/>
-                                        <connections>
-                                            <outletCollection property="gestureRecognizers" destination="7kS-2g-j1M" appends="YES" id="hQc-AG-iDU"/>
-                                        </connections>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -300,7 +297,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="Done"/>
                                 <connections>
-                                    <action selector="done:" destination="RNp-AO-zBl" eventType="touchUpInside" id="qM3-g9-UiQ"/>
+                                    <action selector="done:" destination="RNp-AO-zBl" eventType="touchUpInside" id="7ci-Gk-EPe"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -321,7 +318,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c0l-PF-3n2" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <panGestureRecognizer minimumNumberOfTouches="1" id="7kS-2g-j1M">
                     <connections>
-                        <action selector="done:" destination="RNp-AO-zBl" id="BQU-8w-Sjt"/>
+                        <action selector="done:" destination="RNp-AO-zBl" id="11Q-O5-76e"/>
                     </connections>
                 </panGestureRecognizer>
             </objects>

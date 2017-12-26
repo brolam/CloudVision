@@ -72,6 +72,28 @@ class AppUITests: XCTestCase {
         XCTAssertEqual(app.collectionViews.cells.count, 21)
     }
     
+    func testRaffleOnePersonWithOneFacePicture(){
+        app.launchEnvironment[BMImagePicker.FAKER_IMAGE_SELECTED]  = "crowd-test-03.png"
+        app.launch()
+        app.toolbars.buttons.element(boundBy:CAMERA_BUTTON).tap()
+        XCTAssertTrue(waiterResultWithExpextation(app.collectionViews.element ) == .completed)
+        XCTAssertEqual(app.collectionViews.cells.count, 2)
+        app.navigationBars.buttons.element(boundBy:RAFFLE_BUTTON).tap()
+        XCTAssertTrue(
+            waiterResultWithExpextation(app.collectionViews.staticTexts["Winners"]) == .completed
+        )
+        XCTAssertEqual(app.collectionViews.cells.count, 3)
+    }
+    
+    func testRaffleOnePersonWithAllRafflesMade(){
+        self.testRaffleOnePersonWithOneFacePicture()
+        app.navigationBars.buttons.element(boundBy:RAFFLE_BUTTON).tap()
+        XCTAssertTrue(waiterResultWithExpextation(
+            app.staticTexts["All raffles have already been made."] ) == .completed
+        )
+        
+    }
+    
     func testAddAndShowOneCrowdTableVeiw() {
         self.testAddOnePhotoByPhotoLibrary()
         app.navigationBars.buttons.element(boundBy:BACK_BUTTON).tap()
