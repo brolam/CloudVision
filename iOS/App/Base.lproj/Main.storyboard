@@ -257,10 +257,63 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="RNp-AO-zBl" kind="presentation" identifier="SegueShowPictureModal" modalPresentationStyle="overCurrentContext" id="dwJ-NH-ada"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cXa-sZ-jJt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="660" y="-45"/>
+        </scene>
+        <!--Show Picture-->
+        <scene sceneID="cLt-KN-yiH">
+            <objects>
+                <viewController title="Show Picture" modalPresentationStyle="currentContext" id="RNp-AO-zBl" customClass="ShowPictureController" customModule="CloudVision" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lAY-ML-gYA">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="87R-Yj-gfg" userLabel="ViewModal" customClass="BMViewModal" customModule="CloudVision" customModuleProvider="target">
+                                <rect key="frame" x="16" y="96" width="288" height="288"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O8h-00-fLm" userLabel="PictureUIImageView">
+                                        <rect key="frame" x="1" y="1" width="286" height="286"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="PictureUIImageView"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="288" id="NhN-iu-t5R"/>
+                                    <constraint firstAttribute="height" constant="288" id="Rbm-NY-5n3"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f9b-jI-0MG">
+                                <rect key="frame" x="16" y="389" width="288" height="33"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="Done"/>
+                                <connections>
+                                    <action selector="done:" destination="RNp-AO-zBl" eventType="touchUpInside" id="qM3-g9-UiQ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.080023107392957746" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="bbc-fZ-8Dk" firstAttribute="bottom" secondItem="f9b-jI-0MG" secondAttribute="bottom" constant="58" id="F0K-KV-2W5"/>
+                            <constraint firstItem="87R-Yj-gfg" firstAttribute="centerY" secondItem="lAY-ML-gYA" secondAttribute="centerY" id="PgT-CG-NMy"/>
+                            <constraint firstItem="f9b-jI-0MG" firstAttribute="leading" secondItem="bbc-fZ-8Dk" secondAttribute="leading" constant="16" id="byq-wg-54F"/>
+                            <constraint firstItem="bbc-fZ-8Dk" firstAttribute="trailing" secondItem="f9b-jI-0MG" secondAttribute="trailing" constant="16" id="kdq-Vl-twU"/>
+                            <constraint firstItem="87R-Yj-gfg" firstAttribute="centerX" secondItem="lAY-ML-gYA" secondAttribute="centerX" id="zDO-hk-8Tv"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="bbc-fZ-8Dk"/>
+                    </view>
+                    <connections>
+                        <outlet property="pictureUIImageView" destination="O8h-00-fLm" id="vjp-Ae-3aX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="c0l-PF-3n2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="660" y="762.5"/>
         </scene>
         <!--Raffle-->
         <scene sceneID="Bgk-we-YSN">

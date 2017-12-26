@@ -87,6 +87,32 @@ class AppUITests: XCTestCase {
         firstCell.buttons.element(boundBy: DELETE_BUTTON).tap()
         XCTAssertEqual(app.tables.cells.count, 0)
     }
+  
+    func testShowPictureOnePeopleInEveryone() {
+        self.testAddOnePhotoByPhotoLibrary()
+        app.collectionViews.cells.element(boundBy: 0).tap()
+        XCTAssert(app.images["PictureUIImageView"].exists)
+        app.buttons["Done"].tap()
+        XCTAssertFalse(app.images["PictureUIImageView"].exists)
+    }
+    
+    func testShowPictureOnePeopleInWinners() {
+        testRaffleOnePerson()
+        XCTAssertEqual(app.collectionViews.cells.count, 21)
+        app.collectionViews.cells.element(boundBy: 0).tap()
+        XCTAssert(app.images["PictureUIImageView"].exists)
+        app.buttons["Done"].tap()
+        XCTAssertFalse(app.images["PictureUIImageView"].exists)
+    }
+    
+    func testShowPictureTrackedPicture() {
+        self.testAddOnePhotoByPhotoLibrary()
+        XCTAssertEqual(app.collectionViews.cells.count, 10)
+        app.collectionViews.cells.element(boundBy: 9).tap()
+        XCTAssert(app.images["PictureUIImageView"].exists)
+        app.buttons["Done"].tap()
+        XCTAssertFalse(app.images["PictureUIImageView"].exists)
+    }
     
     //Source: https://github.com/Shashikant86/Xcode83_Demo/blob/master/Xcode83_DemoUITests/Xcode83_DemoUITests.swift
     func waiterResultWithExpextation(_ element: XCUIElement, timeout:Double = 5 ) -> XCTWaiter.Result {

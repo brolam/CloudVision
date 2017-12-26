@@ -65,6 +65,23 @@ class FacesViewController: UICollectionViewController, RaffleViewControllerDeleg
         }
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        var showPictureUIImage : UIImage?
+        if ( ( winners.count > 0) && (indexPath.section == 0)){
+            let winner = self.winners[indexPath.item]
+            let indexPerson = self.bmCrowd.people.index(of:winner)
+            showPictureUIImage = self.facesFictures[indexPerson!]
+        } else if ( indexPath.item < self.facesFictures.count){
+            showPictureUIImage = self.facesFictures[indexPath.item]
+        } else {
+            showPictureUIImage = self.bmCrowd.trackedUIImage
+        }
+        performSegue(
+            withIdentifier: "SegueShowPictureModal",
+            sender: showPictureUIImage
+        )
+    }
+    
     override func collectionView(_ collectionView: UICollectionView,
                                  viewForSupplementaryElementOfKind kind: String,
                                  at indexPath: IndexPath) -> UICollectionReusableView {
@@ -98,6 +115,9 @@ class FacesViewController: UICollectionViewController, RaffleViewControllerDeleg
             raffleViewController.bmCrowd = self.bmCrowd
             raffleViewController.facesFictures = self.facesFictures
             raffleViewController.delegate = self
+        } else if ( segue.identifier == "SegueShowPictureModal"){
+            let  showPictureController = segue.destination  as! ShowPictureController
+            showPictureController.setPictureImage(uiImage: sender as! UIImage)
         }
     }
 }
