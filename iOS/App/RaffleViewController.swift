@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 protocol RaffleViewControllerDelegate {
+    var bmCrowd: BMCrowd!  { get }
+    var facesFictures: [UIImage]  { get }
     func onDoneRaffle(winner:BMCrowd.Person)
 }
 
@@ -17,12 +19,10 @@ class RaffleViewController: UIViewController {
     
     @IBOutlet weak var viewModal: UIView!
     @IBOutlet weak var faceUIImageView: UIImageView!
-    var bmCrowd: BMCrowd!
-    var delegate : RaffleViewControllerDelegate?
+    var delegate : RaffleViewControllerDelegate!
     let amountOfRaffles = 10
     var countReafflesRealised = 0
     var competitors = [BMCrowd.Person]()
-    var facesFictures = [UIImage]()
     let main = DispatchQueue.main
     let background = DispatchQueue.global()
     
@@ -43,7 +43,7 @@ class RaffleViewController: UIViewController {
     }
     
     func startRaffle(){
-        self.competitors = bmCrowd.getNotWinners()
+        self.competitors = self.delegate.bmCrowd.getNotWinners()
         doRaffle()
     }
     
@@ -119,8 +119,8 @@ class RaffleViewController: UIViewController {
     }
     
     func getFaceFictureByPerson(_ person:BMCrowd.Person) -> UIImage{
-        let indexPerson = self.bmCrowd.people.index(of: person)
-        return self.facesFictures[indexPerson!]
+        let indexPerson = self.delegate.bmCrowd.people.index(of: person)
+        return self.delegate.facesFictures[indexPerson!]
     }
     
 }

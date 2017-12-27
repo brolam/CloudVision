@@ -72,8 +72,6 @@ class FacesViewController: UICollectionViewController, RaffleViewControllerDeleg
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if ( segue.identifier == "SequeRaffleViewController"){
             let  raffleViewController = segue.destination  as! RaffleViewController
-            raffleViewController.bmCrowd = self.bmCrowd
-            raffleViewController.facesFictures = self.facesFictures
             raffleViewController.delegate = self
         } else if ( segue.identifier == "SegueShowPictureModal"){
             let  showPictureController = segue.destination  as! ShowPictureController
