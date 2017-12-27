@@ -20,7 +20,7 @@ class BMCrowdTestCase: XCTestCase {
             BMCrowd.Person(key:3 , faceImageLocation: CGRect(x:0, y:0, width: 60 , height:60 ), winnerPosition: 0)
         ]
     )
-    
+ 
     override func setUp() {
         super.setUp()
         BMCrowd.deleteAll()
@@ -68,6 +68,66 @@ class BMCrowdTestCase: XCTestCase {
                 people: nil ),
             "People it is required"
         )
+        
+        XCTAssertNil(
+            BMCrowd(
+                title: crowdFields.title,
+                created: crowdFields.created,
+                trackedUIImage: crowdFields.trackedUIImage,
+                people: [BMCrowd.Person]() ),
+            "People it is required"
+        )
+    }
+    
+    func testInvalidInitWithNSCoder() {
+        let bmCrowd = BMCrowd(
+            title: crowdFields.title,
+            created: crowdFields.created,
+            trackedUIImage: crowdFields.trackedUIImage,
+            people: crowdFields.people
+        )
+        
+        let bmCoderMock = BMCoderMock()
+        bmCrowd!.encode(with: bmCoderMock)
+        
+        bmCoderMock.simulateValueNil(forKey: BMCrowd.PropertyKey.title)
+        XCTAssertNil(BMCrowd(coder: bmCoderMock), "Title it is required")
+        
+        bmCoderMock.simulateValueNil(forKey: BMCrowd.PropertyKey.created)
+        XCTAssertNil(BMCrowd(coder: bmCoderMock), "Date created it is required")
+        
+        bmCoderMock.simulateValueNil(forKey: BMCrowd.PropertyKey.trackedUIImage)
+        XCTAssertNil(BMCrowd(coder: bmCoderMock), "TrackedUIImage it is required")
+        
+        bmCoderMock.simulateValueNil(forKey: BMCrowd.PropertyKey.people)
+        XCTAssertNil(BMCrowd(coder: bmCoderMock),"People it is required")
+        
+        bmCoderMock.cancelSimulateValueNil()
+        XCTAssertNotNil(BMCrowd(coder: bmCoderMock))
+    }
+    
+    func testPersonInvalidInitWithNSCoder() {
+        let bmPerson = BMCrowd(
+            title: crowdFields.title,
+            created: crowdFields.created,
+            trackedUIImage: crowdFields.trackedUIImage,
+            people: crowdFields.people
+        )?.people[0]
+        
+        let bmCoderMock = BMCoderMock()
+        bmPerson!.encode(with: bmCoderMock)
+        
+        bmCoderMock.simulateValueNil(forKey: BMCrowd.PropertyKey.People.key)
+        XCTAssertNil(BMCrowd.Person(coder: bmCoderMock), "Key it is required")
+        
+        bmCoderMock.simulateValueNil(forKey: BMCrowd.PropertyKey.People.faceImageLocation)
+        XCTAssertNil(BMCrowd.Person(coder: bmCoderMock), "FaceImageLocationit is required")
+        
+        bmCoderMock.simulateValueNil(forKey: BMCrowd.PropertyKey.People.winnerPosition)
+        XCTAssertNil(BMCrowd.Person(coder: bmCoderMock), "WinnerPosition it is required")
+        
+        bmCoderMock.cancelSimulateValueNil()
+        XCTAssertNotNil(BMCrowd.Person(coder: bmCoderMock))
     }
     
     func testLoadCrowdsIfNotLoadedYet(){

@@ -22,6 +22,7 @@
 		4E32571E1FEAF1330013E621 /* RaffleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E32571D1FEAF1330013E621 /* RaffleViewController.swift */; };
 		4E33A4551FE290F800BB3C7D /* Vision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E33A4541FE290F700BB3C7D /* Vision.framework */; };
 		4E34678C1FE134C70033775C /* BMFacesDetectorTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34678B1FE134C70033775C /* BMFacesDetectorTestCase.swift */; };
+		4E34BDBE1FF3DB8D0067B7CC /* BMCoderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34BDBC1FF3DB260067B7CC /* BMCoderMock.swift */; };
 		4E34F0E41FE7C04A003873BE /* FacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34F0E31FE7C04A003873BE /* FacesViewController.swift */; };
 		4E34F0E71FE8091D003873BE /* BMOneFaceViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34F0E61FE8091D003873BE /* BMOneFaceViewCell.swift */; };
 		4E34F0E91FE813F1003873BE /* BMTrackedImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34F0E81FE813F1003873BE /* BMTrackedImageViewCell.swift */; };
@@ -90,6 +91,7 @@
 		4E32571D1FEAF1330013E621 /* RaffleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaffleViewController.swift; sourceTree = "<group>"; };
 		4E33A4541FE290F700BB3C7D /* Vision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vision.framework; path = System/Library/Frameworks/Vision.framework; sourceTree = SDKROOT; };
 		4E34678B1FE134C70033775C /* BMFacesDetectorTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMFacesDetectorTestCase.swift; sourceTree = "<group>"; };
+		4E34BDBC1FF3DB260067B7CC /* BMCoderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMCoderMock.swift; sourceTree = "<group>"; };
 		4E34F0E31FE7C04A003873BE /* FacesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacesViewController.swift; sourceTree = "<group>"; };
 		4E34F0E61FE8091D003873BE /* BMOneFaceViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMOneFaceViewCell.swift; sourceTree = "<group>"; };
 		4E34F0E81FE813F1003873BE /* BMTrackedImageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTrackedImageViewCell.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 		4E18B7401FDF2A4A00C1E77B /* AppTests */ = {
 			isa = PBXGroup;
 			children = (
+				4E34BDBB1FF3DA8F0067B7CC /* Mocks */,
 				4E18B7431FDF2A4A00C1E77B /* Info.plist */,
 				4E34678B1FE134C70033775C /* BMFacesDetectorTestCase.swift */,
 				4ED70C741FE3570800129A11 /* BMImageUtilitiesTestCase.swift */,
@@ -209,6 +212,14 @@
 				4E59582B1FF2EA71003F4381 /* crowd-test-03.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4E34BDBB1FF3DA8F0067B7CC /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				4E34BDBC1FF3DB260067B7CC /* BMCoderMock.swift */,
+			);
+			name = Mocks;
 			sourceTree = "<group>";
 		};
 		4E34F0E51FE80894003873BE /* Components */ = {
@@ -600,6 +611,7 @@
 				4E3257181FEAA25A0013E621 /* BMRaffleTestCase.swift in Sources */,
 				4E32571C1FEAB4F80013E621 /* BMRaffle.swift in Sources */,
 				4E1097CF1FEE63D5009B69F7 /* AppDelegate.swift in Sources */,
+				4E34BDBE1FF3DB8D0067B7CC /* BMCoderMock.swift in Sources */,
 				4E355DB41FE3D9C9003B200D /* BMImageUtilities.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
