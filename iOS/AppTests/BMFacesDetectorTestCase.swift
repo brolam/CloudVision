@@ -37,6 +37,12 @@ class BMFacesDetectorTestCase: XCTestCase {
         XCTAssertEqual(bmFacesDetector.countFaces(), 19)
     }
     
+    func testTrackFacesInvalidImage() {
+        XCTAssertFalse(bmFacesDetector.trackFaces(uiImage: UIImage(named: "clover")!))
+        XCTAssertEqual(bmFacesDetector.countFaces(), 0)
+        XCTAssertEqual(bmFacesDetector.getFacesLocation().count, 0 )
+    }
+    
     func testGetFacesLocation(){
         self.testTrackFacesCrowd02Count()
         let facesLocation: [CGRect]  = bmFacesDetector.getFacesLocation()
