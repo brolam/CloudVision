@@ -8,6 +8,8 @@
 
 import Foundation
 import UIKit
+import AVFoundation
+import Photos
 
 class BMImagePicker{
     #if DEBUG
@@ -39,6 +41,17 @@ class BMImagePicker{
                 return
             }
         #endif
+        
+        if ( imagePickerController.sourceType == .photoLibrary && PHPhotoLibrary.authorizationStatus() == .denied) {
+            BMAlert.withShortTime(viewController, "Go into iPhone settings and give photo library permission to CloudVision.")
+            return
+        }
+        
+        if (   imagePickerController.sourceType == .camera && AVCaptureDevice.authorizationStatus(for: .video) ==  .denied ) {
+            BMAlert.withShortTime(viewController, "Go into iPhone settings and give camera permission to CloudVision.")
+            return
+        }
+        
         viewController.present(imagePickerController, animated: true, completion: nil)
     }
     
