@@ -10,6 +10,6 @@ import Foundation
 import UIKit
 
 class BMCrowdCardView: UITableViewCell {
-    @IBOutlet weak var BackgroundUIImage: UIImageView!
+    @IBOutlet weak var backgroundUIImage: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
 }

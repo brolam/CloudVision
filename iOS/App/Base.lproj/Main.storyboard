@@ -42,7 +42,7 @@
                                     <constraint firstAttribute="width" constant="320" id="oM5-2t-U5G"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="BMCrowdCardView" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BMCrowdCardView" rowHeight="230" id="1hb-bb-1Ww" customClass="BMCrowdCardView" customModule="CloudVision">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="BMCrowdCardView" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" indentationWidth="10" reuseIdentifier="BMCrowdCardView" focusStyle="custom" rowHeight="230" id="1hb-bb-1Ww" customClass="BMCrowdCardView" customModule="CloudVision">
                                         <rect key="frame" x="0.0" y="28" width="320" height="230"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1hb-bb-1Ww" id="AJH-ce-Nef">
@@ -66,7 +66,7 @@
                                                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="304" id="Utc-Yg-hX0"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <color key="textColor" white="0.74283854166666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                             <color key="shadowColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                                                         </label>

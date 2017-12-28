@@ -59,7 +59,7 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let bmCrowdCardView = tableView.dequeueReusableCell(withIdentifier: "BMCrowdCardView", for: indexPath) as! BMCrowdCardView
         let bmCrowd = BMCrowd.getCrowds()[indexPath.item]
-        bmCrowdCardView.BackgroundUIImage.image = bmCrowd.trackedUIImage
+        bmCrowdCardView.backgroundUIImage.image = bmCrowd.trackedUIImage
         bmCrowdCardView.titleLabel.text = bmCrowd.title
         return bmCrowdCardView
     }
