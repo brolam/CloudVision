@@ -110,7 +110,7 @@ class AppUITests: XCTestCase {
         XCTAssertEqual(app.tables.cells.count, 0)
     }
   
-    func testShowPictureOnePeopleInEveryone() {
+    func testShowPictureOnePersonInEveryone() {
         self.testAddOnePhotoByPhotoLibrary()
         app.collectionViews.cells.element(boundBy: 0).tap()
         XCTAssert(app.images["PictureUIImageView"].exists)
@@ -118,7 +118,7 @@ class AppUITests: XCTestCase {
         XCTAssertFalse(app.images["PictureUIImageView"].exists)
     }
     
-    func testShowPictureOnePeopleInWinners() {
+    func testShowPictureOnePersonInWinners() {
         testRaffleOnePerson()
         XCTAssertEqual(app.collectionViews.cells.count, 21)
         app.collectionViews.cells.element(boundBy: 0).tap()
