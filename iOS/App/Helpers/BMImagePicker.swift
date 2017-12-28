@@ -34,6 +34,15 @@ class BMImagePicker{
     }
     
     func show(){
+        if ( imagePickerController.sourceType == .photoLibrary && PHPhotoLibrary.authorizationStatus() == .denied) {
+            BMAlert.withShortTime(viewController, keyMessage: "ms_photoLibrary_denied")
+            return
+        }
+        
+        if (   imagePickerController.sourceType == .camera && AVCaptureDevice.authorizationStatus(for: .video) ==  .denied ) {
+            BMAlert.withShortTime(viewController, keyMessage: "ms_camera_denied")
+            return
+        }
         #if DEBUG
             if let fakerImage =  ProcessInfo.processInfo.environment[BMImagePicker.FAKER_IMAGE_SELECTED] {
                 let info:[String : Any] = [UIImagePickerControllerOriginalImage: UIImage(named: fakerImage) as Any]
@@ -41,17 +50,6 @@ class BMImagePicker{
                 return
             }
         #endif
-        
-        if ( imagePickerController.sourceType == .photoLibrary && PHPhotoLibrary.authorizationStatus() == .denied) {
-            BMAlert.withShortTime(viewController, "Go into iPhone settings and give photo library permission to CloudVision.")
-            return
-        }
-        
-        if (   imagePickerController.sourceType == .camera && AVCaptureDevice.authorizationStatus(for: .video) ==  .denied ) {
-            BMAlert.withShortTime(viewController, "Go into iPhone settings and give camera permission to CloudVision.")
-            return
-        }
-        
         viewController.present(imagePickerController, animated: true, completion: nil)
     }
     

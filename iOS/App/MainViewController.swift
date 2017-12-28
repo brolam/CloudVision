@@ -34,7 +34,7 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
                     )
                 }
             } else {
-                BMAlert.withShortTime(self,"Sorry, but I could not find faces in this photo.")
+                BMAlert.withShortTime(self, keyMessage: "ms_not_find_faces_in_the_picture")
             }
         }
     }
@@ -57,10 +57,7 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let bmCrowdCardView = tableView.dequeueReusableCell(withIdentifier: "BMCrowdCardView", for: indexPath) as? BMCrowdCardView  else {
-            //TODO: incomplete code
-            fatalError("The dequeued cell is not an instance of BMCrowdCardView.")
-        }
+        let bmCrowdCardView = tableView.dequeueReusableCell(withIdentifier: "BMCrowdCardView", for: indexPath) as! BMCrowdCardView
         let bmCrowd = BMCrowd.getCrowds()[indexPath.item]
         bmCrowdCardView.BackgroundUIImage.image = bmCrowd.trackedUIImage
         bmCrowdCardView.titleLabel.text = bmCrowd.title
@@ -100,7 +97,7 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
         guard let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage else {
-            BMAlert.withShortTime(self, "Sorry, this picture is not valid.")
+            BMAlert.withShortTime(self, keyMessage: "ms_not_valid_picture")
             return
         }
         doDetectFacesAsync(selectedImage)
@@ -137,14 +134,11 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
     
     func saveOneCrowd(_ bmFacesDetector: BMFacesDetector! ) -> BMCrowd {
         let created = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .full
-        dateFormatter.timeStyle = .medium
         let people = bmFacesDetector.getFacesLocation().enumerated().map{
             (index, cgRect) in BMCrowd.Person(key: index, faceImageLocation: cgRect, winnerPosition: 0)
         }
         let bmCrowd = BMCrowd(
-            title: dateFormatter.string(from: created),
+            title: stringLongDateTime(created),
             created: created,
             trackedUIImage: bmFacesDetector.trackedUIImage,
             people: people

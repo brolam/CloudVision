@@ -3,16 +3,16 @@
 "4hh-YR-qCO.text" = "Saturday, December 23, 2017 at 6:28:31 AM";
 
 /* Class = "UINavigationItem"; title = "Crowd"; ObjectID = "ACm-wG-DGj"; */
-"ACm-wG-DGj.title" = "Crowd";
+"ACm-wG-DGj.title" = "Galera";
 
 /* Class = "UICollectionViewController"; title = "Crowd"; ObjectID = "Fcf-1W-GxR"; */
-"Fcf-1W-GxR.title" = "Crowd";
+"Fcf-1W-GxR.title" = "Galera";
 
 /* Class = "UIViewController"; title = "Show Picture"; ObjectID = "RNp-AO-zBl"; */
-"RNp-AO-zBl.title" = "Show Picture";
+"RNp-AO-zBl.title" = "Mostrar foto";
 
 /* Class = "UIViewController"; title = "Raffle"; ObjectID = "RuS-Dr-B0P"; */
-"RuS-Dr-B0P.title" = "Raffle";
+"RuS-Dr-B0P.title" = "Sorteio";
 
 /* Class = "UINavigationItem"; title = "Cloud Vision"; ObjectID = "cnn-6G-ZJy"; */
 "cnn-6G-ZJy.title" = "Cloud Vision";
@@ -21,7 +21,7 @@
 "f7P-Ys-OYT.text" = "10";
 
 /* Class = "UIButton"; normalTitle = "Done"; ObjectID = "f9b-jI-0MG"; */
-"f9b-jI-0MG.normalTitle" = "Done";
+"f9b-jI-0MG.normalTitle" = "Fechar";
 
 /* Class = "UILabel"; text = "Everyone"; ObjectID = "lWj-aP-s80"; */
-"lWj-aP-s80.text" = "Everyone";
+"lWj-aP-s80.text" = "Todos";

@@ -10,13 +10,14 @@ import Foundation
 import UIKit
 
 class BMAlert {
-    static func withShortTime(_ viewController: UIViewController,_ message:String){
+    static func withShortTime(_ viewController: UIViewController, keyMessage:String){
         let main = DispatchQueue.main
         let alert = UIAlertController(
             title: "CloudVision",
-            message: message,
+            message: GS(keyMessage),
             preferredStyle: .alert
         )
+        
         viewController.present(alert, animated: true, completion: nil)
         main.asyncAfter(deadline: .now() + .milliseconds(2000)) {
             alert.dismiss(animated: true, completion: nil)

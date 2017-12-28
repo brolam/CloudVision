@@ -28,7 +28,7 @@ class RaffleViewController: UIViewController {
     
     static func parse(_ faffleViewControllerDelegate: UIViewController & RaffleViewControllerDelegate, competidors:[BMCrowd.Person]) -> Bool{
         if ( competidors.count <= 1){
-            BMAlert.withShortTime(faffleViewControllerDelegate, "All raffles have already been made.")
+            BMAlert.withShortTime(faffleViewControllerDelegate, keyMessage: "ms_all_raffles_been_made")
             if ( competidors.count == 1){
                 faffleViewControllerDelegate.onDoneRaffle(winner: competidors[0])
             }

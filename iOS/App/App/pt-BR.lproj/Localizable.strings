@@ -5,3 +5,10 @@
   Created by Breno Marques on 27/12/2017.
   Copyright © 2017 Breno Marques. All rights reserved.
 */
+"Winners" = "Vencedores";
+"Everyone" = "Todos";
+"ms_photoLibrary_denied" = "Entre nas configurações do iPhone e dê permissão à biblioteca de fotos para o CloudVision.";
+"ms_camera_denied" = "Entre nas configurações do iPhone e dê permissão na câmera para o CloudVision.";
+"ms_not_find_faces_in_the_picture" = "Desculpe, não consegui encontrar rostos nesta foto.";
+"ms_all_raffles_been_made" = "Todos os sorteios já foram feitos.";
+"ms_not_valid_picture" = "Desculpe, esta imagem não é válida.";

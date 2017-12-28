@@ -29,9 +29,14 @@
 		4E355DB31FE3D9C9003B200D /* BMImageUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E355DB21FE3D9C9003B200D /* BMImageUtilities.swift */; };
 		4E355DB41FE3D9C9003B200D /* BMImageUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E355DB21FE3D9C9003B200D /* BMImageUtilities.swift */; };
 		4E3626FE1FE5AB6100FA1C6F /* AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E18B74C1FDF2A4A00C1E77B /* AppUITests.swift */; };
+		4E373E721FF44F3A00FA312B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4E373E701FF44F3A00FA312B /* Localizable.strings */; };
+		4E373E751FF45A5D00FA312B /* BMStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E373E741FF45A5D00FA312B /* BMStrings.swift */; };
+		4E38C5DA1FF4FCE5002AB827 /* BMStringsTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E38C5D91FF4FCE5002AB827 /* BMStringsTestCase.swift */; };
 		4E38CC991FE911CA002F8002 /* BMImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E38CC981FE911CA002F8002 /* BMImagePicker.swift */; };
 		4E38CC9D1FE9191B002F8002 /* BMImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E38CC981FE911CA002F8002 /* BMImagePicker.swift */; };
 		4E3A66A71FF17DDE00C5FAB0 /* BMAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3A66A61FF17DDE00C5FAB0 /* BMAlert.swift */; };
+		4E3AA8AA1FF45FCB0007E70B /* BMStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E373E741FF45A5D00FA312B /* BMStrings.swift */; };
+		4E3AA8AB1FF45FCC0007E70B /* BMStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E373E741FF45A5D00FA312B /* BMStrings.swift */; };
 		4E443DD81FEBF34A00EF0065 /* BMCrowdTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E443DD71FEBF34A00EF0065 /* BMCrowdTestCase.swift */; };
 		4E443DDB1FEBF9F700EF0065 /* BMCrowd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E443DDA1FEBF9F700EF0065 /* BMCrowd.swift */; };
 		4E443DDC1FEBF9F700EF0065 /* BMCrowd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E443DDA1FEBF9F700EF0065 /* BMCrowd.swift */; };
@@ -96,6 +101,12 @@
 		4E34F0E61FE8091D003873BE /* BMOneFaceViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMOneFaceViewCell.swift; sourceTree = "<group>"; };
 		4E34F0E81FE813F1003873BE /* BMTrackedImageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTrackedImageViewCell.swift; sourceTree = "<group>"; };
 		4E355DB21FE3D9C9003B200D /* BMImageUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMImageUtilities.swift; sourceTree = "<group>"; };
+		4E373E6E1FF44DD100FA312B /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Main.strings"; sourceTree = "<group>"; };
+		4E373E6F1FF44DD100FA312B /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		4E373E711FF44F3A00FA312B /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = App/Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4E373E731FF44FDE00FA312B /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "App/pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		4E373E741FF45A5D00FA312B /* BMStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMStrings.swift; sourceTree = "<group>"; };
+		4E38C5D91FF4FCE5002AB827 /* BMStringsTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMStringsTestCase.swift; sourceTree = "<group>"; };
 		4E38CC981FE911CA002F8002 /* BMImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMImagePicker.swift; sourceTree = "<group>"; };
 		4E3A66A61FF17DDE00C5FAB0 /* BMAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMAlert.swift; sourceTree = "<group>"; };
 		4E443DD71FEBF34A00EF0065 /* BMCrowdTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMCrowdTestCase.swift; sourceTree = "<group>"; };
@@ -178,6 +189,7 @@
 				4E18B7331FDF2A4A00C1E77B /* Assets.xcassets */,
 				4E18B7351FDF2A4A00C1E77B /* LaunchScreen.storyboard */,
 				4E18B7381FDF2A4A00C1E77B /* Info.plist */,
+				4E373E701FF44F3A00FA312B /* Localizable.strings */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -191,6 +203,7 @@
 				4ED70C741FE3570800129A11 /* BMImageUtilitiesTestCase.swift */,
 				4E3257171FEAA25A0013E621 /* BMRaffleTestCase.swift */,
 				4E443DD71FEBF34A00EF0065 /* BMCrowdTestCase.swift */,
+				4E38C5D91FF4FCE5002AB827 /* BMStringsTestCase.swift */,
 			);
 			path = AppTests;
 			sourceTree = "<group>";
@@ -250,6 +263,7 @@
 				4E38CC981FE911CA002F8002 /* BMImagePicker.swift */,
 				4E3257191FEAB3490013E621 /* BMRaffle.swift */,
 				4E3A66A61FF17DDE00C5FAB0 /* BMAlert.swift */,
+				4E373E741FF45A5D00FA312B /* BMStrings.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -375,6 +389,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"pt-BR",
 			);
 			mainGroup = 4E18B7201FDF2A4A00C1E77B;
 			productRefGroup = 4E18B72A1FDF2A4A00C1E77B /* Products */;
@@ -396,6 +411,7 @@
 				4E18B75E1FDF370800C1E77B /* crowd-test-01.png in Resources */,
 				4E59582C1FF2EA72003F4381 /* crowd-test-03.png in Resources */,
 				4E18B7371FDF2A4A00C1E77B /* LaunchScreen.storyboard in Resources */,
+				4E373E721FF44F3A00FA312B /* Localizable.strings in Resources */,
 				4EE3CC851FE0A7AA00FF60D6 /* crowd-test-02.jpg in Resources */,
 				4E18B7341FDF2A4A00C1E77B /* Assets.xcassets in Resources */,
 				4E18B7321FDF2A4A00C1E77B /* Main.storyboard in Resources */,
@@ -580,6 +596,7 @@
 			files = (
 				4E18B72F1FDF2A4A00C1E77B /* MainViewController.swift in Sources */,
 				4EE28C2C1FEDC6EA00F8BC56 /* BMCrowdCardView.swift in Sources */,
+				4E373E751FF45A5D00FA312B /* BMStrings.swift in Sources */,
 				4E443DDB1FEBF9F700EF0065 /* BMCrowd.swift in Sources */,
 				4ED70C721FE2B16200129A11 /* BMFacesDetector.swift in Sources */,
 				4E32571E1FEAF1330013E621 /* RaffleViewController.swift in Sources */,
@@ -602,9 +619,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E443DDC1FEBF9F700EF0065 /* BMCrowd.swift in Sources */,
+				4E38C5DA1FF4FCE5002AB827 /* BMStringsTestCase.swift in Sources */,
 				4E34678C1FE134C70033775C /* BMFacesDetectorTestCase.swift in Sources */,
 				4ED70C751FE3570800129A11 /* BMImageUtilitiesTestCase.swift in Sources */,
 				4E443DD81FEBF34A00EF0065 /* BMCrowdTestCase.swift in Sources */,
+				4E3AA8AB1FF45FCC0007E70B /* BMStrings.swift in Sources */,
 				4E59582F1FF30045003F4381 /* RaffleViewController.swift in Sources */,
 				4ED70C731FE2B5F700129A11 /* BMFacesDetector.swift in Sources */,
 				4E5958301FF300B3003F4381 /* BMAlert.swift in Sources */,
@@ -625,6 +644,7 @@
 				4E38CC9D1FE9191B002F8002 /* BMImagePicker.swift in Sources */,
 				4E3626FE1FE5AB6100FA1C6F /* AppUITests.swift in Sources */,
 				4E59582D1FF30000003F4381 /* BMAlert.swift in Sources */,
+				4E3AA8AA1FF45FCB0007E70B /* BMStrings.swift in Sources */,
 				4E1097D01FEE63D6009B69F7 /* AppDelegate.swift in Sources */,
 				4E59582E1FF30037003F4381 /* RaffleViewController.swift in Sources */,
 				4EE28C2A1FED2E4700F8BC56 /* BMImageUtilities.swift in Sources */,
@@ -651,6 +671,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				4E18B7311FDF2A4A00C1E77B /* Base */,
+				4E373E6E1FF44DD100FA312B /* pt-BR */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -659,8 +680,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				4E18B7361FDF2A4A00C1E77B /* Base */,
+				4E373E6F1FF44DD100FA312B /* pt-BR */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		4E373E701FF44F3A00FA312B /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4E373E711FF44F3A00FA312B /* Base */,
+				4E373E731FF44FDE00FA312B /* pt-BR */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -670,6 +701,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -727,6 +759,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

@@ -93,8 +93,8 @@ class FacesViewController: UICollectionViewController, RaffleViewControllerDeleg
     
     fileprivate func getFacesHearderView(_ indexPath: IndexPath, _ collectionView: UICollectionView, _ kind: String) -> UICollectionReusableView {
         let (textTitleUILabel, textAmountUILabel)  = isWinnerSection(indexPath.section )
-            ? ("Winners" , String(self.winners.count))
-            : ("Everyone", String(self.facesFictures.count) )
+            ? (GS("Winners"), String(self.winners.count))
+            : (GS("Everyone"), String(self.facesFictures.count) )
         
         let facesHearderView = collectionView.dequeueReusableSupplementaryView(
             ofKind: kind,

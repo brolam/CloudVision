@@ -5,3 +5,10 @@
   Created by Breno Marques on 27/12/2017.
   Copyright © 2017 Breno Marques. All rights reserved.
 */
+"Winners" = "Winners";
+"Everyone" = "Everyone";
+"ms_photoLibrary_denied" = "Go into iPhone settings and give photo library permission to CloudVision.";
+"ms_camera_denied" = "Go into iPhone settings and give camera permission to CloudVision.";
+"ms_not_find_faces_in_the_picture" = "Sorry, but I could not find faces in this photo.";
+"ms_all_raffles_been_made" = "All raffles have already been made.";
+"ms_not_valid_picture" = "Sorry, this picture is not valid.";
