@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import UIKit
 
 class BMImageUtilitiesTestCase: XCTestCase {
     let uiImage = UIImage(named: "crowd-test-01.png")!
@@ -36,6 +37,18 @@ class BMImageUtilitiesTestCase: XCTestCase {
         XCTAssertEqual(resizedImage.size.width, 800)
         XCTAssertEqual(resizedImage.size.height, 800)
         
+    }
+    
+    func testDrawFrameRoundedCornerWithoutError(){
+        let uiImageView = UIImageView()
+        uiImageView.image = uiImage
+        BMImageUtilities.drawFrameRoundedCorner(uiImageView)
+    }
+    
+    func testDrawCircleFrameWithoutError(){
+        let uiImageView = UIImageView()
+        uiImageView.image = uiImage
+        BMImageUtilities.drawCircleFrame(uiImageView)
     }
     
 }

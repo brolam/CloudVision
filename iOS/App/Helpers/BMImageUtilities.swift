@@ -37,4 +37,26 @@ class BMImageUtilities {
         UIGraphicsEndImageContext()
         return newImage!
     }
+    
+    static func drawFrameRoundedCorner(_ view: UIView){
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 1
+        view.layer.shadowOffset = CGSize.zero
+        view.layer.shadowRadius = 15
+        view.layer.shadowPath = UIBezierPath(rect: view.bounds).cgPath
+        view.layer.shouldRasterize = true
+        view.layer.cornerRadius = 15
+        view.layer.masksToBounds = true
+    }
+    
+    static func drawCircleFrame(_ view: UIView){
+        let radius = view.frame.width / 2
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 1
+        view.layer.shadowOffset = CGSize.zero
+        view.layer.shadowRadius = radius
+        view.layer.shadowPath = UIBezierPath(rect: view.bounds).cgPath
+        view.layer.cornerRadius = radius
+        view.layer.masksToBounds = true
+    }
 }
