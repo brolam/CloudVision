@@ -39,8 +39,8 @@ class RaffleViewController: UIViewController {
     
     override func viewDidLoad() {
         self.faceUIImageView.image = nil
-        BMImageUtilities.drawCircleFrame(self.faceUIImageView)
-        BMImageUtilities.drawCircleFrame(self.viewModal)
+        BMImageUtilities.drawFrameCircle(self.faceUIImageView)
+        BMImageUtilities.drawFrameCircle(self.viewModal)
         self.startRaffle()
     }
     

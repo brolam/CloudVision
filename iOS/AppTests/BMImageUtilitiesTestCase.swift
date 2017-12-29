@@ -45,10 +45,10 @@ class BMImageUtilitiesTestCase: XCTestCase {
         BMImageUtilities.drawFrameRoundedCorner(uiImageView)
     }
     
-    func testDrawCircleFrameWithoutError(){
+    func testDrawFrameCircleWithoutError(){
         let uiImageView = UIImageView()
         uiImageView.image = uiImage
-        BMImageUtilities.drawCircleFrame(uiImageView)
+        BMImageUtilities.drawFrameCircle(uiImageView)
     }
     
 }

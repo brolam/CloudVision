@@ -14,7 +14,7 @@ class BMOneFaceViewCell: UICollectionViewCell {
     
     func setFaceUIImage( uiImage: UIImage){
         self.faceUIImageView.image = uiImage
-        BMImageUtilities.drawCircleFrame(self.faceUIImageView)
+        BMImageUtilities.drawFrameCircle(self.faceUIImageView)
     }
     
 }

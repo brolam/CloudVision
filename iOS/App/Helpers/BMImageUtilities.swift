@@ -49,7 +49,7 @@ class BMImageUtilities {
         view.layer.masksToBounds = true
     }
     
-    static func drawCircleFrame(_ view: UIView){
+    static func drawFrameCircle(_ view: UIView){
         let radius = view.frame.width / 2
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOpacity = 1
