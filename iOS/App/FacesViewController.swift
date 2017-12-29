@@ -112,7 +112,7 @@ class FacesViewController: UICollectionViewController, RaffleViewControllerDeleg
         let oneFaceViewCell = collectionView.dequeueReusableCell(
             withReuseIdentifier: "OneFaceViewCell",
             for: indexPath) as! BMOneFaceViewCell
-        oneFaceViewCell.faceUIImageView.image = self.facesFictures[indexPerson!]
+        oneFaceViewCell.setFaceUIImage(uiImage: self.facesFictures[indexPerson!])
         return oneFaceViewCell
     }
     
@@ -120,7 +120,7 @@ class FacesViewController: UICollectionViewController, RaffleViewControllerDeleg
         let oneFaceViewCell = collectionView.dequeueReusableCell(
             withReuseIdentifier: "OneFaceViewCell",
             for: indexPath) as! BMOneFaceViewCell
-        oneFaceViewCell.faceUIImageView.image = self.facesFictures[indexPath.item]
+        oneFaceViewCell.setFaceUIImage( uiImage: self.facesFictures[indexPath.item])
         return oneFaceViewCell
     }
     
@@ -128,7 +128,7 @@ class FacesViewController: UICollectionViewController, RaffleViewControllerDeleg
         let trackedImageViewCell = collectionView.dequeueReusableCell(
             withReuseIdentifier: "TrackedImageViewCell",
             for: indexPath) as! BMTrackedImageViewCell
-        trackedImageViewCell.uiImageView.image = self.bmCrowd.trackedUIImage
+        trackedImageViewCell.setUiImage(self.bmCrowd.trackedUIImage)
         return trackedImageViewCell
     }
     

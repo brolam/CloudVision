@@ -15,7 +15,10 @@ class ShowPictureController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        BMImageUtilities.drawFrameRoundedCorner(self.pictureUIImageView)
         self.pictureUIImageView.image = self.pictureUIImage
+        
+        
     }
     
     func setPictureImage(uiImage: UIImage){

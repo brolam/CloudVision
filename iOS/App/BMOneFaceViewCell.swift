@@ -10,6 +10,11 @@ import Foundation
 import UIKit
 
 class BMOneFaceViewCell: UICollectionViewCell {
-     @IBOutlet weak var faceUIImageView: UIImageView!
-
+    @IBOutlet fileprivate weak var faceUIImageView: UIImageView!
+    
+    func setFaceUIImage( uiImage: UIImage){
+        self.faceUIImageView.image = uiImage
+        BMImageUtilities.drawCircleFrame(self.faceUIImageView)
+    }
+    
 }

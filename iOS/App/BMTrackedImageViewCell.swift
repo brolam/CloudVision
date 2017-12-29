@@ -12,6 +12,13 @@ import Foundation
 import UIKit
 
 class BMTrackedImageViewCell: UICollectionViewCell {
-    @IBOutlet weak var uiImageView: UIImageView!
+    @IBOutlet fileprivate weak var uiImageView: UIImageView!
+    
+    func setUiImage(_ uiImage: UIImage){
+        self.uiImageView.image = uiImage
+        BMImageUtilities.drawFrameRoundedCorner(self.uiImageView)
+    }
+    
+    
     
 }
