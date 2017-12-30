@@ -144,8 +144,16 @@ class MainViewController: UIViewController , UIImagePickerControllerDelegate , U
             people: people
         )
         BMCrowd.add(bmCrowd!)
-        self.main.sync { self.tableCardsView.reloadData() }
+        self.main.sync {
+            self.tableCardsView.reloadData()
+            self.scrollToTop()
+        }
         return bmCrowd!
+    }
+    //Source: https://stackoverflow.com/questions/724892/uitableview-scroll-to-the-top
+    func scrollToTop() {
+        let indexPath = IndexPath(row: 0, section: 0)
+        self.tableCardsView.scrollToRow(at: indexPath, at: .top, animated: true)
     }
 }
 
