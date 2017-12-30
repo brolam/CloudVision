@@ -44,6 +44,41 @@ class AppUITests: XCTestCase {
         XCTAssertTrue(waiterResultWithExpextation(app.collectionViews.element ) == .completed)
         XCTAssertEqual(app.collectionViews.cells.count, 20)
     }
+    
+    func testRaffleOnePerson(){
+        testAddOnePhotoByCamera()
+        app.navigationBars.buttons.element(boundBy:RAFFLE_BUTTON).tap()
+        XCTAssertTrue(
+            waiterResultWithExpextation(app.collectionViews.staticTexts["Winners"] , timeout: 10 ) == .completed
+        )
+        XCTAssertEqual(app.collectionViews.cells.count, 21)
+    }
+    
+    func testShowPictureOnePersonInEveryone() {
+        self.testAddOnePhotoByPhotoLibrary()
+        app.collectionViews.cells.element(boundBy: 0).tap()
+        XCTAssert(app.images["PictureUIImageView"].exists)
+        app.buttons["Done"].tap()
+        XCTAssertFalse(app.images["PictureUIImageView"].exists)
+    }
+    
+    func testShowPictureOnePersonInWinners() {
+        testRaffleOnePerson()
+        XCTAssertEqual(app.collectionViews.cells.count, 21)
+        app.collectionViews.cells.element(boundBy: 0).tap()
+        XCTAssert(app.images["PictureUIImageView"].exists)
+        app.buttons["Done"].tap()
+        XCTAssertFalse(app.images["PictureUIImageView"].exists)
+    }
+    
+    func testShowPictureTrackedPicture() {
+        self.testAddOnePhotoByPhotoLibrary()
+        XCTAssertEqual(app.collectionViews.cells.count, 10)
+        app.collectionViews.cells.element(boundBy: 9).tap()
+        XCTAssert(app.images["PictureUIImageView"].exists)
+        app.buttons["Done"].tap()
+        XCTAssertFalse(app.images["PictureUIImageView"].exists)
+    }
 
     func testTryAddInvalidPhotoByPhotoLibrary() {
         app.launchEnvironment[BMImagePicker.FAKER_IMAGE_SELECTED]  = "invaliIdPhoto.jpg"
@@ -61,15 +96,6 @@ class AppUITests: XCTestCase {
         XCTAssertTrue(waiterResultWithExpextation(app.alerts.element) == .completed)
         XCTAssertTrue(app.staticTexts["Sorry, but I could not find faces in this photo."].exists)
         XCTAssertFalse(waiterResultWithExpextation(app.alerts.element, timeout: 10) == .completed)
-    }
-    
-    func testRaffleOnePerson(){
-        testAddOnePhotoByCamera()
-        app.navigationBars.buttons.element(boundBy:RAFFLE_BUTTON).tap()
-        XCTAssertTrue(
-            waiterResultWithExpextation(app.collectionViews.staticTexts["Winners"] , timeout: 10 ) == .completed
-        )
-        XCTAssertEqual(app.collectionViews.cells.count, 21)
     }
     
     func testRaffleOnePersonWithOneFacePicture(){
@@ -110,32 +136,6 @@ class AppUITests: XCTestCase {
         XCTAssertEqual(app.tables.cells.count, 0)
     }
   
-    func testShowPictureOnePersonInEveryone() {
-        self.testAddOnePhotoByPhotoLibrary()
-        app.collectionViews.cells.element(boundBy: 0).tap()
-        XCTAssert(app.images["PictureUIImageView"].exists)
-        app.buttons["Done"].tap()
-        XCTAssertFalse(app.images["PictureUIImageView"].exists)
-    }
-    
-    func testShowPictureOnePersonInWinners() {
-        testRaffleOnePerson()
-        XCTAssertEqual(app.collectionViews.cells.count, 21)
-        app.collectionViews.cells.element(boundBy: 0).tap()
-        XCTAssert(app.images["PictureUIImageView"].exists)
-        app.buttons["Done"].tap()
-        XCTAssertFalse(app.images["PictureUIImageView"].exists)
-    }
-    
-    func testShowPictureTrackedPicture() {
-        self.testAddOnePhotoByPhotoLibrary()
-        XCTAssertEqual(app.collectionViews.cells.count, 10)
-        app.collectionViews.cells.element(boundBy: 9).tap()
-        XCTAssert(app.images["PictureUIImageView"].exists)
-        app.buttons["Done"].tap()
-        XCTAssertFalse(app.images["PictureUIImageView"].exists)
-    }
-    
     //Source: https://github.com/Shashikant86/Xcode83_Demo/blob/master/Xcode83_DemoUITests/Xcode83_DemoUITests.swift
     func waiterResultWithExpextation(_ element: XCUIElement, timeout:Double = 5 ) -> XCTWaiter.Result {
         let myPredicate = NSPredicate(format: "exists == true")
