@@ -13,8 +13,10 @@ iOS          |Android
 [![Demonstração](http://img.youtube.com/vi/SH2QR99U5zw/0.jpg)](http://www.youtube.com/watch?v=SH2QR99U5zw)|[![Demonstração](https://img.youtube.com/vi/QrG-vEyAgKQ/0.jpg)](http://www.youtube.com/watch?v=QrG-vEyAgKQ)
 
 ## Instalação do aplicativo 
-- iOS
+- iOS - [instalar](https://itunes.apple.com/br/app/cloudvision/id1330305823?l=en&mt=8)
 - Android - [baixar](https://raw.githubusercontent.com/brolam/Capstone-Project/master/CloudVision.apk) e executar o apk em um smartphone ou tablet.google.com/).
+
+
 
 ## Licença
 [Licensed to the Apache Software Foundation (ASF)](http://www.apache.org/licenses/LICENSE-2.0)
