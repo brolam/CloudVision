@@ -1,6 +1,6 @@
 package br.com.brolam.cloudvision
 
-import android.graphics.Bitmap
+import android.content.Context
 import android.graphics.BitmapFactory
 import br.com.brolam.cloudvision.helpers.FacesDetectorHelper
 import org.junit.Test
@@ -15,19 +15,47 @@ import org.junit.Before
  */
 class FacesDetectorUnitTest {
     lateinit var facesDetectorHelper: FacesDetectorHelper
-    lateinit var bitmapCrowd01: Bitmap
+    lateinit var context: Context
 
     @Before
     fun setUp() {
-        val context = InstrumentationRegistry.getTargetContext()
+        this.context = InstrumentationRegistry.getTargetContext()
         this.facesDetectorHelper = FacesDetectorHelper(context)
-        this.bitmapCrowd01 = BitmapFactory.decodeResource(context.resources, R.drawable.crowd_test_01)
-
     }
 
     @Test
     fun testTrackFacesCrowd01Count() {
-        assertTrue(facesDetectorHelper.trackFaces(this.bitmapCrowd01))
-        assertEquals(facesDetectorHelper.countFaces(), 9)
+        var stream = this.context.getResources().openRawResource(R.raw.crowd_test_01)
+        try {
+            val bitmapCrowd01 = BitmapFactory.decodeStream(stream)
+            assertTrue(facesDetectorHelper.trackFaces(bitmapCrowd01))
+            assertEquals(facesDetectorHelper.countFaces(), 9)
+        } finally {
+            stream.close()
+        }
+    }
+
+    @Test
+    fun testTrackFacesCrowd02Count() {
+        var stream = this.context.getResources().openRawResource(R.raw.crowd_test_02)
+        try {
+            val bitmapCrowd02 = BitmapFactory.decodeStream(stream)
+            assertTrue(facesDetectorHelper.trackFaces(bitmapCrowd02))
+            assertEquals(facesDetectorHelper.countFaces(), 19)
+        } finally {
+            stream.close()
+        }
+    }
+
+    @Test
+    fun testTrackFacesCrowd03Count() {
+        var stream = this.context.getResources().openRawResource(R.raw.crowd_test_03)
+        try {
+            val bitmapCrowd03 = BitmapFactory.decodeStream(stream)
+            assertTrue(facesDetectorHelper.trackFaces(bitmapCrowd03))
+            assertEquals(facesDetectorHelper.countFaces(), 1)
+        } finally {
+            stream.close()
+        }
     }
 }

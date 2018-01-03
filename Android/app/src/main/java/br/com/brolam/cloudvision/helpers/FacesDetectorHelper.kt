@@ -15,14 +15,16 @@ class FacesDetectorHelper(context: Context) {
             .setLandmarkType(FaceDetector.ALL_LANDMARKS)
             .setClassificationType(FaceDetector.ALL_CLASSIFICATIONS)
             .setProminentFaceOnly(false)
-            .setMinFaceSize(0.15F)
+            .setMinFaceSize(0.01F)
             .setTrackingEnabled(false)
             .setMode(FaceDetector.ACCURATE_MODE)
             .build()
     private var trackingFaces = SparseArray<Face>()
 
     fun trackFaces(bitmap: Bitmap): Boolean {
-        val frame = Frame.Builder().setBitmap(bitmap).build()
+        val frame = Frame.Builder()
+                .setBitmap(bitmap)
+                .build()
         val facesDetected = faceDetector.detect(frame)
         if (facesDetected.size() > 0) {
             this.trackingFaces = facesDetected
