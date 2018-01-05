@@ -26,9 +26,10 @@
         android:id="@+id/cardsFragment"
         android:name="br.com.brolam.cloudvision.fragments.CardsFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="513dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:layout="@layout/fragment_cards" />
+        tools:layout="@layout/fragment_cards"
+        tools:layout_editor_absoluteY="54dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -37,6 +38,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:onClick="onClick"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:src="@drawable/ic_action_camera" />
 
 </android.support.design.widget.CoordinatorLayout>

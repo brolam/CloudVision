@@ -2,5 +2,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="br.com.brolam.cloudvision.MainActivity">
+    <item
+        android:orderInCategory="100"
+        android:id="@+id/action_camera"
+        android:icon="@drawable/ic_action_camera"
+        android:title="@string/action_camera"
+        app:showAsAction="always"/>
 
+    <item
+        android:orderInCategory="200"
+        android:id="@+id/action_gallery"
+        android:icon="@drawable/ic_action_gallery"
+        android:title="@string/action_gallery"
+        app:showAsAction="always"/>
 </menu>

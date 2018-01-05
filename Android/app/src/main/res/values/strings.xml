@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CloudVision</string>
+    <string name="action_camera">Take a photo</string>
+    <string name="action_gallery">Select a picture</string>
 </resources>
