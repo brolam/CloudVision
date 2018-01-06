@@ -3,14 +3,15 @@ package br.com.brolam.cloudvision.helpers
 import android.content.Context
 import android.graphics.Bitmap
 import android.util.SparseArray
-import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.Frame
 import com.google.android.gms.vision.face.Face
 import com.google.android.gms.vision.face.FaceDetector
 
 /**
- * Created by brenomarques on 02/01/2018.
- */
-class FacesDetectorHelper(context: Context) {
+* Created by brenomarques on 02/01/2018.
+*
+*/
+class FacesDetector(context: Context) {
     private val faceDetector = FaceDetector.Builder(context)
             .setLandmarkType(FaceDetector.ALL_LANDMARKS)
             .setClassificationType(FaceDetector.ALL_CLASSIFICATIONS)
@@ -26,12 +27,12 @@ class FacesDetectorHelper(context: Context) {
                 .setBitmap(bitmap)
                 .build()
         val facesDetected = faceDetector.detect(frame)
-        if (facesDetected.size() > 0) {
+        return if (facesDetected.size() > 0) {
             this.trackingFaces = facesDetected
-            return true
+            true
         } else {
-            this.trackingFaces = SparseArray<Face>()
-            return false
+            this.trackingFaces = SparseArray()
+            false
         }
     }
 
