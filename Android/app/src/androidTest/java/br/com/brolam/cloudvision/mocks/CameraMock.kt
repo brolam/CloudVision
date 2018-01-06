@@ -23,12 +23,11 @@ class CameraMock(context: Context) {
     private val tempPictureUrl = storageDir.absolutePath + "/tempPicture.jpg"
 
     init {
-        val streamFilePicture = context.getResources().openRawResource(R.raw.crowd_test_02)
-        try {
+        context.resources.openRawResource(R.raw.crowd_test_02).use { streamFilePicture ->
             val bitmapCrowd02 = BitmapFactory.decodeStream(streamFilePicture)
             val filePictureTemp = File(tempPictureUrl)
-            val filePictureTempOut = FileOutputStream(filePictureTemp);
-            bitmapCrowd02.compress(Bitmap.CompressFormat.JPEG, 85, filePictureTempOut);
+            val filePictureTempOut = FileOutputStream(filePictureTemp)
+            bitmapCrowd02.compress(Bitmap.CompressFormat.JPEG, 85, filePictureTempOut)
             filePictureTempOut.flush()
             filePictureTempOut.close()
             val bundle = Bundle()
@@ -37,10 +36,7 @@ class CameraMock(context: Context) {
             resultData.putExtras(bundle)
             val activityResult = Instrumentation.ActivityResult(Activity.RESULT_OK, resultData)
             Intents.intending(IntentMatchers.hasAction(MediaStore.ACTION_IMAGE_CAPTURE)).respondWith(activityResult)
-        } finally {
-            streamFilePicture.close()
         }
-
     }
 
 }
