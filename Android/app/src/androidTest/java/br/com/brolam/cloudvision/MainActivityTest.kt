@@ -17,6 +17,7 @@ import android.support.test.espresso.matcher.BoundedMatcher
 import android.view.View
 import android.widget.ImageView
 import br.com.brolam.cloudvision.mocks.CameraMock
+import br.com.brolam.cloudvision.mocks.ImagesGalleryMock
 import org.hamcrest.Description
 
 
@@ -40,7 +41,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun mainActivityStartWithoutErrorTest() {
+    fun mainActivityStartWithoutError() {
         val appContext = InstrumentationRegistry.getTargetContext()
         val cardsFragment = onView(withId(R.id.cardsFragment))
         Assert.assertEquals("br.com.brolam.cloudvision", appContext.packageName)
@@ -48,11 +49,20 @@ class MainActivityTest {
     }
 
     @Test
-    fun takeOnePhotoTest() {
+    fun takeOnePhotoByCamera() {
         val appContext = InstrumentationRegistry.getTargetContext()
         CameraMock(appContext)
         val cameraButton = onView(withId(R.id.fab))
         cameraButton.perform(click())
+        onView(withId(R.id.imageView)).check(matches(hasDrawable()))
+    }
+
+    @Test
+    fun selectOnePhotoOnImagesGallery() {
+        val appContext = InstrumentationRegistry.getTargetContext()
+        ImagesGalleryMock(appContext)
+        val showGalleryButton = onView(withId(R.id.action_gallery))
+        showGalleryButton.perform(click())
         onView(withId(R.id.imageView)).check(matches(hasDrawable()))
     }
 }
