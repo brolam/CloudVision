@@ -9,9 +9,7 @@ import org.junit.Assert.*
 import org.junit.Before
 
 /**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
+ * Created by brenomarques on 02/01/2018.
  */
 class FacesDetectorUnitTest {
     lateinit var facesDetectorHelper: FacesDetectorHelper
@@ -24,38 +22,29 @@ class FacesDetectorUnitTest {
     }
 
     @Test
-    fun testTrackFacesCrowd01Count() {
-        var stream = this.context.getResources().openRawResource(R.raw.crowd_test_01)
-        try {
+    fun trackFacesCrowd01Count() {
+        this.context.resources.openRawResource(R.raw.crowd_test_01).use { stream ->
             val bitmapCrowd01 = BitmapFactory.decodeStream(stream)
             assertTrue(facesDetectorHelper.trackFaces(bitmapCrowd01))
             assertEquals(facesDetectorHelper.countFaces(), 9)
-        } finally {
-            stream.close()
         }
     }
 
     @Test
-    fun testTrackFacesCrowd02Count() {
-        var stream = this.context.getResources().openRawResource(R.raw.crowd_test_02)
-        try {
+    fun trackFacesCrowd02Count() {
+        this.context.resources.openRawResource(R.raw.crowd_test_02).use { stream ->
             val bitmapCrowd02 = BitmapFactory.decodeStream(stream)
             assertTrue(facesDetectorHelper.trackFaces(bitmapCrowd02))
             assertEquals(facesDetectorHelper.countFaces(), 19)
-        } finally {
-            stream.close()
         }
     }
 
     @Test
-    fun testTrackFacesCrowd03Count() {
-        var stream = this.context.getResources().openRawResource(R.raw.crowd_test_03)
-        try {
+    fun trackFacesCrowd03Count() {
+        this.context.resources.openRawResource(R.raw.crowd_test_03).use { stream ->
             val bitmapCrowd03 = BitmapFactory.decodeStream(stream)
             assertTrue(facesDetectorHelper.trackFaces(bitmapCrowd03))
             assertEquals(facesDetectorHelper.countFaces(), 1)
-        } finally {
-            stream.close()
         }
     }
 }
