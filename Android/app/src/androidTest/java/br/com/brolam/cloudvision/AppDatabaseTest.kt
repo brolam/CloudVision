@@ -1,0 +1,46 @@
+package br.com.brolam.cloudvision
+
+import android.arch.persistence.room.Room
+import android.support.test.runner.AndroidJUnit4
+import br.com.brolam.cloudvision.data.AppDatabase
+import br.com.brolam.cloudvision.data.CrowdDao
+import org.junit.After
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.Assert.*
+import android.support.test.InstrumentationRegistry
+import br.com.brolam.cloudvision.data.CrowdEntity
+import java.util.*
+
+/**
+* Created by brenomarques on 07/01/2018.
+*/
+@RunWith(AndroidJUnit4::class)
+class AppDatabaseTest {
+    private lateinit var crowdDao : CrowdDao
+    private lateinit var appDataBase : AppDatabase
+
+    @Before
+    fun setUp() {
+        val context = InstrumentationRegistry.getContext()
+        this.appDataBase = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build()
+        this.crowdDao = appDataBase.crowdDao()
+    }
+
+    @After
+    fun tearDown() {
+       this.appDataBase.close()
+    }
+
+    @Test
+    fun insertOneCrowd() {
+        val crowd = CrowdEntity(
+                title = "Dec 31 2017 00:00:00",
+                created = Date().time,
+                trackedImageUri = "/Picture/crowd_1.jpp")
+        this.crowdDao.insert(crowd)
+        assertEquals(this.crowdDao.count(),1)
+    }
+
+}
