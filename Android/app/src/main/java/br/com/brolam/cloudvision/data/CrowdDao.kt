@@ -17,4 +17,7 @@ interface CrowdDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(crowd: CrowdEntity)
 
+    @Query("select * from crowds")
+    fun getAll(): List<CrowdEntity>
+
 }

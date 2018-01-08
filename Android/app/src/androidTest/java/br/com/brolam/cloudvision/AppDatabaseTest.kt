@@ -35,12 +35,27 @@ class AppDatabaseTest {
 
     @Test
     fun insertOneCrowd() {
+        val currentCountCrowds = this.crowdDao.count()
         val crowd = CrowdEntity(
                 title = "Dec 31 2017 00:00:00",
                 created = Date().time,
                 trackedImageUri = "/Picture/crowd_1.jpp")
         this.crowdDao.insert(crowd)
-        assertEquals(this.crowdDao.count(),1)
+        assertEquals(this.crowdDao.count(),currentCountCrowds + 1)
+    }
+
+    @Test
+    fun getAllCrowds(){
+        val currentTime = Date().time
+        this.insertOneCrowd()
+        this.insertOneCrowd()
+        val allCrowds = this.crowdDao.getAll()
+        assertEquals(allCrowds.size, 2)
+        allCrowds.forEach{ crowd ->
+            assertEquals(crowd.title, "Dec 31 2017 00:00:00")
+            assertTrue(crowd.created >= currentTime)
+            assertEquals(crowd.trackedImageUri, "/Picture/crowd_1.jpp")
+        }
     }
 
 }
