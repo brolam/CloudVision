@@ -58,4 +58,11 @@ class AppDatabaseTest {
         }
     }
 
+    @Test
+    fun getOneCrowdById(){
+        this.insertOneCrowd()
+        val liveDataCrowd = this.crowdDao.getById(1)
+        assertNotNull(liveDataCrowd)
+    }
+
 }

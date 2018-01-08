@@ -1,5 +1,6 @@
 package br.com.brolam.cloudvision.data
 
+import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
@@ -19,5 +20,8 @@ interface CrowdDao {
 
     @Query("select * from crowds")
     fun getAll(): List<CrowdEntity>
+
+    @Query("select * from crowds where id = :id")
+    fun getById(id: Long) : LiveData<CrowdEntity>
 
 }
