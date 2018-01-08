@@ -12,16 +12,16 @@ import android.arch.persistence.room.Query
  */
 @Dao
 interface CrowdDao {
-    @Query("select count(id) from crowds")
+    @Query("SELECT COUNT(id) FROM crowds")
     fun count(): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(crowd: CrowdEntity)
 
-    @Query("select * from crowds")
+    @Query("SELECT * FROM crowds")
     fun getAll(): List<CrowdEntity>
 
-    @Query("select * from crowds where id = :id")
+    @Query("SELECT * FROM crowds WHERE id = :id")
     fun getById(id: Long) : LiveData<CrowdEntity>
 
 }
