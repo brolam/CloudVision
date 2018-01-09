@@ -16,7 +16,7 @@ interface CrowdDao {
     fun count(): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(crowd: CrowdEntity)
+    fun insert(crowd: CrowdEntity) : Long
 
     @Query("SELECT * FROM crowds")
     fun getAll(): List<CrowdEntity>
@@ -24,4 +24,6 @@ interface CrowdDao {
     @Query("SELECT * FROM crowds WHERE id = :id")
     fun getById(id: Long) : LiveData<CrowdEntity>
 
+    @Query("SELECT * FROM crowds")
+    fun getAllLiveData(): LiveData<List<CrowdEntity>>
 }

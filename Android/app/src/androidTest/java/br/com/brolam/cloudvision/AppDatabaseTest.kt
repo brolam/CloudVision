@@ -15,11 +15,12 @@ import java.util.*
 
 /**
 * Created by brenomarques on 07/01/2018.
+*
 */
 @RunWith(AndroidJUnit4::class)
 class AppDatabaseTest {
-    private lateinit var crowdDao : CrowdDao
-    private lateinit var appDataBase : AppDatabase
+    private lateinit var crowdDao: CrowdDao
+    private lateinit var appDataBase: AppDatabase
 
     @Before
     fun setUp() {
@@ -30,7 +31,7 @@ class AppDatabaseTest {
 
     @After
     fun tearDown() {
-       this.appDataBase.close()
+        this.appDataBase.close()
     }
 
     @Test
@@ -40,18 +41,19 @@ class AppDatabaseTest {
                 title = "Dec 31 2017 00:00:00",
                 created = Date().time,
                 trackedImageUri = "/Picture/crowd_1.jpp")
-        this.crowdDao.insert(crowd)
-        assertEquals(this.crowdDao.count(),currentCountCrowds + 1)
+        val nextCrowdId = (currentCountCrowds + 1).toLong()
+        assertEquals(this.crowdDao.insert(crowd), nextCrowdId)
+        assertEquals(this.crowdDao.count(), currentCountCrowds + 1)
     }
 
     @Test
-    fun getAllCrowds(){
+    fun getAllCrowds() {
         val currentTime = Date().time
         this.insertOneCrowd()
         this.insertOneCrowd()
         val allCrowds = this.crowdDao.getAll()
         assertEquals(allCrowds.size, 2)
-        allCrowds.forEach{ crowd ->
+        allCrowds.forEach { crowd ->
             assertEquals(crowd.title, "Dec 31 2017 00:00:00")
             assertTrue(crowd.created >= currentTime)
             assertEquals(crowd.trackedImageUri, "/Picture/crowd_1.jpp")
@@ -59,10 +61,17 @@ class AppDatabaseTest {
     }
 
     @Test
-    fun getOneCrowdById(){
+    fun getOneCrowdById() {
         this.insertOneCrowd()
         val liveDataCrowd = this.crowdDao.getById(1)
         assertNotNull(liveDataCrowd)
+    }
+
+    @Test
+    fun getAllLiveData() {
+        this.insertOneCrowd()
+        val allLiveData = this.crowdDao.getAllLiveData()
+        assertNotNull(allLiveData)
     }
 
 }
