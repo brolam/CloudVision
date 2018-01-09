@@ -1,4 +1,4 @@
-package br.com.brolam.cloudvision.data
+package br.com.brolam.cloudvision.models
 
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao

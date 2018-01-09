@@ -2,15 +2,15 @@ package br.com.brolam.cloudvision
 
 import android.arch.persistence.room.Room
 import android.support.test.runner.AndroidJUnit4
-import br.com.brolam.cloudvision.data.AppDatabase
-import br.com.brolam.cloudvision.data.CrowdDao
+import br.com.brolam.cloudvision.models.AppDatabase
+import br.com.brolam.cloudvision.models.CrowdDao
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.Assert.*
 import android.support.test.InstrumentationRegistry
-import br.com.brolam.cloudvision.data.CrowdEntity
+import br.com.brolam.cloudvision.models.CrowdEntity
 import java.util.*
 
 /**
@@ -40,7 +40,7 @@ class AppDatabaseTest {
         val crowd = CrowdEntity(
                 title = "Dec 31 2017 00:00:00",
                 created = Date().time,
-                trackedImageUri = "/Picture/crowd_1.jpp")
+                trackedImageName = "/Picture/crowd_1.jpp")
         val nextCrowdId = (currentCountCrowds + 1).toLong()
         assertEquals(this.crowdDao.insert(crowd), nextCrowdId)
         assertEquals(this.crowdDao.count(), currentCountCrowds + 1)
@@ -56,7 +56,7 @@ class AppDatabaseTest {
         allCrowds.forEach { crowd ->
             assertEquals(crowd.title, "Dec 31 2017 00:00:00")
             assertTrue(crowd.created >= currentTime)
-            assertEquals(crowd.trackedImageUri, "/Picture/crowd_1.jpp")
+            assertEquals(crowd.trackedImageName, "/Picture/crowd_1.jpp")
         }
     }
 
