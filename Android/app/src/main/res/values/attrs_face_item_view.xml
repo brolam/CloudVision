@@ -1,0 +1,5 @@
+<resources>
+    <declare-styleable name="FaceItemView">
+        <attr name="faceDrawable" format="color|reference" />
+    </declare-styleable>
+</resources>
