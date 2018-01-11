@@ -10,7 +10,7 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "br.com.brolam.cloudvision"
-        minSdkVersion 16
+        minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -39,6 +39,10 @@ dependencies {
     // Room
     implementation "android.arch.persistence.room:runtime:$room_version"
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+
+    //Flexbox
+    implementation 'com.google.android:flexbox:0.3.2'
+
 
     kapt "android.arch.persistence.room:compiler:$room_version"
     testImplementation 'junit:junit:4.12'
