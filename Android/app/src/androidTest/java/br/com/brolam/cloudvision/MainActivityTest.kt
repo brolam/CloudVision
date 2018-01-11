@@ -19,7 +19,7 @@ import android.widget.ImageView
 import br.com.brolam.cloudvision.mocks.CameraMock
 import br.com.brolam.cloudvision.mocks.ImagesGalleryMock
 import org.hamcrest.Description
-
+import org.hamcrest.Matchers.not
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
@@ -27,18 +27,6 @@ class MainActivityTest {
 
     @get:Rule
     val mainActivity = IntentsTestRule(MainActivity::class.java)
-
-    fun hasDrawable(): BoundedMatcher<View, ImageView> {
-        return object : BoundedMatcher<View, ImageView>(ImageView::class.java) {
-            override fun describeTo(description: Description) {
-                description.appendText("has drawable")
-            }
-
-            public override fun matchesSafely(imageView: ImageView): Boolean {
-                return imageView.drawable != null
-            }
-        }
-    }
 
     @Test
     fun mainActivityStartWithoutError() {
@@ -54,7 +42,6 @@ class MainActivityTest {
         CameraMock(appContext)
         val cameraButton = onView(withId(R.id.fab))
         cameraButton.perform(click())
-        onView(withId(R.id.imageView)).check(matches(hasDrawable()))
     }
 
     @Test
@@ -63,7 +50,31 @@ class MainActivityTest {
         ImagesGalleryMock(appContext)
         val showGalleryButton = onView(withId(R.id.action_gallery))
         showGalleryButton.perform(click())
-        onView(withId(R.id.imageView)).check(matches(hasDrawable()))
     }
+
+    @Test
+    fun newCrowdByCamera() {
+        this.takeOnePhotoByCamera()
+        val facesActivity = onView(withId(R.id.activity_faces_layout))
+        facesActivity.check(matches(isDisplayed()))
+        onView(withId(R.id.imageViewTrackedImage)).check(matches(hasDrawable()))
+        onView(withId(R.id.textViewTitle)).check(matches(not(withText(""))))
+        onView(withId(R.id.textViewFacesTitle)).check(matches(withText("Everyone")))
+        onView(withId(R.id.textViewFacesAmount)).check(matches(withText("19")))
+        onView(withId(R.id.flexboxLayoutFaces)).check(matches(isDisplayed()))
+    }
+
+    private fun hasDrawable(): BoundedMatcher<View, ImageView> {
+        return object : BoundedMatcher<View, ImageView>(ImageView::class.java) {
+            override fun describeTo(description: Description) {
+                description.appendText("has drawable")
+            }
+
+            public override fun matchesSafely(imageView: ImageView): Boolean {
+                return imageView.drawable != null
+            }
+        }
+    }
+
 }
 

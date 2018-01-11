@@ -20,7 +20,7 @@ class FacesDetector(context: Context) {
             .setTrackingEnabled(false)
             .setMode(FaceDetector.ACCURATE_MODE)
             .build()
-    private var trackingFaces = SparseArray<Face>()
+    var trackingFaces = SparseArray<Face>()
 
     fun trackFaces(bitmap: Bitmap): Boolean {
         val frame = Frame.Builder()

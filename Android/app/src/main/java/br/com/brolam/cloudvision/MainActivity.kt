@@ -10,25 +10,34 @@ import kotlinx.android.synthetic.main.activity_main.*
 import android.content.Intent
 import android.graphics.Bitmap
 import android.widget.ImageView
+import br.com.brolam.cloudvision.viewModels.CrowdViewModel
 import br.com.brolam.cloudvision.helpers.ImagePicker
 import br.com.brolam.cloudvision.helpers.ImagePickerDelegate
-
-const val REQUEST_IMAGE_CAPTURE = 5001
-const val REQUEST_IMAGE_SELECT = 5002
+import android.arch.lifecycle.ViewModelProviders
 
 class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerDelegate {
+    companion object {
+        const val REQUEST_IMAGE_CAPTURE = 5001
+        const val REQUEST_IMAGE_SELECT = 5002
+    }
 
     private val imagePiker = ImagePicker(this, REQUEST_IMAGE_CAPTURE, REQUEST_IMAGE_SELECT)
+    private lateinit var crowdViewModel: CrowdViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        this.crowdViewModel = ViewModelProviders.of(this).get(CrowdViewModel::class.java);
     }
 
-    override fun onPickedOneImage(pikedBitmap: Bitmap) : Boolean {
+    override fun onPickedOneImage(pikedBitmap: Bitmap): Boolean {
         val imageView = this.findViewById<ImageView>(R.id.imageView)
         imageView.setImageBitmap(pikedBitmap)
+        this.crowdViewModel.insertCrowd(pikedBitmap, { crowdId: Long ->
+            FacesActivity.show(this, crowdId)
+        })
+
         return true
     }
 

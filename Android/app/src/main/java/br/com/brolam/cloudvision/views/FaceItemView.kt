@@ -10,6 +10,7 @@ import br.com.brolam.cloudvision.R
 import android.graphics.Bitmap
 import android.graphics.Shader
 import android.graphics.BitmapShader
+import android.graphics.drawable.BitmapDrawable
 
 class FaceItemView : View {
     private var faceDrawable: Drawable? = null
@@ -73,5 +74,9 @@ class FaceItemView : View {
         drawable.setBounds(0, 0, canvas.width, canvas.height)
         drawable.draw(canvas)
         return bitmap
+    }
+
+    fun setFaceDrawable(faceBitmap: Bitmap) {
+        this.faceDrawable = BitmapDrawable(resources, faceBitmap)
     }
 }
