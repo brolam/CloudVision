@@ -1,6 +1,7 @@
 package br.com.brolam.cloudvision
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.support.test.InstrumentationRegistry
 import br.com.brolam.cloudvision.helpers.ImageUtil
 import br.com.brolam.cloudvision.mocks.CameraMock
@@ -30,5 +31,20 @@ class ImageUtilUnitTest {
         this.imageUtil.save(fileName = fileName, bitmap = cameraMock.bitmapCrowd02 )
         val imageFile = File(this.imageUtil.storageDirPicture.absolutePath + "/$fileName")
         Assert.assertTrue(imageFile.exists())
+    }
+
+    @Test
+    fun getOneImage(){
+        this.saveOneImage()
+        val fileName = "testSaveOneImage.jpg"
+        val image: Bitmap? = this.imageUtil.getImage(fileName = fileName)
+        Assert.assertNotNull(image)
+    }
+
+    @Test
+    fun getImageNotExists(){
+        val fileName = "notExistsImage.jpg"
+        val image: Bitmap? = this.imageUtil.getImage(fileName = fileName)
+        Assert.assertNull(image)
     }
 }
