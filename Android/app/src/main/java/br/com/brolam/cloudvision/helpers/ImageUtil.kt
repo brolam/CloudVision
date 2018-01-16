@@ -3,6 +3,7 @@ package br.com.brolam.cloudvision.helpers
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.os.AsyncTask
 import android.os.Environment
 import java.io.File
 import java.io.FileOutputStream
@@ -30,5 +31,11 @@ class ImageUtil(val context: Context) {
         if (File(fullPathFileName).exists())
             return BitmapFactory.decodeFile(fullPathFileName)
         return null
+    }
+
+    fun getImage(fileName: String, onCompleted: (Bitmap?) -> Unit){
+        AsyncTask.execute {
+            onCompleted(getImage(fileName))
+        }
     }
 }
