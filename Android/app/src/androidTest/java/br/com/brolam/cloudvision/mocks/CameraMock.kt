@@ -18,24 +18,27 @@ import java.io.FileOutputStream
 /**
  * Created by brenomarques on 05/01/2018.
  */
-class CameraMock(context: Context) {
+class CameraMock(context: Context, private var isDoActivityResult : Boolean = true) {
     private val storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
     private val tempPictureUrl = storageDir.absolutePath + "/tempPicture.jpg"
+    lateinit var bitmapCrowd02: Bitmap
 
     init {
         context.resources.openRawResource(R.raw.crowd_test_02).use { streamFilePicture ->
-            val bitmapCrowd02 = BitmapFactory.decodeStream(streamFilePicture)
+            this.bitmapCrowd02 = BitmapFactory.decodeStream(streamFilePicture)
             val filePictureTemp = File(tempPictureUrl)
             val filePictureTempOut = FileOutputStream(filePictureTemp)
-            bitmapCrowd02.compress(Bitmap.CompressFormat.JPEG, 85, filePictureTempOut)
+            this.bitmapCrowd02.compress(Bitmap.CompressFormat.JPEG, 85, filePictureTempOut)
             filePictureTempOut.flush()
             filePictureTempOut.close()
-            val bundle = Bundle()
-            bundle.putParcelable("data", bitmapCrowd02)
-            val resultData = Intent()
-            resultData.putExtras(bundle)
-            val activityResult = Instrumentation.ActivityResult(Activity.RESULT_OK, resultData)
-            Intents.intending(IntentMatchers.hasAction(MediaStore.ACTION_IMAGE_CAPTURE)).respondWith(activityResult)
+            if (isDoActivityResult) {
+                val bundle = Bundle()
+                bundle.putParcelable("data", this.bitmapCrowd02)
+                val resultData = Intent()
+                resultData.putExtras(bundle)
+                val activityResult = Instrumentation.ActivityResult(Activity.RESULT_OK, resultData)
+                Intents.intending(IntentMatchers.hasAction(MediaStore.ACTION_IMAGE_CAPTURE)).respondWith(activityResult)
+            }
         }
     }
 
