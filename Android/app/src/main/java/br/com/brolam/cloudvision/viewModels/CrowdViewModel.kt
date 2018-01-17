@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.os.AsyncTask
 import android.os.Environment
 import android.text.format.DateUtils
+import br.com.brolam.cloudvision.helpers.ImageUtil
 import br.com.brolam.cloudvision.models.AppDatabase
 import br.com.brolam.cloudvision.models.CrowdEntity
 import java.io.File
@@ -20,7 +21,7 @@ import java.util.*
 class CrowdViewModel(application: Application) : AndroidViewModel(application) {
     private val appDatabase: AppDatabase = AppDatabase.getInstance(application)
     private val crowdDao = this.appDatabase.crowdDao()
-    private val storageDir = application.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+    private val imageUtil = ImageUtil(application)
 
     fun insertCrowd(trackedImageBitmap: Bitmap, onCompleted: (Long) -> Unit) {
         AsyncTask.execute {
@@ -29,13 +30,9 @@ class CrowdViewModel(application: Application) : AndroidViewModel(application) {
                     this.getApplication(),
                     created,
                     DateUtils.FORMAT_SHOW_DATE + DateUtils.FORMAT_ABBREV_MONTH + DateUtils.FORMAT_SHOW_TIME )
-            val trackedImageUri = storageDir.absolutePath + "/crowd_$created.jpg"
-            val fileTrackedImage = File(trackedImageUri)
-            val fileTrackedImageOut = FileOutputStream(fileTrackedImage)
-            trackedImageBitmap.compress(Bitmap.CompressFormat.JPEG, 85, fileTrackedImageOut)
-            fileTrackedImageOut.flush()
-            fileTrackedImageOut.close()
-            val crowdEntity = CrowdEntity(title = title, trackedImageName = trackedImageUri, created = created)
+            val trackedImageName = "/crowd_$created.jpg"
+            this.imageUtil.save(trackedImageName, trackedImageBitmap)
+            val crowdEntity = CrowdEntity(title = title, trackedImageName = trackedImageName, created = created)
             val crowdId = this.crowdDao.insert(crowdEntity)
             if (onCompleted != null) onCompleted(crowdId)
         }
