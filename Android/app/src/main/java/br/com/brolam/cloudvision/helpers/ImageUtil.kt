@@ -39,7 +39,7 @@ class ImageUtil(val context: Context) {
         }
     }
 
-    fun crop(bitmap: Bitmap, positionX: Int, positionY: Int, width: Int, height: Int, enlargeWidthInPercent: Float, enlargeHeightInPercent: Float): Bitmap {
+    fun crop(bitmap: Bitmap, positionX: Float, positionY: Float, width: Float, height: Float, enlargeWidthInPercent: Float, enlargeHeightInPercent: Float): Bitmap {
         val enlargedX = ((width * enlargeWidthInPercent) / 100.00)
         val enlargedY = ((height * enlargeHeightInPercent) / 100.00)
         val newX = if (positionX - enlargedX >= 1) (positionX - enlargedX).toInt() else 1

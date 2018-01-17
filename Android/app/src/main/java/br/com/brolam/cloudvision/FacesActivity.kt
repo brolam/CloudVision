@@ -31,7 +31,6 @@ class FacesActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_faces)
@@ -49,7 +48,6 @@ class FacesActivity : AppCompatActivity() {
                 textViewTitle.text = crowd.title
             }
         })
-
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -75,21 +73,14 @@ class FacesActivity : AppCompatActivity() {
     }
 
     private fun crop(trackedImage: Bitmap, face: Face, enlargeWidthInPercent: Float, enlargeHeightInPercent: Float): Bitmap {
-        val enlargeX = ((face.width * enlargeWidthInPercent) / 100.00)
-        val enlargeY = ((face.height * enlargeHeightInPercent) / 100.00)
-        val positionX = if (face.position.x - enlargeX >= 1) (face.position.x - enlargeX).toInt() else 1
-        val positionY = if (face.position.y - enlargeY >= 1) (face.position.y - enlargeY).toInt() else 1
-        val width = (face.width + (enlargeX * 2)).toInt()
-        val height = (face.height + (enlargeY * 2)).toInt()
-
-        val croppedBitmap = Bitmap.createBitmap(
+        return this.imageUtil.crop(
                 trackedImage,
-                positionX,
-                positionY,
-                width,
-                height);
-        return croppedBitmap
-
+                face.position.x,
+                face.position.y,
+                face.width,
+                face.height,
+                enlargeWidthInPercent,
+                enlargeHeightInPercent
+        )
     }
-
 }

@@ -71,10 +71,10 @@ class ImageUtilUnitTest {
         val image: Bitmap = this.imageUtil.getImage(fileName = fileName)!!
         val imageCropped = this.imageUtil.crop(
                 bitmap = image,
-                positionX = 200,
-                positionY = 200,
-                width = 100,
-                height = 100,
+                positionX = 200F,
+                positionY = 200F,
+                width = 100F,
+                height = 100F,
                 enlargeWidthInPercent = 10.0F,
                 enlargeHeightInPercent = 10.0F
         )
@@ -90,10 +90,10 @@ class ImageUtilUnitTest {
         val image: Bitmap = this.imageUtil.getImage(fileName = fileName)!!
         val imageCropped = this.imageUtil.crop(
                 bitmap = image,
-                positionX = 0,
-                positionY = 0,
-                width = 100,
-                height = 100,
+                positionX = 0F,
+                positionY = 0F,
+                width = 100F,
+                height = 100F,
                 enlargeWidthInPercent = 10.0F,
                 enlargeHeightInPercent = 10.0F
         )
