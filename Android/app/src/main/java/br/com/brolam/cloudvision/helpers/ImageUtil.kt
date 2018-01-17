@@ -33,9 +33,19 @@ class ImageUtil(val context: Context) {
         return null
     }
 
-    fun getImage(fileName: String, onCompleted: (Bitmap?) -> Unit){
+    fun getImage(fileName: String, onCompleted: (Bitmap?) -> Unit) {
         AsyncTask.execute {
             onCompleted(getImage(fileName))
         }
+    }
+
+    fun crop(bitmap: Bitmap, positionX: Int, positionY: Int, width: Int, height: Int, enlargeWidthInPercent: Float, enlargeHeightInPercent: Float): Bitmap {
+        val enlargedX = ((width * enlargeWidthInPercent) / 100.00)
+        val enlargedY = ((height * enlargeHeightInPercent) / 100.00)
+        val newX = if (positionX - enlargedX >= 1) (positionX - enlargedX).toInt() else 1
+        val newY = if (positionY - enlargedY >= 1) (positionY - enlargedY).toInt() else 1
+        val newWidth = (width + (enlargedX * 2)).toInt()
+        val newHeight = (height + (enlargedY * 2)).toInt()
+        return Bitmap.createBitmap(bitmap, newX, newY, newWidth, newHeight)
     }
 }

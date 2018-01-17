@@ -53,16 +53,52 @@ class ImageUtilUnitTest {
     @Test
     fun getOneImageAsync() {
         val spyOnCompleted = CountDownLatch(1)
-        var expectedImage:Bitmap? = null
+        var expectedImage: Bitmap? = null
         this.saveOneImage()
         val fileName = "testSaveOneImage.jpg"
         this.imageUtil.getImage(fileName = fileName, onCompleted = { image: Bitmap? ->
             expectedImage = image
             spyOnCompleted.countDown()
         })
-        spyOnCompleted.await(3, TimeUnit.SECONDS);
+        spyOnCompleted.await(3, TimeUnit.SECONDS)
         Assert.assertNotNull(expectedImage)
+    }
 
+    @Test
+    fun cropOneImage() {
+        this.saveOneImage()
+        val fileName = "testSaveOneImage.jpg"
+        val image: Bitmap = this.imageUtil.getImage(fileName = fileName)!!
+        val imageCropped = this.imageUtil.crop(
+                bitmap = image,
+                positionX = 200,
+                positionY = 200,
+                width = 100,
+                height = 100,
+                enlargeWidthInPercent = 10.0F,
+                enlargeHeightInPercent = 10.0F
+        )
+        Assert.assertNotNull(imageCropped)
+        Assert.assertEquals(imageCropped.width, 120)
+        Assert.assertEquals(imageCropped.height, 120)
+    }
 
+    @Test
+    fun cropAboveImageArea() {
+        this.saveOneImage()
+        val fileName = "testSaveOneImage.jpg"
+        val image: Bitmap = this.imageUtil.getImage(fileName = fileName)!!
+        val imageCropped = this.imageUtil.crop(
+                bitmap = image,
+                positionX = 0,
+                positionY = 0,
+                width = 100,
+                height = 100,
+                enlargeWidthInPercent = 10.0F,
+                enlargeHeightInPercent = 10.0F
+        )
+        Assert.assertNotNull(imageCropped)
+        Assert.assertEquals(imageCropped.width, 120)
+        Assert.assertEquals(imageCropped.height, 120)
     }
 }
