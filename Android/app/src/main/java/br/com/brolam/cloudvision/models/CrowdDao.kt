@@ -15,15 +15,25 @@ interface CrowdDao {
     @Query("SELECT COUNT(id) FROM crowds")
     fun count(): Int
 
+    @Query("SELECT COUNT(id) FROM crowdsPeople WHERE crowdId =:crowdId")
+    fun countPeople(crowdId: Long): Int
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(crowd: CrowdEntity) : Long
+    fun insert(crowd: CrowdEntity): Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertPeople(crowdPeople: List<CrowdPersonEntity>)
 
     @Query("SELECT * FROM crowds")
     fun getAll(): List<CrowdEntity>
 
     @Query("SELECT * FROM crowds WHERE id = :id")
-    fun getById(id: Long) : LiveData<CrowdEntity>
+    fun getById(id: Long): LiveData<CrowdEntity>
 
     @Query("SELECT * FROM crowds")
     fun getAllLiveData(): LiveData<List<CrowdEntity>>
+
+    @Query("SELECT * FROM crowdsPeople WHERE crowdId = :crowdId ORDER BY insertedOrder")
+    fun getPeople(crowdId: Int) : LiveData<List<CrowdPersonEntity>>
+
 }

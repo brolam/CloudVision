@@ -10,7 +10,7 @@ import android.content.Context
  * Created by brenomarques on 07/01/2018.
  *
  */
-@Database(entities = [(CrowdEntity::class)], version = 1)
+@Database(entities = [(CrowdEntity::class), (CrowdPersonEntity::class)], version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {
