@@ -3,16 +3,13 @@ package br.com.brolam.cloudvision
 import android.arch.lifecycle.Observer
 import android.arch.persistence.room.Room
 import android.support.test.runner.AndroidJUnit4
-import br.com.brolam.cloudvision.models.AppDatabase
-import br.com.brolam.cloudvision.models.CrowdDao
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.Assert.*
 import android.support.test.InstrumentationRegistry
-import br.com.brolam.cloudvision.models.CrowdEntity
-import br.com.brolam.cloudvision.models.CrowdPersonEntity
+import br.com.brolam.cloudvision.models.*
 import java.util.*
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
@@ -51,10 +48,24 @@ class AppDatabaseTest {
     }
 
     @Test
-    fun insertCrowdPeople() {
+    fun getAllCrowds() {
+        val currentTime = Date().time
         this.insertOneCrowd()
-        val crowdId: Long = 1
-        val crowdPeople = listOf(
+        this.insertOneCrowd()
+        val allCrowds = this.crowdDao.getAll()
+        assertEquals(allCrowds.size, 2)
+        allCrowds.forEach { crowd -> assertCrowdEntity(crowd, currentTime) }
+    }
+
+    @Test
+    fun insertCrowdWithPeople() {
+        val crowd = CrowdEntity(
+                title = "Dec 31 2017 00:00:00",
+                created = Date().time,
+                trackedImageName = "/Picture/crowd_1.jpp"
+        )
+        val crowdId = this.crowdDao.insert(crowd)
+        val people = listOf(
                 CrowdPersonEntity(
                         crowdId = crowdId,
                         insertedOrder = 1,
@@ -72,22 +83,14 @@ class AppDatabaseTest {
                         faceHeight = 102f
                 )
         )
-        this.crowdDao.insertPeople(crowdPeople)
+        this.crowdDao.insert(people)
+        assertEquals(1, this.crowdDao.count())
         assertEquals(2, this.crowdDao.countPeople(crowdId))
+
     }
 
     @Test
-    fun getAllCrowds() {
-        val currentTime = Date().time
-        this.insertOneCrowd()
-        this.insertOneCrowd()
-        val allCrowds = this.crowdDao.getAll()
-        assertEquals(allCrowds.size, 2)
-        allCrowds.forEach { crowd -> assertCrowdEntity(crowd, currentTime) }
-    }
-
-    @Test
-    fun getOneCrowdById() {
+    fun getOneCrowdLiveDataById() {
         val spyOnCompleted = CountDownLatch(1)
         val currentTime = Date().time
         this.insertOneCrowd()
@@ -102,22 +105,24 @@ class AppDatabaseTest {
     }
 
     @Test
-    fun getCrowdPeople() {
+    fun getCrowdPeopleLiveData() {
         val spyOnCompleted = CountDownLatch(1)
-        this.insertCrowdPeople()
-        var expectedCrowdPeople: List<CrowdPersonEntity>? = null
-        val observer = Observer<List<CrowdPersonEntity>>(function = { crowdPersonEntity ->
-            expectedCrowdPeople = crowdPersonEntity
+        val currentTime = Date().time
+        this.insertCrowdWithPeople()
+        var expectedCrowdPeople: CrowdPeopleEntity? = null
+        val observer = Observer<CrowdPeopleEntity>(function = { crowdPeopleEntity ->
+            expectedCrowdPeople = crowdPeopleEntity
         })
-        this.crowdDao.getPeople(crowdId = 1).observeForever(observer)
+        this.crowdDao.getCrowdPeopleById(id = 1).observeForever(observer)
         spyOnCompleted.await(2, TimeUnit.SECONDS)
         assertNotNull(expectedCrowdPeople)
-        this.assertCrowdPersonEntity(expectedCrowdPeople!![0], 1, 1)
-        this.assertCrowdPersonEntity(expectedCrowdPeople!![1], 1, 2)
+        this.assertCrowdEntity(expectedCrowdPeople!!.crowd, currentTime)
+        this.assertCrowdPersonEntity(expectedCrowdPeople!!.people[0], 1, 1)
+        this.assertCrowdPersonEntity(expectedCrowdPeople!!.people[1], 1, 2)
     }
 
     @Test
-    fun getAllLiveData() {
+    fun getAllCrowdsLiveData() {
         val spyOnCompleted = CountDownLatch(1)
         val currentTime = Date().time
         this.insertOneCrowd()

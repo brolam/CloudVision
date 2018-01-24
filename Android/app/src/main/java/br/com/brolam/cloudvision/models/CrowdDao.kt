@@ -22,7 +22,7 @@ interface CrowdDao {
     fun insert(crowd: CrowdEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertPeople(crowdPeople: List<CrowdPersonEntity>)
+    fun insert(people: List<CrowdPersonEntity>)
 
     @Query("SELECT * FROM crowds")
     fun getAll(): List<CrowdEntity>
@@ -30,10 +30,15 @@ interface CrowdDao {
     @Query("SELECT * FROM crowds WHERE id = :id")
     fun getById(id: Long): LiveData<CrowdEntity>
 
+    @Query("SELECT * FROM crowds WHERE id = :id")
+    fun getCrowdPeopleById(id: Long): LiveData<CrowdPeopleEntity>
+
     @Query("SELECT * FROM crowds")
     fun getAllLiveData(): LiveData<List<CrowdEntity>>
 
     @Query("SELECT * FROM crowdsPeople WHERE crowdId = :crowdId ORDER BY insertedOrder")
     fun getPeople(crowdId: Int) : LiveData<List<CrowdPersonEntity>>
+
+
 
 }

@@ -21,10 +21,10 @@ import android.arch.persistence.room.ForeignKey.CASCADE
                 childColumns = ["crowdId"],
                 onDelete = CASCADE))]
 )
-class CrowdPersonEntity(
+data class CrowdPersonEntity(
         @ColumnInfo(name = "id")
         @PrimaryKey(autoGenerate = true) var id: Long = 0,
-        @ColumnInfo(name = "crowdId") var crowdId: Long,
+        @ColumnInfo(name = "crowdId") var crowdId: Long = 0,
         @ColumnInfo(name = "insertedOrder") var insertedOrder: Int,
         @ColumnInfo(name = "facePositionX") var facePositionX: Float,
         @ColumnInfo(name = "facePositionY") var facePositionY: Float,

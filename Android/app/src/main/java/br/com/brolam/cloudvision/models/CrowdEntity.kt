@@ -12,7 +12,7 @@ import android.arch.persistence.room.PrimaryKey
 data class CrowdEntity(
         @ColumnInfo(name = "id")
         @PrimaryKey(autoGenerate = true) var id: Long = 0,
-        @ColumnInfo(name = "title") var title: String,
-        @ColumnInfo(name = "trackedImageName") var trackedImageName: String,
+        @ColumnInfo(name = "title") var title: String = "",
+        @ColumnInfo(name = "trackedImageName") var trackedImageName: String = "",
         @ColumnInfo(name = "created") var created: Long
 )
