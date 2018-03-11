@@ -33,7 +33,7 @@ class FacesActivity : AppCompatActivity() {
         val crowdId = this.intent.getLongExtra(PARAM_CROWD_ID, 0)
         this.crowdViewModel.getCrowdPeopleById(crowdId).observe(this, Observer { crowdPeople ->
             this.crowdViewModel.getTrackedImage(crowdPeople!!.crowd.trackedImageName)?.let { trackedImage ->
-                this.fillFlexboxLayoutFaces(crowdViewModel.getImagesPeoplefaces(trackedImage,  crowdPeople!!.people ))
+                this.fillFlexboxLayoutFaces(crowdViewModel.getImagesPeopleFaces(trackedImage,  crowdPeople!!.people ))
                 imageViewTrackedImage.setImageBitmap(trackedImage)
                 textViewTitle.text = crowdPeople!!.crowd.title
             }
