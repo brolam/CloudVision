@@ -17,15 +17,15 @@ class CrowdViewModel(application: Application) : AndroidViewModel(application) {
     private val appDatabase: AppDatabase = AppDatabase.getInstance(application)
     private val crowdDao = this.appDatabase.crowdDao()
     private val imageUtil = ImageUtil(application)
-    private var _TrackedImage: Bitmap? = null;
-    private val _facesBitmap = mutableListOf<Bitmap>()
+    private var trackedImage: Bitmap? = null;
+    private val facesBitmap = mutableListOf<Bitmap>()
 
     fun getCrowdPeopleById(id: Long): LiveData<CrowdPeopleEntity> {
         return this.crowdDao.getCrowdPeopleById(id)
     }
 
     fun getImagesPeopleFaces(trackedImage: Bitmap, people: List<CrowdPersonEntity>) : List<Bitmap> {
-        if ( _facesBitmap.size > 0 ) return _facesBitmap;
+        if ( this.facesBitmap.size > 0 ) return this.facesBitmap;
         people.forEach { crowdPersonEntity ->
             val faceBitmap = this.imageUtil.crop(
                     trackedImage,
@@ -35,15 +35,15 @@ class CrowdViewModel(application: Application) : AndroidViewModel(application) {
                     crowdPersonEntity.faceHeight,
                     enlargeWidthInPercent = 15.toFloat(),
                     enlargeHeightInPercent =  15.toFloat())
-            _facesBitmap.add(faceBitmap)
+            this.facesBitmap.add(faceBitmap)
 
         }
-        return _facesBitmap
+        return this.facesBitmap
     }
 
     fun getTrackedImage(trackedImageName:String): Bitmap? {
-        if ( _TrackedImage != null ) return _TrackedImage
-        _TrackedImage = this.imageUtil.getImage(trackedImageName)
-        return  _TrackedImage
+        if ( this.trackedImage != null ) return this.trackedImage
+        this.trackedImage = this.imageUtil.getImage(trackedImageName)
+        return  this.trackedImage
     }
 }
