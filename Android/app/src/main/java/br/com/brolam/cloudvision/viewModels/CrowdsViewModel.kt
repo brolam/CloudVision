@@ -2,6 +2,7 @@ package br.com.brolam.cloudvision.viewModels
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
+import android.arch.lifecycle.LiveData
 import android.graphics.Bitmap
 import android.os.AsyncTask
 import android.text.format.DateUtils
@@ -9,6 +10,7 @@ import br.com.brolam.cloudvision.helpers.FacesDetector
 import br.com.brolam.cloudvision.helpers.ImageUtil
 import br.com.brolam.cloudvision.models.AppDatabase
 import br.com.brolam.cloudvision.models.CrowdEntity
+import br.com.brolam.cloudvision.models.CrowdPeopleEntity
 import br.com.brolam.cloudvision.models.CrowdPersonEntity
 import java.util.*
 
@@ -20,6 +22,10 @@ class CrowdsViewModel(application: Application) : AndroidViewModel(application) 
     private val appDatabase: AppDatabase = AppDatabase.getInstance(application)
     private val crowdDao = this.appDatabase.crowdDao()
     private val imageUtil = ImageUtil(application)
+
+    fun getAllCrowds(): LiveData<List<CrowdEntity>> {
+        return this.crowdDao.getAllLiveData()
+    }
 
     fun insertCrowd(trackedImageBitmap: Bitmap, onCompleted: (Long) -> Unit) {
         AsyncTask.execute {

@@ -16,6 +16,7 @@ import android.support.test.espresso.intent.rule.IntentsTestRule
 import android.support.test.espresso.matcher.BoundedMatcher
 import android.view.View
 import android.widget.ImageView
+import br.com.brolam.cloudvision.asserts.AssertsCount.Companion.recyclerViewItems;
 import br.com.brolam.cloudvision.mocks.CameraMock
 import br.com.brolam.cloudvision.mocks.ImagesGalleryMock
 import org.hamcrest.Description
@@ -31,9 +32,10 @@ class MainActivityTest {
     @Test
     fun mainActivityStartWithoutError() {
         val appContext = InstrumentationRegistry.getTargetContext()
-        val cardsFragment = onView(withId(R.id.cardsFragment))
+        val recyclerView = onView(withId(R.id.recyclerView))
         Assert.assertEquals("br.com.brolam.cloudvision", appContext.packageName)
-        cardsFragment.check(matches(isDisplayed()))
+        recyclerView.check(matches(isDisplayed()))
+        recyclerView.check(matches(recyclerViewItems(greaterThan =  0)));
     }
 
     @Test
