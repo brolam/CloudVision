@@ -4,6 +4,7 @@ import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
 import android.test.suitebuilder.annotation.LargeTest
 import android.support.test.espresso.Espresso.onView
+import android.support.test.espresso.Espresso.pressBack
 import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.assertion.ViewAssertions.*
 import android.support.test.espresso.matcher.ViewMatchers.*
@@ -35,7 +36,6 @@ class MainActivityTest {
         val recyclerView = onView(withId(R.id.recyclerView))
         Assert.assertEquals("br.com.brolam.cloudvision", appContext.packageName)
         recyclerView.check(matches(isDisplayed()))
-        recyclerView.check(matches(recyclerViewItems(greaterThan =  0)));
     }
 
     @Test
@@ -64,6 +64,9 @@ class MainActivityTest {
         onView(withId(R.id.textViewFacesTitle)).check(matches(withText("Everyone")))
         onView(withId(R.id.textViewFacesAmount)).check(matches(withText("19")))
         onView(withId(R.id.flexboxLayoutFaces)).check(matches(isDisplayed()))
+        pressBack()
+        val recyclerView = onView(withId(R.id.recyclerView))
+        recyclerView.check(matches(recyclerViewItems(greaterThan =  0)))
     }
 
     private fun hasDrawable(): BoundedMatcher<View, ImageView> {
