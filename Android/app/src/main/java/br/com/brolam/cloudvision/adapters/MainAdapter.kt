@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.support.v7.widget.RecyclerView.Adapter
 import br.com.brolam.cloudvision.R
 import br.com.brolam.cloudvision.adapters.holders.CrowdCardHolder
+import br.com.brolam.cloudvision.helpers.ImageUtil
 import br.com.brolam.cloudvision.models.CrowdEntity
 
 /**
@@ -14,10 +15,11 @@ import br.com.brolam.cloudvision.models.CrowdEntity
  */
 class MainAdapter(private val crows: List<CrowdEntity>,
                   private val context: Context) : Adapter<CrowdCardHolder>() {
+    private val imageUtil = ImageUtil(context)
 
     override fun onBindViewHolder(crowdCardHolder: CrowdCardHolder?, position: Int) {
         val crowd = crows.get(position)
-        crowdCardHolder?.bindView(crowd)
+        crowdCardHolder?.bindView(crowd, imageUtil.getImage(crowd.trackedImageName))
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): CrowdCardHolder {

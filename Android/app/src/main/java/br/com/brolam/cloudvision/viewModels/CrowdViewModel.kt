@@ -44,6 +44,6 @@ class CrowdViewModel(application: Application) : AndroidViewModel(application) {
     fun getTrackedImage(trackedImageName:String): Bitmap? {
         if ( this.trackedImage != null ) return this.trackedImage
         this.trackedImage = this.imageUtil.getImage(trackedImageName)
-        return  this.trackedImage
+        return this.trackedImage
     }
 }
