@@ -14,13 +14,14 @@ import br.com.brolam.cloudvision.viewModels.CrowdsViewModel
 import br.com.brolam.cloudvision.helpers.ImagePicker
 import br.com.brolam.cloudvision.helpers.ImagePickerDelegate
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import br.com.brolam.cloudvision.adapters.MainAdapter
 import br.com.brolam.cloudvision.models.CrowdEntity
 
 
-class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerDelegate, Observer<List<CrowdEntity>> {
+class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerDelegate, Observer<List<CrowdEntity>>, MainAdapter.MainAdapterListener {
 
     companion object {
         const val REQUEST_IMAGE_CAPTURE = 5001
@@ -76,6 +77,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerDeleg
     override fun onChanged(crowds: List<CrowdEntity>?) {
         recyclerView.layoutManager = LinearLayoutManager(this)
         if ( crowds != null ) recyclerView.adapter = MainAdapter(crowds, this)
+    }
+
+    override fun onSelectOneCrowd(crowd: CrowdEntity) {
+        FacesActivity.show(this, crowd.id)
+    }
+
+    override fun getContext(): Context {
+        return this
     }
 
 }
