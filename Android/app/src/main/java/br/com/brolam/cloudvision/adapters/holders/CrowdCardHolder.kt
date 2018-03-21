@@ -17,5 +17,8 @@ class CrowdCardHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title = itemView.textView_title
         title.text = crowd.title
         imageViewTrackedImage.setImageBitmap(trackedImage)
+        this.itemView.setOnClickListener { v: View? ->
+            title.text = "123"
+        }
     }
 }

@@ -21,7 +21,9 @@ import br.com.brolam.cloudvision.asserts.AssertsCount.Companion.recyclerViewItem
 import br.com.brolam.cloudvision.mocks.CameraMock
 import br.com.brolam.cloudvision.mocks.ImagesGalleryMock
 import org.hamcrest.Description
+import org.hamcrest.Matcher
 import org.hamcrest.Matchers.not
+import org.hamcrest.TypeSafeMatcher
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
@@ -69,6 +71,14 @@ class MainActivityTest {
         recyclerView.check(matches(recyclerViewItems(greaterThan =  0)))
     }
 
+    @Test
+    fun selectOneCrowd(){
+        onView(withIndex(withId(R.id.cardViewCrowd), 1)).perform(click());
+        val facesActivity = onView(withId(R.id.activity_faces_layout))
+        facesActivity.check(matches(isDisplayed()))
+
+    }
+
     private fun hasDrawable(): BoundedMatcher<View, ImageView> {
         return object : BoundedMatcher<View, ImageView>(ImageView::class.java) {
             override fun describeTo(description: Description) {
@@ -77,6 +87,22 @@ class MainActivityTest {
 
             public override fun matchesSafely(imageView: ImageView): Boolean {
                 return imageView.drawable != null
+            }
+        }
+    }
+
+    fun withIndex(matcher: Matcher<View>, index: Int): Matcher<View> {
+        return object : TypeSafeMatcher<View>() {
+            internal var currentIndex = 0
+
+            override fun describeTo(description: Description) {
+                description.appendText("with index: ")
+                description.appendValue(index)
+                matcher.describeTo(description)
+            }
+
+            override fun matchesSafely(view: View): Boolean {
+                return matcher.matches(view) && currentIndex++ == index
             }
         }
     }
