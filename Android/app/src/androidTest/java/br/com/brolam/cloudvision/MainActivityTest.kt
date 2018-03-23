@@ -2,7 +2,6 @@ package br.com.brolam.cloudvision
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
-import android.test.suitebuilder.annotation.LargeTest
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.Espresso.pressBack
 import android.support.test.espresso.action.ViewActions.click
@@ -14,18 +13,12 @@ import org.junit.runner.RunWith
 import org.junit.Assert
 import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
 import android.support.test.espresso.intent.rule.IntentsTestRule
-import android.support.test.espresso.matcher.BoundedMatcher
-import android.view.View
-import android.widget.ImageView
-import br.com.brolam.cloudvision.asserts.AssertsCount.Companion.recyclerViewItems;
+import br.com.brolam.cloudvision.asserts.AssertsUtils
+import br.com.brolam.cloudvision.asserts.AssertsUtils.Companion.recyclerViewItems
 import br.com.brolam.cloudvision.mocks.CameraMock
 import br.com.brolam.cloudvision.mocks.ImagesGalleryMock
-import org.hamcrest.Description
-import org.hamcrest.Matcher
 import org.hamcrest.Matchers.not
-import org.hamcrest.TypeSafeMatcher
 
-@LargeTest
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {
 
@@ -61,7 +54,7 @@ class MainActivityTest {
         this.takeOnePhotoByCamera()
         val facesActivity = onView(withId(R.id.activity_faces_layout))
         facesActivity.check(matches(isDisplayed()))
-        onView(withId(R.id.imageViewTrackedImage)).check(matches(hasDrawable()))
+        onView(withId(R.id.imageViewTrackedImage)).check(matches(AssertsUtils.hasDrawable()))
         onView(withId(R.id.textViewTitle)).check(matches(not(withText(""))))
         onView(withId(R.id.textViewFacesTitle)).check(matches(withText("Everyone")))
         onView(withId(R.id.textViewFacesAmount)).check(matches(withText("19")))
@@ -73,38 +66,9 @@ class MainActivityTest {
 
     @Test
     fun selectOneCrowd(){
-        onView(withIndex(withId(R.id.cardViewCrowd), 1)).perform(click());
+        onView( AssertsUtils.withIndex(withId(R.id.cardViewCrowd), 1)).perform(click())
         val facesActivity = onView(withId(R.id.activity_faces_layout))
         facesActivity.check(matches(isDisplayed()))
-
-    }
-
-    private fun hasDrawable(): BoundedMatcher<View, ImageView> {
-        return object : BoundedMatcher<View, ImageView>(ImageView::class.java) {
-            override fun describeTo(description: Description) {
-                description.appendText("has drawable")
-            }
-
-            public override fun matchesSafely(imageView: ImageView): Boolean {
-                return imageView.drawable != null
-            }
-        }
-    }
-
-    fun withIndex(matcher: Matcher<View>, index: Int): Matcher<View> {
-        return object : TypeSafeMatcher<View>() {
-            internal var currentIndex = 0
-
-            override fun describeTo(description: Description) {
-                description.appendText("with index: ")
-                description.appendValue(index)
-                matcher.describeTo(description)
-            }
-
-            override fun matchesSafely(view: View): Boolean {
-                return matcher.matches(view) && currentIndex++ == index
-            }
-        }
     }
 
 }
