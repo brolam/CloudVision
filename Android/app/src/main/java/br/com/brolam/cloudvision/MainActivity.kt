@@ -16,8 +16,11 @@ import br.com.brolam.cloudvision.helpers.ImagePickerDelegate
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.Log
 import br.com.brolam.cloudvision.adapters.MainAdapter
+import br.com.brolam.cloudvision.adapters.holders.SwipeToDeleteCallback
 import br.com.brolam.cloudvision.models.CrowdEntity
 
 
@@ -76,7 +79,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerDeleg
 
     override fun onChanged(crowds: List<CrowdEntity>?) {
         recyclerView.layoutManager = LinearLayoutManager(this)
-        if ( crowds != null ) recyclerView.adapter = MainAdapter(crowds, this)
+        if ( crowds != null ){
+            recyclerView.adapter = MainAdapter(crowds, this)
+            val swipeHandler = object : SwipeToDeleteCallback(this) {
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    val crowd = crowds[viewHolder.adapterPosition]
+                    crowdsViewModel.deleteCrowd(crowd, onCompleted = {
+                        recyclerView.adapter.notifyItemChanged(viewHolder.adapterPosition)
+                    })
+                }
+            }
+            val itemTouchHelper = ItemTouchHelper(swipeHandler)
+            itemTouchHelper.attachToRecyclerView(recyclerView)
+        }
     }
 
     override fun onSelectOneCrowd(crowd: CrowdEntity) {

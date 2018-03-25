@@ -26,6 +26,12 @@ class ImageUtil(val context: Context) {
         }
     }
 
+    fun delete(fileImageName: String) {
+        val imageUri = storageDirPicture.absolutePath + "/$fileImageName"
+        val fileImage = File(imageUri)
+        fileImage.delete()
+    }
+
     fun getImage(fileName: String): Bitmap? {
         val fullPathFileName = storageDirPicture.absolutePath + "/$fileName"
         if (File(fullPathFileName).exists())

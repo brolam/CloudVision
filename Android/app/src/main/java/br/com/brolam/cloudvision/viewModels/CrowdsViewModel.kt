@@ -62,4 +62,20 @@ class CrowdsViewModel(application: Application) : AndroidViewModel(application) 
             }
         }
     }
+
+    fun deleteCrowd(crowd: CrowdEntity, onCompleted: () -> Unit) {
+        val asyncTask = object : AsyncTask<Void, Void, Long>() {
+            override fun doInBackground(vararg params: Void?): Long {
+                appDatabase.runInTransaction {
+                    crowdDao.deleteOneCrowd(crowd)
+                    imageUtil.delete(crowd.trackedImageName)
+                }
+                return crowd.id
+            }
+
+            override fun onPostExecute(result: Long?) {
+                onCompleted()
+            }
+        }.execute()
+    }
 }

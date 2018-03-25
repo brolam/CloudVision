@@ -5,6 +5,7 @@ import android.support.test.runner.AndroidJUnit4
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.Espresso.pressBack
 import android.support.test.espresso.action.ViewActions.click
+import android.support.test.espresso.action.ViewActions.swipeLeft
 import android.support.test.espresso.assertion.ViewAssertions.*
 import android.support.test.espresso.matcher.ViewMatchers.*
 import org.junit.Rule
@@ -14,7 +15,8 @@ import org.junit.Assert
 import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
 import android.support.test.espresso.intent.rule.IntentsTestRule
 import br.com.brolam.cloudvision.asserts.AssertsUtils
-import br.com.brolam.cloudvision.asserts.AssertsUtils.Companion.recyclerViewItems
+import br.com.brolam.cloudvision.asserts.AssertsUtils.Companion.recyclerViewCount
+import br.com.brolam.cloudvision.asserts.AssertsUtils.Companion.recyclerViewCountEqual
 import br.com.brolam.cloudvision.mocks.CameraMock
 import br.com.brolam.cloudvision.mocks.ImagesGalleryMock
 import org.hamcrest.Matchers.not
@@ -61,7 +63,7 @@ class MainActivityTest {
         onView(withId(R.id.flexboxLayoutFaces)).check(matches(isDisplayed()))
         pressBack()
         val recyclerView = onView(withId(R.id.recyclerView))
-        recyclerView.check(matches(recyclerViewItems(greaterThan =  0)))
+        recyclerView.check(matches(recyclerViewCount(greaterThan =  0)))
     }
 
     @Test
@@ -69,6 +71,15 @@ class MainActivityTest {
         onView( AssertsUtils.withIndex(withId(R.id.cardViewCrowd), 1)).perform(click())
         val facesActivity = onView(withId(R.id.activity_faces_layout))
         facesActivity.check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun deleteOneCrowd(){
+        this.newCrowdByCamera()
+        val recyclerView = onView(withId(R.id.recyclerView))
+        val cardViewCrowd = onView(AssertsUtils.withIndex(withId(R.id.cardViewCrowd), 0))
+        cardViewCrowd.perform(swipeLeft())
+        recyclerView.check(matches(recyclerViewCountEqual(expect =  0)))
     }
 
 }

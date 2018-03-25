@@ -14,7 +14,7 @@ import org.hamcrest.TypeSafeMatcher
  */
 class AssertsUtils {
     companion object {
-        fun recyclerViewItems(greaterThan: Int): Matcher<View> {
+        fun recyclerViewCount(greaterThan: Int): Matcher<View> {
             return object : BoundedMatcher<View, RecyclerView>(RecyclerView::class.java) {
                 override fun describeTo(description: Description?) {
                     description?.appendText("RecyclerView with item count is not greater the : $greaterThan")
@@ -23,6 +23,19 @@ class AssertsUtils {
                 override fun matchesSafely(item: RecyclerView?): Boolean {
                     if ( ( item == null ) || (item?.adapter == null ) ) return false;
                     return item.adapter.itemCount > greaterThan
+                }
+            }
+        }
+
+        fun recyclerViewCountEqual(expect: Int): Matcher<View> {
+            return object : BoundedMatcher<View, RecyclerView>(RecyclerView::class.java) {
+                override fun describeTo(description: Description?) {
+                    description?.appendText("RecyclerView item count is not egual the : $expect")
+                }
+
+                override fun matchesSafely(item: RecyclerView?): Boolean {
+                    if ( ( item == null ) || (item?.adapter == null ) ) return false;
+                    return item.adapter.itemCount == expect
                 }
             }
         }
