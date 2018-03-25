@@ -1,10 +1,7 @@
 package br.com.brolam.cloudvision.models
 
 import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.OnConflictStrategy
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.*
 
 /**
  * Created by brenomarques on 07/01/2018.
@@ -39,6 +36,7 @@ interface CrowdDao {
     @Query("SELECT * FROM crowdsPeople WHERE crowdId = :crowdId ORDER BY insertedOrder")
     fun getPeople(crowdId: Int) : LiveData<List<CrowdPersonEntity>>
 
-
+    @Delete
+    fun deleteOneCrowd(crowd: CrowdEntity)
 
 }

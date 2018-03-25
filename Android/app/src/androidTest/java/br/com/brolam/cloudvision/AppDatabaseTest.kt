@@ -31,7 +31,7 @@ class AppDatabaseTest {
     }
 
     @After
-    fun tearDown() {
+    fun setDown() {
         this.appDataBase.close()
     }
 
@@ -45,6 +45,17 @@ class AppDatabaseTest {
         val nextCrowdId = (currentCountCrowds + 1).toLong()
         assertEquals(this.crowdDao.insert(crowd), nextCrowdId)
         assertEquals(this.crowdDao.count(), currentCountCrowds + 1)
+    }
+
+    @Test
+    fun deleteOneCrowd() {
+        insertCrowdWithPeople();
+        val allCrowds = this.crowdDao.getAll()
+        allCrowds.forEach { crowd ->
+            this.crowdDao.deleteOneCrowd(crowd)
+            assertEquals(0, this.crowdDao.countPeople(crowd.id))
+        }
+        assertEquals(0, this.crowdDao.count())
     }
 
     @Test
