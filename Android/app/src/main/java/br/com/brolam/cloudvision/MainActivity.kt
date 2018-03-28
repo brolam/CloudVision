@@ -33,13 +33,25 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerDeleg
 
     private val imagePiker = ImagePicker(this, REQUEST_IMAGE_CAPTURE, REQUEST_IMAGE_SELECT)
     private lateinit var crowdsViewModel: CrowdsViewModel
+    private lateinit var mainAdapter: MainAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        this.mainAdapter = MainAdapter(this)
+        this.recyclerView.layoutManager = LinearLayoutManager(this)
+        this.recyclerView.adapter = mainAdapter
         this.crowdsViewModel = ViewModelProviders.of(this).get(CrowdsViewModel::class.java);
         this.crowdsViewModel.getAllCrowds().observe(this, this )
+        val swipeHandler = object : SwipeToDeleteCallback(this) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val crowd = mainAdapter.crowds[viewHolder.adapterPosition]
+                crowdsViewModel.deleteCrowd(crowd)
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
     override fun onPickedOneImage(pikedBitmap: Bitmap): Boolean {
@@ -78,19 +90,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerDeleg
     }
 
     override fun onChanged(crowds: List<CrowdEntity>?) {
-        recyclerView.layoutManager = LinearLayoutManager(this)
         if ( crowds != null ){
-            recyclerView.adapter = MainAdapter(crowds, this)
-            val swipeHandler = object : SwipeToDeleteCallback(this) {
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    val crowd = crowds[viewHolder.adapterPosition]
-                    crowdsViewModel.deleteCrowd(crowd, onCompleted = {
-                        recyclerView.adapter.notifyItemChanged(viewHolder.adapterPosition)
-                    })
-                }
-            }
-            val itemTouchHelper = ItemTouchHelper(swipeHandler)
-            itemTouchHelper.attachToRecyclerView(recyclerView)
+            this.mainAdapter.setCrows(crowds)
         }
     }
 

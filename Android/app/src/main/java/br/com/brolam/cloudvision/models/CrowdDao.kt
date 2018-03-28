@@ -39,4 +39,7 @@ interface CrowdDao {
     @Delete
     fun deleteOneCrowd(crowd: CrowdEntity)
 
+    @Query("DELETE FROM crowds")
+    fun deleteAllCrowds()
+
 }

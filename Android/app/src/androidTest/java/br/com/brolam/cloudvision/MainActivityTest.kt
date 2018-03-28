@@ -1,5 +1,6 @@
 package br.com.brolam.cloudvision
 
+import android.os.Environment
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
 import android.support.test.espresso.Espresso.onView
@@ -19,13 +20,23 @@ import br.com.brolam.cloudvision.asserts.AssertsUtils.Companion.recyclerViewCoun
 import br.com.brolam.cloudvision.asserts.AssertsUtils.Companion.recyclerViewCountEqual
 import br.com.brolam.cloudvision.mocks.CameraMock
 import br.com.brolam.cloudvision.mocks.ImagesGalleryMock
+import br.com.brolam.cloudvision.models.AppDatabase
 import org.hamcrest.Matchers.not
+import org.junit.Before
 
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {
 
     @get:Rule
     val mainActivity = IntentsTestRule(MainActivity::class.java)
+
+    @Before
+    fun setUpTests(){
+        val context = mainActivity.activity
+        val storageDirPicture =  context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
+        storageDirPicture.deleteRecursively()
+        AppDatabase.getInstance(context).crowdDao().deleteAllCrowds()
+    }
 
     @Test
     fun mainActivityStartWithoutError() {
@@ -68,7 +79,8 @@ class MainActivityTest {
 
     @Test
     fun selectOneCrowd(){
-        onView( AssertsUtils.withIndex(withId(R.id.cardViewCrowd), 1)).perform(click())
+        this.newCrowdByCamera()
+        onView( AssertsUtils.withIndex(withId(R.id.cardViewCrowd), 0)).perform(click())
         val facesActivity = onView(withId(R.id.activity_faces_layout))
         facesActivity.check(matches(isDisplayed()))
     }
