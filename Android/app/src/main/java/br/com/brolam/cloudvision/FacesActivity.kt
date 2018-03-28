@@ -39,7 +39,7 @@ class FacesActivity : AppCompatActivity() {
             }
         })
 
-        fab.setOnClickListener { view ->
+        fabRaffle.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
@@ -53,7 +53,7 @@ class FacesActivity : AppCompatActivity() {
             flexboxLayoutFaces.addView(faceItemView)
             faceItemView.setFaceDrawable(face)
         }
-        this.textViewFacesAmount.text = flexboxLayoutFaces.childCount.toString()
+        this.textViewEveryOneFacesAmount.text = flexboxLayoutFaces.childCount.toString()
     }
 
 

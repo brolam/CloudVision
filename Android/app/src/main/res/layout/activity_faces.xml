@@ -33,7 +33,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="fitXY" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -71,7 +70,7 @@
                 tools:text="Dec 31 2017 00:00:00" />
 
             <LinearLayout
-                android:id="@+id/linearLayoutFaces"
+                android:id="@+id/linearLayoutEveryOneFaces"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textViewTitle"
@@ -80,14 +79,14 @@
                 android:layout_marginRight="@dimen/text_margin">
 
                 <TextView
-                    android:id="@+id/textViewFacesTitle"
+                    android:id="@+id/textViewEveryOneFacesTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/everyone"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
 
                 <TextView
-                    android:id="@+id/textViewFacesAmount"
+                    android:id="@+id/textViewEveryOneFacesAmount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
@@ -100,7 +99,7 @@
                 android:id="@+id/flexboxLayoutFaces"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/linearLayoutFaces"
+                android:layout_below="@id/linearLayoutEveryOneFaces"
                 android:layout_marginLeft="@dimen/default_margin"
                 android:layout_marginRight="@dimen/default_margin"
                 app:dividerDrawable="@drawable/divider_flexbox"
@@ -128,9 +127,8 @@
 
     </android.support.v4.widget.NestedScrollView>
 
-
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fabRaffle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"

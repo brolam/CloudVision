@@ -33,8 +33,10 @@ class MainActivityTest {
     @Before
     fun setUpTests(){
         val context = mainActivity.activity
+        //Clean Pictures
         val storageDirPicture =  context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
         storageDirPicture.deleteRecursively()
+        //Clean Database
         AppDatabase.getInstance(context).crowdDao().deleteAllCrowds()
     }
 
@@ -69,8 +71,8 @@ class MainActivityTest {
         facesActivity.check(matches(isDisplayed()))
         onView(withId(R.id.imageViewTrackedImage)).check(matches(AssertsUtils.hasDrawable()))
         onView(withId(R.id.textViewTitle)).check(matches(not(withText(""))))
-        onView(withId(R.id.textViewFacesTitle)).check(matches(withText("Everyone")))
-        onView(withId(R.id.textViewFacesAmount)).check(matches(withText("19")))
+        onView(withId(R.id.textViewEveryOneFacesTitle)).check(matches(withText("Everyone")))
+        onView(withId(R.id.textViewEveryOneFacesAmount)).check(matches(withText("19")))
         onView(withId(R.id.flexboxLayoutFaces)).check(matches(isDisplayed()))
         pressBack()
         val recyclerView = onView(withId(R.id.recyclerView))
@@ -92,6 +94,17 @@ class MainActivityTest {
         val cardViewCrowd = onView(AssertsUtils.withIndex(withId(R.id.cardViewCrowd), 0))
         cardViewCrowd.perform(swipeLeft())
         recyclerView.check(matches(recyclerViewCountEqual(expect =  0)))
+    }
+
+    fun raffleOnePerson(){
+        newCrowdByCamera()
+        selectOneCrowd()
+        onView(withId(R.id.fabRaffle)).perform(click())
+        //onView(withId(R.id.textViewFacesTitle)).check(matches(withText("Winners")))
+        //onView(withId(R.id.textViewFacesAmount)).check(matches(withText("1")))
+
+
+
     }
 
 }
