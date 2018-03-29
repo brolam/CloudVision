@@ -29,5 +29,6 @@ data class CrowdPersonEntity(
         @ColumnInfo(name = "facePositionX") var facePositionX: Float,
         @ColumnInfo(name = "facePositionY") var facePositionY: Float,
         @ColumnInfo(name = "faceWidth") var faceWidth: Float,
-        @ColumnInfo(name = "faceHeight") var faceHeight: Float
+        @ColumnInfo(name = "faceHeight") var faceHeight: Float,
+        @ColumnInfo(name = "winnerPosition") var winnerPosition: Int = 0
 )

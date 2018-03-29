@@ -47,13 +47,13 @@ class FacesActivity : AppCompatActivity() {
     }
 
     private fun fillFlexboxLayoutFaces(facesBitmap: List<Bitmap>) {
-        flexboxLayoutFaces.removeAllViews()
+        flexboxLayoutEveryOneFaces.removeAllViews()
         facesBitmap.map { face ->
-            val faceItemView = layoutInflater.inflate(R.layout.view_face_item, flexboxLayoutFaces, false) as FaceItemView
-            flexboxLayoutFaces.addView(faceItemView)
+            val faceItemView = layoutInflater.inflate(R.layout.view_face_item, flexboxLayoutEveryOneFaces, false) as FaceItemView
+            flexboxLayoutEveryOneFaces.addView(faceItemView)
             faceItemView.setFaceDrawable(face)
         }
-        this.textViewEveryOneFacesAmount.text = flexboxLayoutFaces.childCount.toString()
+        this.textViewEveryOneFacesAmount.text = flexboxLayoutEveryOneFaces.childCount.toString()
     }
 
 

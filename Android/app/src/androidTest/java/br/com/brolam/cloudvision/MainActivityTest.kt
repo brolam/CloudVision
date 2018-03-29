@@ -73,7 +73,7 @@ class MainActivityTest {
         onView(withId(R.id.textViewTitle)).check(matches(not(withText(""))))
         onView(withId(R.id.textViewEveryOneFacesTitle)).check(matches(withText("Everyone")))
         onView(withId(R.id.textViewEveryOneFacesAmount)).check(matches(withText("19")))
-        onView(withId(R.id.flexboxLayoutFaces)).check(matches(isDisplayed()))
+        onView(withId(R.id.flexboxLayoutEveryOneFaces)).check(matches(isDisplayed()))
         pressBack()
         val recyclerView = onView(withId(R.id.recyclerView))
         recyclerView.check(matches(recyclerViewCount(greaterThan =  0)))
@@ -96,12 +96,14 @@ class MainActivityTest {
         recyclerView.check(matches(recyclerViewCountEqual(expect =  0)))
     }
 
+    @Test
     fun raffleOnePerson(){
         newCrowdByCamera()
         selectOneCrowd()
         onView(withId(R.id.fabRaffle)).perform(click())
-        //onView(withId(R.id.textViewFacesTitle)).check(matches(withText("Winners")))
-        //onView(withId(R.id.textViewFacesAmount)).check(matches(withText("1")))
+        onView(withId(R.id.textViewWinnersFacesTitle)).check(matches(withText("Winners")))
+        onView(withId(R.id.textViewWinnersFacesAmount)).check(matches(withText("1")))
+        onView(withId(R.id.flexboxLayoutWinnersFaces)).check(matches(isDisplayed()))
 
 
 

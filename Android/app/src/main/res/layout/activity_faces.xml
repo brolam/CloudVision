@@ -70,10 +70,67 @@
                 tools:text="Dec 31 2017 00:00:00" />
 
             <LinearLayout
-                android:id="@+id/linearLayoutEveryOneFaces"
+                android:id="@+id/linearLayoutWinnersFaces"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textViewTitle"
+                android:layout_marginBottom="@dimen/text_margin"
+                android:layout_marginLeft="@dimen/text_margin"
+                android:layout_marginRight="@dimen/text_margin"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/textViewWinnersFacesTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/winners"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
+
+                <TextView
+                    android:id="@+id/textViewWinnersFacesAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    tools:text="4"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2" />
+            </LinearLayout>
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/flexboxLayoutWinnersFaces"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/linearLayoutWinnersFaces"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginRight="@dimen/default_margin"
+                android:visibility="gone"
+                app:dividerDrawable="@drawable/divider_flexbox"
+                app:flexWrap="wrap"
+                app:showDivider="middle">
+
+                <br.com.brolam.cloudvision.views.FaceItemView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    tools:faceDrawable="@drawable/ic_face_black_60dp" />
+                <br.com.brolam.cloudvision.views.FaceItemView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    tools:faceDrawable="@drawable/ic_face_black_60dp" />
+                <br.com.brolam.cloudvision.views.FaceItemView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    tools:faceDrawable="@drawable/ic_face_black_60dp" />
+                <br.com.brolam.cloudvision.views.FaceItemView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    tools:faceDrawable="@drawable/ic_face_black_60dp" />
+            </com.google.android.flexbox.FlexboxLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutEveryOneFaces"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/flexboxLayoutWinnersFaces"
                 android:layout_marginBottom="@dimen/text_margin"
                 android:layout_marginLeft="@dimen/text_margin"
                 android:layout_marginRight="@dimen/text_margin">
@@ -96,7 +153,7 @@
             </LinearLayout>
 
             <com.google.android.flexbox.FlexboxLayout
-                android:id="@+id/flexboxLayoutFaces"
+                android:id="@+id/flexboxLayoutEveryOneFaces"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/linearLayoutEveryOneFaces"

@@ -4,6 +4,7 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.graphics.Bitmap
+import android.os.AsyncTask
 import br.com.brolam.cloudvision.helpers.ImageUtil
 import br.com.brolam.cloudvision.models.AppDatabase
 import br.com.brolam.cloudvision.models.CrowdPeopleEntity
@@ -45,5 +46,25 @@ class CrowdViewModel(application: Application) : AndroidViewModel(application) {
         if ( this.trackedImage != null ) return this.trackedImage
         this.trackedImage = this.imageUtil.getImage(trackedImageName)
         return this.trackedImage
+    }
+
+    fun raffleOnePerson(crowdId: Long, onBegin:() -> Unit, onEnd:() -> Unit ){
+        /*
+        object : AsyncTask<Void, Void, Long>() {
+            override fun onPreExecute() {
+                super.onPreExecute()
+            }
+
+            override fun doInBackground(vararg params: Void?): Long {
+                val competitors = crowdDao.getPeople(crowdId).filter { person -> person.winnerPosition == 0 }
+            }
+
+            override fun onPostExecute(result: Long?) {
+                super.onPostExecute(result)
+            }
+
+        }.execute()
+        */
+
     }
 }
