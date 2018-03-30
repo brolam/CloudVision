@@ -9,9 +9,9 @@ import java.util.*
 class Raffle {
     companion object {
         fun <T> chooseOne(competitors: List<T>): T? {
+            if (competitors.isEmpty()) return null
             val winner = Random().nextInt(competitors.size)
-            //if (competitors.elementAtOrNull(winner) == null ) return null
-            return competitors.get(winner)
+            return competitors[winner]
         }
     }
 }

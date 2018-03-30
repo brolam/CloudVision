@@ -11,11 +11,18 @@ import org.junit.Test
 
 class RaffleTest {
     @Test
-    fun testChooseOne(){
+    fun chooseOne(){
         val competitors: List<Int> = 1.rangeTo(10).distinct()
         (0..1000).forEach {
             val oneWinner = Raffle.chooseOne(competitors)
             Assert.assertNotNull(oneWinner)
         }
+    }
+
+    @Test
+    fun chooseOneWithoutCompetitors(){
+        val competitors = ArrayList<Int>()
+        val oneWinner = Raffle.chooseOne(competitors)
+        Assert.assertNull(oneWinner)
     }
 }
