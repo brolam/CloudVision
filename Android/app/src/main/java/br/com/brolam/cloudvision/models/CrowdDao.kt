@@ -34,12 +34,15 @@ interface CrowdDao {
     fun getAllLiveData(): LiveData<List<CrowdEntity>>
 
     @Query("SELECT * FROM crowdsPeople WHERE crowdId = :crowdId ORDER BY insertedOrder")
-    fun getPeople(crowdId: Long) : List<CrowdPersonEntity>
+    fun getPeople(crowdId: Long): List<CrowdPersonEntity>
 
     @Delete
     fun deleteOneCrowd(crowd: CrowdEntity)
 
     @Query("DELETE FROM crowds")
     fun deleteAllCrowds()
+
+    @Update
+    fun update(person: CrowdPersonEntity)
 
 }

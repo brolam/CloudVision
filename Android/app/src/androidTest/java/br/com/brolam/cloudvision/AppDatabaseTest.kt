@@ -147,6 +147,16 @@ class AppDatabaseTest {
         this.assertCrowdEntity(expectedCrowdEntities!![0], currentTime)
     }
 
+    @Test
+    fun updateOneCrowdPerson(){
+        insertCrowdWithPeople()
+        var people = this.crowdDao.getPeople(1)
+        people[0].winnerPosition = 1
+        crowdDao.update(people[0])
+        people = this.crowdDao.getPeople(1)
+        assertEquals(1, people[0].winnerPosition)
+    }
+
     private fun assertCrowdEntity(crowd: CrowdEntity, currentTime: Long) {
         assertEquals("Dec 31 2017 00:00:00", crowd.title)
         assertTrue(crowd.created >= currentTime)

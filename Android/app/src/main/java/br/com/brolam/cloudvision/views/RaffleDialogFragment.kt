@@ -56,7 +56,7 @@ class RaffleDialogFragment : android.support.v4.app.DialogFragment() {
             (0 until chosenFacesBitmap.size).forEach({ x[it] = it })
 
             val facesAnimator = ValueAnimator.ofInt(*x)
-            facesAnimator.duration = 6000
+            facesAnimator.duration = 5000
             facesAnimator.addUpdateListener { animation ->
                 val animatedValue = animation.animatedValue as Int
                 this.faceContainer!!.removeAllViews()
@@ -70,12 +70,13 @@ class RaffleDialogFragment : android.support.v4.app.DialogFragment() {
 
             }
 
-            var endAnimator = ValueAnimator.ofInt(0,1)
-            endAnimator.duration = 10000
+            var endAnimator = ValueAnimator.ofInt(0,1,1, 2)
+            endAnimator.duration = 4000
             endAnimator.addUpdateListener {animation ->
                 val animatedValue = animation.animatedValue as Int
-                if ( animatedValue == 1 ) this.dismiss()
-                return@addUpdateListener
+                if ( animatedValue == 0) this.faceContainer!!.visibility =  View.GONE
+                if ( animatedValue == 1) this.faceContainer!!.visibility =  View.VISIBLE
+                if ( animatedValue == 2 ) this.dismiss()
             }
 
             animatorSet.playSequentially(facesAnimator, endAnimator)
