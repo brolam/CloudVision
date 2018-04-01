@@ -6,6 +6,7 @@ import android.arch.lifecycle.LiveData
 import android.graphics.Bitmap
 import android.os.AsyncTask
 import br.com.brolam.cloudvision.helpers.ImageUtil
+import br.com.brolam.cloudvision.helpers.Raffle
 import br.com.brolam.cloudvision.models.AppDatabase
 import br.com.brolam.cloudvision.models.CrowdPeopleEntity
 import br.com.brolam.cloudvision.models.CrowdPersonEntity
@@ -25,8 +26,8 @@ class CrowdViewModel(application: Application) : AndroidViewModel(application) {
         return this.crowdDao.getCrowdPeopleById(id)
     }
 
-    fun getImagesPeopleFaces(trackedImage: Bitmap, people: List<CrowdPersonEntity>) : List<Bitmap> {
-        if ( this.facesBitmap.size > 0 ) return this.facesBitmap;
+    fun getImagesPeopleFaces(trackedImage: Bitmap, people: List<CrowdPersonEntity>): List<Bitmap> {
+        if (this.facesBitmap.size > 0) return this.facesBitmap;
         people.forEach { crowdPersonEntity ->
             val faceBitmap = this.imageUtil.crop(
                     trackedImage,
@@ -35,36 +36,56 @@ class CrowdViewModel(application: Application) : AndroidViewModel(application) {
                     crowdPersonEntity.faceWidth,
                     crowdPersonEntity.faceHeight,
                     enlargeWidthInPercent = 15.toFloat(),
-                    enlargeHeightInPercent =  15.toFloat())
+                    enlargeHeightInPercent = 15.toFloat())
             this.facesBitmap.add(faceBitmap)
 
         }
         return this.facesBitmap
     }
 
-    fun getTrackedImage(trackedImageName:String): Bitmap? {
-        if ( this.trackedImage != null ) return this.trackedImage
+    fun getTrackedImage(trackedImageName: String): Bitmap? {
+        if (this.trackedImage != null) return this.trackedImage
         this.trackedImage = this.imageUtil.getImage(trackedImageName)
         return this.trackedImage
     }
 
-    fun raffleOnePerson(crowdId: Long, onBegin:() -> Unit, onEnd:() -> Unit ){
-        /*
-        object : AsyncTask<Void, Void, Long>() {
+    fun raffleOnePerson(crowdId: Long, onBegin: () -> Unit, onEnd: (facesBitmap: List<Bitmap>) -> Unit) {
+        object : AsyncTask<Void, Void, List<Bitmap>>() {
             override fun onPreExecute() {
                 super.onPreExecute()
+                onBegin()
             }
 
-            override fun doInBackground(vararg params: Void?): Long {
+            override fun doInBackground(vararg params: Void?): List<Bitmap> {
                 val competitors = crowdDao.getPeople(crowdId).filter { person -> person.winnerPosition == 0 }
+                val pickedList = ArrayList<CrowdPersonEntity>()
+                val pickedFacesBitmap = ArrayList<Bitmap>()
+                (0..10).forEach { index ->
+                    var personPicked = Raffle.chooseOne(competitors)
+                    personPicked?.let { pickedList.add(it) }
+                }
+                pickedList.forEach() { person ->
+                    val faceBitmap = trackedImage?.let {
+                        imageUtil.crop(
+                                it,
+                                person.facePositionX,
+                                person.facePositionY,
+                                person.faceWidth,
+                                person.faceHeight,
+                                enlargeWidthInPercent = 15.toFloat(),
+                                enlargeHeightInPercent = 15.toFloat())
+                    }
+                    faceBitmap?.let { pickedFacesBitmap.add(it) }
+
+                }
+                return pickedFacesBitmap
             }
 
-            override fun onPostExecute(result: Long?) {
+            override fun onPostExecute(result: List<Bitmap>) {
                 super.onPostExecute(result)
+                onEnd(result)
             }
 
         }.execute()
-        */
-
     }
 }

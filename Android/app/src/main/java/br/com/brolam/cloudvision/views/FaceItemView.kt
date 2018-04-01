@@ -77,6 +77,12 @@ class FaceItemView : View {
     }
 
     fun setFaceDrawable(faceBitmap: Bitmap) {
+        if ( this.faceDrawable != null ) { this.invalidateDrawable(this.faceDrawable) }
         this.faceDrawable = BitmapDrawable(resources, faceBitmap)
+    }
+
+    override fun requestLayout() {
+        super.requestLayout()
+        this.invalidate()
     }
 }
