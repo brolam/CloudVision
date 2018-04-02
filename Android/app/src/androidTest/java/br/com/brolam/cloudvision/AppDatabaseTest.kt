@@ -152,7 +152,7 @@ class AppDatabaseTest {
         insertCrowdWithPeople()
         var people = this.crowdDao.getPeople(1)
         people[0].winnerPosition = 1
-        crowdDao.update(people[0])
+        crowdDao.updatePerson(people[0])
         people = this.crowdDao.getPeople(1)
         assertEquals(1, people[0].winnerPosition)
     }

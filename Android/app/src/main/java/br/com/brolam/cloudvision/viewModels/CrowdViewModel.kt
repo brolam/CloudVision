@@ -57,7 +57,9 @@ class CrowdViewModel(application: Application) : AndroidViewModel(application) {
             }
 
             override fun doInBackground(vararg params: Void?): List<Bitmap> {
-                val competitors = crowdDao.getPeople(crowdId).filter { person -> person.winnerPosition == 0 }
+                val people = crowdDao.getPeople(crowdId)
+                val competitors = people.filter { person -> person.winnerPosition == 0 }
+                val lastWinner = people.sortedBy{it.winnerPosition }.last()
                 val pickedList = ArrayList<CrowdPersonEntity>()
                 val pickedFacesBitmap = ArrayList<Bitmap>()
                 (0..10).forEach { index ->
@@ -78,6 +80,8 @@ class CrowdViewModel(application: Application) : AndroidViewModel(application) {
                     faceBitmap?.let { pickedFacesBitmap.add(it) }
 
                 }
+                pickedList.last().winnerPosition = lastWinner.winnerPosition + 1
+                crowdDao.updatePerson(pickedList.last())
                 return pickedFacesBitmap
             }
 

@@ -43,6 +43,6 @@ interface CrowdDao {
     fun deleteAllCrowds()
 
     @Update
-    fun update(person: CrowdPersonEntity)
+    fun updatePerson(person: CrowdPersonEntity)
 
 }
