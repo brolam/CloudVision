@@ -98,15 +98,16 @@ class MainActivityTest {
 
     @Test
     fun raffleOnePerson(){
-        newCrowdByCamera()
         selectOneCrowd()
         onView(withId(R.id.fabRaffle)).perform(click())
+        try {
+            Thread.sleep(10000)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
         onView(withId(R.id.textViewWinnersFacesTitle)).check(matches(withText("Winners")))
         onView(withId(R.id.textViewWinnersFacesAmount)).check(matches(withText("1")))
         onView(withId(R.id.flexboxLayoutWinnersFaces)).check(matches(isDisplayed()))
-
-
-
     }
 
 }
