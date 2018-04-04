@@ -14,7 +14,7 @@ import br.com.brolam.cloudvision.views.RaffleDialogFragment
 import kotlinx.android.synthetic.main.activity_faces.*
 
 
-class FacesActivity : AppCompatActivity() {
+class FacesActivity : AppCompatActivity(), CrowdViewModel.CrowdViewModelLifecycle {
     private var crowdId: Long = 0
     private lateinit var crowdViewModel: CrowdViewModel
     private val raffleDialogFragment = RaffleDialogFragment()
@@ -28,33 +28,25 @@ class FacesActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCrowdPeopleUpdated() {
+        this.imageViewTrackedImage.setImageBitmap(this.crowdViewModel.getTrackedImage())
+        this.textViewTitle.text = this.crowdViewModel.getCrowd().title
+        this.fillFlexboxLayoutWinnersFaces()
+        this.fillFlexboxLayoutEveryOneFaces()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_faces)
         setSupportActionBar(toolbar)
         this.crowdId = this.intent.getLongExtra(PARAM_CROWD_ID, 0)
         this.crowdViewModel = ViewModelProviders.of(this).get(CrowdViewModel::class.java)
-        this.crowdViewModel.getCrowdPeopleById(crowdId).observe(this, Observer { crowdPeople ->
-            this.crowdViewModel.getTrackedImage(crowdPeople!!.crowd.trackedImageName)?.let { trackedImage ->
-                val imagesEveryOneFaces = crowdViewModel.getImagesPeopleFaces(trackedImage, crowdPeople!!.people)
-                val imagesWinnersFaces = crowdViewModel.getImagesPeopleFaces(
-                        trackedImage,
-                        crowdPeople!!.people.filter { it.winnerPosition > 0 }.sortedBy { it.winnerPosition }
-                )
-                this.fillFlexboxLayoutEveryOneFaces(imagesEveryOneFaces)
-                this.fillFlexboxLayoutWinnersFaces(imagesWinnersFaces)
-                imageViewTrackedImage.setImageBitmap(trackedImage)
-                textViewTitle.text = crowdPeople!!.crowd.title
-
-            }
-        })
-
+        this.crowdViewModel.setCrowdPeopleObserve(crowdId, this)
         fabRaffle.setOnClickListener { view ->
-            //this.raffleDialogFragment.doRaffle(supportFragmentManager, "dialog");
-            //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-            //        .setAction("Action", null).show()
             this.crowdViewModel.raffleOnePerson(crowdId,
                     {
+                        linearLayoutWinnersFaces.visibility = View.GONE
+                        flexboxLayoutWinnersFaces.visibility = View.GONE
                         fabRaffle.hide()
                         raffleDialogFragment.show(supportFragmentManager)
 
@@ -65,8 +57,8 @@ class FacesActivity : AppCompatActivity() {
 
     }
 
-    private fun fillFlexboxLayoutWinnersFaces(winnersFacesBitmap: List<Bitmap>) {
-        if (winnersFacesBitmap.isEmpty()) {
+    private fun fillFlexboxLayoutWinnersFaces() {
+        if ( this.crowdViewModel.getWinners().isEmpty()) {
             linearLayoutWinnersFaces.visibility = View.GONE
             flexboxLayoutWinnersFaces.visibility = View.GONE
             return
@@ -74,20 +66,22 @@ class FacesActivity : AppCompatActivity() {
         linearLayoutWinnersFaces.visibility = View.VISIBLE
         flexboxLayoutWinnersFaces.visibility = View.VISIBLE
         flexboxLayoutWinnersFaces.removeAllViews()
-        winnersFacesBitmap.map { face ->
+        this.crowdViewModel.getWinners().map { winner ->
             val faceItemView = layoutInflater.inflate(R.layout.view_face_item, flexboxLayoutWinnersFaces, false) as FaceItemView
+            val faceBitmap = this.crowdViewModel.getPersonFaceBitmap(winner.id)
             flexboxLayoutWinnersFaces.addView(faceItemView)
-            faceItemView.setFaceDrawable(face)
+            faceItemView.setFaceDrawable(faceBitmap)
         }
         this.textViewWinnersFacesAmount.text = flexboxLayoutWinnersFaces.childCount.toString()
     }
 
-    private fun fillFlexboxLayoutEveryOneFaces(imagesEveryOneFaces: List<Bitmap>) {
+    private fun fillFlexboxLayoutEveryOneFaces() {
         flexboxLayoutEveryOneFaces.removeAllViews()
-        imagesEveryOneFaces.map { face ->
+        this.crowdViewModel.getPeople().map { person ->
             val faceItemView = layoutInflater.inflate(R.layout.view_face_item, flexboxLayoutEveryOneFaces, false) as FaceItemView
+            val faceBitmap = this.crowdViewModel.getPersonFaceBitmap(person.id)
             flexboxLayoutEveryOneFaces.addView(faceItemView)
-            faceItemView.setFaceDrawable(face)
+            faceItemView.setFaceDrawable(faceBitmap)
         }
         this.textViewEveryOneFacesAmount.text = flexboxLayoutEveryOneFaces.childCount.toString()
     }

@@ -2,12 +2,15 @@ package br.com.brolam.cloudvision.viewModels
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
+import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.Observer
 import android.graphics.Bitmap
 import android.os.AsyncTask
 import br.com.brolam.cloudvision.helpers.ImageUtil
 import br.com.brolam.cloudvision.helpers.Raffle
 import br.com.brolam.cloudvision.models.AppDatabase
+import br.com.brolam.cloudvision.models.CrowdEntity
 import br.com.brolam.cloudvision.models.CrowdPeopleEntity
 import br.com.brolam.cloudvision.models.CrowdPersonEntity
 
@@ -19,33 +22,54 @@ class CrowdViewModel(application: Application) : AndroidViewModel(application) {
     private val appDatabase: AppDatabase = AppDatabase.getInstance(application)
     private val crowdDao = this.appDatabase.crowdDao()
     private val imageUtil = ImageUtil(application)
+    private var crowdPeopleEntity: CrowdPeopleEntity? = null
     private var trackedImage: Bitmap? = null;
+    private var facesBitmap = HashMap<Long, Bitmap>()
 
-    fun getCrowdPeopleById(id: Long): LiveData<CrowdPeopleEntity> {
-        return this.crowdDao.getCrowdPeopleById(id)
+    interface CrowdViewModelLifecycle : LifecycleOwner {
+        fun onCrowdPeopleUpdated()
     }
 
-    fun getImagesPeopleFaces(trackedImage: Bitmap, people: List<CrowdPersonEntity>): List<Bitmap> {
-        val facesBitmap = mutableListOf<Bitmap>()
-        people.forEach { crowdPersonEntity ->
-            val faceBitmap = this.imageUtil.crop(
-                    trackedImage,
-                    crowdPersonEntity.facePositionX,
-                    crowdPersonEntity.facePositionY,
-                    crowdPersonEntity.faceWidth,
-                    crowdPersonEntity.faceHeight,
-                    enlargeWidthInPercent = 15.toFloat(),
-                    enlargeHeightInPercent = 15.toFloat())
-            facesBitmap.add(faceBitmap)
-
-        }
-        return facesBitmap
+    fun setCrowdPeopleObserve(crowdId: Long, lifecycleOwner: CrowdViewModelLifecycle){
+        this.crowdDao.getCrowdPeopleById(crowdId).observe(lifecycleOwner, Observer {
+            this.crowdPeopleEntity = it
+            if (this.crowdPeopleEntity != null) {
+                this.trackedImage = this.imageUtil.getImage(this.crowdPeopleEntity!!.crowd.trackedImageName)
+                this.facesBitmap = HashMap<Long, Bitmap>()
+                this.crowdPeopleEntity!!.people.forEach { crowdPersonEntity ->
+                    val faceBitmap = this.imageUtil.crop(
+                            this.trackedImage!!,
+                            crowdPersonEntity.facePositionX,
+                            crowdPersonEntity.facePositionY,
+                            crowdPersonEntity.faceWidth,
+                            crowdPersonEntity.faceHeight,
+                            enlargeWidthInPercent = 15.toFloat(),
+                            enlargeHeightInPercent = 15.toFloat())
+                    this.facesBitmap.put(crowdPersonEntity.id, faceBitmap)
+                }
+            }
+            lifecycleOwner.onCrowdPeopleUpdated()
+        })
     }
 
-    fun getTrackedImage(trackedImageName: String): Bitmap? {
-        if (this.trackedImage != null) return this.trackedImage
-        this.trackedImage = this.imageUtil.getImage(trackedImageName)
-        return this.trackedImage
+    fun getCrowd(): CrowdEntity{
+        return this.crowdPeopleEntity!!.crowd
+    }
+
+    fun getTrackedImage(): Bitmap{
+        return this.trackedImage!!
+    }
+
+    fun getPeople(): List<CrowdPersonEntity> {
+        return this.crowdPeopleEntity!!.people
+    }
+
+    fun getWinners(): List<CrowdPersonEntity> {
+        return this.crowdPeopleEntity!!.people.filter { it.winnerPosition > 0 }.sortedBy { it.winnerPosition }
+    }
+
+    fun getPersonFaceBitmap(personId:Long):Bitmap{
+        return this.facesBitmap.get(personId)!!
     }
 
     fun raffleOnePerson(crowdId: Long, onBegin: () -> Unit, onEnd: (facesBitmap: List<Bitmap>) -> Unit) {
