@@ -1,10 +1,8 @@
 package br.com.brolam.cloudvision
 
 import android.app.Activity
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -12,7 +10,6 @@ import br.com.brolam.cloudvision.viewModels.CrowdViewModel
 import br.com.brolam.cloudvision.views.FaceItemView
 import br.com.brolam.cloudvision.views.RaffleDialogFragment
 import kotlinx.android.synthetic.main.activity_faces.*
-
 
 class FacesActivity : AppCompatActivity(), CrowdViewModel.CrowdViewModelLifecycle {
     private var crowdId: Long = 0
@@ -45,8 +42,7 @@ class FacesActivity : AppCompatActivity(), CrowdViewModel.CrowdViewModelLifecycl
         fabRaffle.setOnClickListener { view ->
             this.crowdViewModel.raffleOnePerson(crowdId,
                     {
-                        linearLayoutWinnersFaces.visibility = View.GONE
-                        flexboxLayoutWinnersFaces.visibility = View.GONE
+                        hideWinners()
                         fabRaffle.hide()
                         raffleDialogFragment.show(supportFragmentManager)
 
@@ -58,13 +54,11 @@ class FacesActivity : AppCompatActivity(), CrowdViewModel.CrowdViewModelLifecycl
     }
 
     private fun fillFlexboxLayoutWinnersFaces() {
-        if ( this.crowdViewModel.getWinners().isEmpty()) {
-            linearLayoutWinnersFaces.visibility = View.GONE
-            flexboxLayoutWinnersFaces.visibility = View.GONE
+        if (this.crowdViewModel.getWinners().isEmpty()) {
+            hideWinners()
             return
         }
-        linearLayoutWinnersFaces.visibility = View.VISIBLE
-        flexboxLayoutWinnersFaces.visibility = View.VISIBLE
+        showWinners()
         flexboxLayoutWinnersFaces.removeAllViews()
         this.crowdViewModel.getWinners().map { winner ->
             val faceItemView = layoutInflater.inflate(R.layout.view_face_item, flexboxLayoutWinnersFaces, false) as FaceItemView
@@ -73,6 +67,16 @@ class FacesActivity : AppCompatActivity(), CrowdViewModel.CrowdViewModelLifecycl
             faceItemView.setFaceDrawable(faceBitmap)
         }
         this.textViewWinnersFacesAmount.text = flexboxLayoutWinnersFaces.childCount.toString()
+    }
+
+    private fun showWinners() {
+        linearLayoutWinnersFaces.visibility = View.VISIBLE
+        flexboxLayoutWinnersFaces.visibility = View.VISIBLE
+    }
+
+    private fun hideWinners() {
+        linearLayoutWinnersFaces.visibility = View.GONE
+        flexboxLayoutWinnersFaces.visibility = View.GONE
     }
 
     private fun fillFlexboxLayoutEveryOneFaces() {
@@ -85,6 +89,4 @@ class FacesActivity : AppCompatActivity(), CrowdViewModel.CrowdViewModelLifecycl
         }
         this.textViewEveryOneFacesAmount.text = flexboxLayoutEveryOneFaces.childCount.toString()
     }
-
-
 }

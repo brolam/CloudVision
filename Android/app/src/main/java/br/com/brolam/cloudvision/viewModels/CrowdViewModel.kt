@@ -3,7 +3,6 @@ package br.com.brolam.cloudvision.viewModels
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Observer
 import android.graphics.Bitmap
 import android.os.AsyncTask
@@ -34,11 +33,11 @@ class CrowdViewModel(application: Application) : AndroidViewModel(application) {
         this.crowdDao.getCrowdPeopleById(crowdId).observe(lifecycleOwner, Observer {
             this.crowdPeopleEntity = it
             if (this.crowdPeopleEntity != null) {
-                this.trackedImage = this.imageUtil.getImage(this.crowdPeopleEntity!!.crowd.trackedImageName)
+                this.trackedImage = this.imageUtil.getImage(this.getCrowd().trackedImageName)
                 this.facesBitmap = HashMap<Long, Bitmap>()
-                this.crowdPeopleEntity!!.people.forEach { crowdPersonEntity ->
+                getPeople().forEach { crowdPersonEntity ->
                     val faceBitmap = this.imageUtil.crop(
-                            this.trackedImage!!,
+                            this.getTrackedImage(),
                             crowdPersonEntity.facePositionX,
                             crowdPersonEntity.facePositionY,
                             crowdPersonEntity.faceWidth,
