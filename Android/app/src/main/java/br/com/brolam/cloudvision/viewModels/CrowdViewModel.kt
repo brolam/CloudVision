@@ -29,33 +29,26 @@ class CrowdViewModel(application: Application) : AndroidViewModel(application) {
         fun onCrowdPeopleUpdated()
     }
 
-    fun setCrowdPeopleObserve(crowdId: Long, lifecycleOwner: CrowdViewModelLifecycle){
+    fun setCrowdPeopleObserve(crowdId: Long, lifecycleOwner: CrowdViewModelLifecycle) {
         this.crowdDao.getCrowdPeopleById(crowdId).observe(lifecycleOwner, Observer {
             this.crowdPeopleEntity = it
             if (this.crowdPeopleEntity != null) {
                 this.trackedImage = this.imageUtil.getImage(this.getCrowd().trackedImageName)
                 this.facesBitmap = HashMap<Long, Bitmap>()
                 getPeople().forEach { crowdPersonEntity ->
-                    val faceBitmap = this.imageUtil.crop(
-                            this.getTrackedImage(),
-                            crowdPersonEntity.facePositionX,
-                            crowdPersonEntity.facePositionY,
-                            crowdPersonEntity.faceWidth,
-                            crowdPersonEntity.faceHeight,
-                            enlargeWidthInPercent = 15.toFloat(),
-                            enlargeHeightInPercent = 15.toFloat())
-                    this.facesBitmap.put(crowdPersonEntity.id, faceBitmap)
+                    this.facesBitmap[crowdPersonEntity.id] = getPersonPicture(crowdPersonEntity)
                 }
             }
             lifecycleOwner.onCrowdPeopleUpdated()
         })
     }
 
-    fun getCrowd(): CrowdEntity{
+
+    fun getCrowd(): CrowdEntity {
         return this.crowdPeopleEntity!!.crowd
     }
 
-    fun getTrackedImage(): Bitmap{
+    fun getTrackedImage(): Bitmap {
         return this.trackedImage!!
     }
 
@@ -67,51 +60,40 @@ class CrowdViewModel(application: Application) : AndroidViewModel(application) {
         return this.crowdPeopleEntity!!.people.filter { it.winnerPosition > 0 }.sortedBy { it.winnerPosition }
     }
 
-    fun getPersonFaceBitmap(personId:Long):Bitmap{
+    fun createRaffledPeopleList(): List<CrowdPersonEntity> {
+        val raffledPeopleList = ArrayList<CrowdPersonEntity>()
+        val competitors = this.crowdPeopleEntity!!.people.filter { it.winnerPosition == 0 }
+        (0..10).forEach {
+            var person = Raffle.chooseOne(competitors)
+            person?.let { raffledPeopleList.add(it) }
+        }
+        return raffledPeopleList
+    }
+
+    private fun getLastWinner(): CrowdPersonEntity? {
+        return this.crowdPeopleEntity!!.people.sortedBy { it.winnerPosition }.last()
+    }
+
+    fun getPersonPicture(personId: Long): Bitmap {
         return this.facesBitmap.get(personId)!!
     }
 
-    fun raffleOnePerson(crowdId: Long, onBegin: () -> Unit, onEnd: (facesBitmap: List<Bitmap>) -> Unit) {
-        object : AsyncTask<Void, Void, List<Bitmap>>() {
-            override fun onPreExecute() {
-                super.onPreExecute()
-                onBegin()
-            }
+    private fun getPersonPicture(crowdPersonEntity: CrowdPersonEntity): Bitmap {
+        return this.imageUtil.crop(
+                this.getTrackedImage(),
+                crowdPersonEntity.facePositionX,
+                crowdPersonEntity.facePositionY,
+                crowdPersonEntity.faceWidth,
+                crowdPersonEntity.faceHeight,
+                enlargeWidthInPercent = 15.toFloat(),
+                enlargeHeightInPercent = 15.toFloat())
+    }
 
-            override fun doInBackground(vararg params: Void?): List<Bitmap> {
-                val people = crowdDao.getPeople(crowdId)
-                val competitors = people.filter { person -> person.winnerPosition == 0 }
-                val lastWinner = people.sortedBy{it.winnerPosition }.last()
-                val pickedList = ArrayList<CrowdPersonEntity>()
-                val pickedFacesBitmap = ArrayList<Bitmap>()
-                (0..10).forEach { index ->
-                    var personPicked = Raffle.chooseOne(competitors)
-                    personPicked?.let { pickedList.add(it) }
-                }
-                pickedList.forEach() { person ->
-                    val faceBitmap = trackedImage?.let {
-                        imageUtil.crop(
-                                it,
-                                person.facePositionX,
-                                person.facePositionY,
-                                person.faceWidth,
-                                person.faceHeight,
-                                enlargeWidthInPercent = 15.toFloat(),
-                                enlargeHeightInPercent = 15.toFloat())
-                    }
-                    faceBitmap?.let { pickedFacesBitmap.add(it) }
-
-                }
-                pickedList.last().winnerPosition = lastWinner.winnerPosition + 1
-                crowdDao.updatePerson(pickedList.last())
-                return pickedFacesBitmap
-            }
-
-            override fun onPostExecute(result: List<Bitmap>) {
-                super.onPostExecute(result)
-                onEnd(result)
-            }
-
-        }.execute()
+    fun setWinner(person: CrowdPersonEntity) {
+        AsyncTask.execute {
+            val lastWinnerPosition = (getLastWinner()?.winnerPosition ?: 0)
+            person.winnerPosition = lastWinnerPosition + 1
+            crowdDao.updatePerson(person)
+        }
     }
 }

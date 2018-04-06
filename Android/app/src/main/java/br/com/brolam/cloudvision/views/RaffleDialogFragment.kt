@@ -12,8 +12,8 @@ import android.view.View
 import android.view.Window
 import br.com.brolam.cloudvision.R
 import android.animation.ValueAnimator
-import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
+import br.com.brolam.cloudvision.viewModels.CrowdViewModel
 
 /**
  * Created by brenomarques on 30/03/2018.
@@ -21,6 +21,7 @@ import android.widget.LinearLayout
  */
 class RaffleDialogFragment : android.support.v4.app.DialogFragment() {
     private var faceContainer: LinearLayout? = null
+    private lateinit var crowdViewModel: CrowdViewModel
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater?.inflate(R.layout.dialog_raffle, container, false);
@@ -35,36 +36,37 @@ class RaffleDialogFragment : android.support.v4.app.DialogFragment() {
         return dialog
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
-
-
     override fun getTheme(): Int {
         return R.style.FullScreenDialog
     }
 
-    fun show(fragmentManager: FragmentManager?) {
+    fun show(fragmentManager: FragmentManager?, crowdViewModel: CrowdViewModel) {
         super.show(fragmentManager, tag)
+        this.crowdViewModel = crowdViewModel
     }
 
-    fun raffleAnimator(chosenFacesBitmap: List<Bitmap>) {
+    override fun onResume() {
+        super.onResume()
+        raffleAnimator()
+    }
 
+    private fun raffleAnimator() {
+        val raffledList = this.crowdViewModel.createRaffledPeopleList()
         if ( this.faceContainer != null ) {
             val animatorSet = AnimatorSet()
-            val x = IntArray(chosenFacesBitmap.size)
-            (0 until chosenFacesBitmap.size).forEach({ x[it] = it })
+            val x = IntArray(raffledList.size)
+            (0 until raffledList.size).forEach({ x[it] = it })
 
             val facesAnimator = ValueAnimator.ofInt(*x)
             facesAnimator.duration = 5000
             facesAnimator.addUpdateListener { animation ->
                 val animatedValue = animation.animatedValue as Int
                 this.faceContainer!!.removeAllViews()
-                chosenFacesBitmap.let { it ->
+                raffledList.let { it ->
                     val faceItemView = layoutInflater.inflate(R.layout.view_face_item_big, this.faceContainer!!, false) as FaceItemView
-                    faceItemView!!.setFaceDrawable(it!![animatedValue])
+                    val person = it!![animatedValue]
+                    faceItemView!!.setFaceDrawable( this.crowdViewModel.getPersonPicture(person.id) )
                     this.faceContainer!!.addView(faceItemView)
-
                 }
                 this.faceContainer!!.requestLayout()
 
@@ -76,9 +78,11 @@ class RaffleDialogFragment : android.support.v4.app.DialogFragment() {
                 val animatedValue = animation.animatedValue as Int
                 if ( animatedValue == 0) this.faceContainer!!.visibility =  View.GONE
                 if ( animatedValue == 1) this.faceContainer!!.visibility =  View.VISIBLE
-                if ( animatedValue == 2 ) this.dismiss()
+                if ( animatedValue == 2 ){
+                    this.crowdViewModel.setWinner(raffledList.last())
+                    this.dismiss()
+                }
             }
-
             animatorSet.playSequentially(facesAnimator, endAnimator)
             //facesAnimator.startDelay = 1000
             animatorSet.start()

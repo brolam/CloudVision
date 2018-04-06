@@ -39,17 +39,7 @@ class FacesActivity : AppCompatActivity(), CrowdViewModel.CrowdViewModelLifecycl
         this.crowdId = this.intent.getLongExtra(PARAM_CROWD_ID, 0)
         this.crowdViewModel = ViewModelProviders.of(this).get(CrowdViewModel::class.java)
         this.crowdViewModel.setCrowdPeopleObserve(crowdId, this)
-        fabRaffle.setOnClickListener { view ->
-            this.crowdViewModel.raffleOnePerson(crowdId,
-                    {
-                        hideWinners()
-                        fabRaffle.hide()
-                        raffleDialogFragment.show(supportFragmentManager)
-
-                    }, { chosenFacesBitmap ->
-                raffleDialogFragment.raffleAnimator(chosenFacesBitmap)
-            })
-        }
+        fabRaffle.setOnClickListener { raffleDialogFragment.show(supportFragmentManager, this.crowdViewModel) }
 
     }
 
@@ -62,7 +52,7 @@ class FacesActivity : AppCompatActivity(), CrowdViewModel.CrowdViewModelLifecycl
         flexboxLayoutWinnersFaces.removeAllViews()
         this.crowdViewModel.getWinners().map { winner ->
             val faceItemView = layoutInflater.inflate(R.layout.view_face_item, flexboxLayoutWinnersFaces, false) as FaceItemView
-            val faceBitmap = this.crowdViewModel.getPersonFaceBitmap(winner.id)
+            val faceBitmap = this.crowdViewModel.getPersonPicture(winner.id)
             flexboxLayoutWinnersFaces.addView(faceItemView)
             faceItemView.setFaceDrawable(faceBitmap)
         }
@@ -83,7 +73,7 @@ class FacesActivity : AppCompatActivity(), CrowdViewModel.CrowdViewModelLifecycl
         flexboxLayoutEveryOneFaces.removeAllViews()
         this.crowdViewModel.getPeople().map { person ->
             val faceItemView = layoutInflater.inflate(R.layout.view_face_item, flexboxLayoutEveryOneFaces, false) as FaceItemView
-            val faceBitmap = this.crowdViewModel.getPersonFaceBitmap(person.id)
+            val faceBitmap = this.crowdViewModel.getPersonPicture(person.id)
             flexboxLayoutEveryOneFaces.addView(faceItemView)
             faceItemView.setFaceDrawable(faceBitmap)
         }
