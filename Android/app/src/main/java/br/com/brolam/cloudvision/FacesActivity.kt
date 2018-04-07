@@ -4,6 +4,7 @@ import android.app.Activity
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import br.com.brolam.cloudvision.viewModels.CrowdViewModel
@@ -11,7 +12,8 @@ import br.com.brolam.cloudvision.views.FaceItemView
 import br.com.brolam.cloudvision.views.RaffleDialogFragment
 import kotlinx.android.synthetic.main.activity_faces.*
 
-class FacesActivity : AppCompatActivity(), CrowdViewModel.CrowdViewModelLifecycle {
+class FacesActivity : AppCompatActivity(), CrowdViewModel.CrowdViewModelLifecycle, View.OnClickListener {
+
     private var crowdId: Long = 0
     private lateinit var crowdViewModel: CrowdViewModel
     private val raffleDialogFragment = RaffleDialogFragment()
@@ -39,8 +41,7 @@ class FacesActivity : AppCompatActivity(), CrowdViewModel.CrowdViewModelLifecycl
         this.crowdId = this.intent.getLongExtra(PARAM_CROWD_ID, 0)
         this.crowdViewModel = ViewModelProviders.of(this).get(CrowdViewModel::class.java)
         this.crowdViewModel.setCrowdPeopleObserve(crowdId, this)
-        fabRaffle.setOnClickListener { raffleDialogFragment.show(supportFragmentManager, this.crowdViewModel) }
-
+        fabRaffle.setOnClickListener(this)
     }
 
     private fun fillFlexboxLayoutWinnersFaces() {
@@ -78,5 +79,15 @@ class FacesActivity : AppCompatActivity(), CrowdViewModel.CrowdViewModelLifecycl
             faceItemView.setFaceDrawable(faceBitmap)
         }
         this.textViewEveryOneFacesAmount.text = flexboxLayoutEveryOneFaces.childCount.toString()
+    }
+
+    override fun onClick(v: View?) {
+        if (fabRaffle == v){
+            try {
+                raffleDialogFragment.show(this, supportFragmentManager, this.crowdViewModel)
+            } catch (e: RaffleDialogFragment.ExceptionRaffledPeopleListIsEmpty) {
+                Snackbar.make(fabRaffle, e.message!!, Snackbar.LENGTH_LONG).setAction(null, null).show()
+            }
+        }
     }
 }

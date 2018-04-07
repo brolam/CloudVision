@@ -110,5 +110,22 @@ class MainActivityTest {
         onView(withId(R.id.flexboxLayoutWinnersFaces)).check(matches(isDisplayed()))
     }
 
+    @Test
+    fun raffleOnePersonWithAllRafflesMade(){
+        selectOneCrowd()
+        val appDataBase = AppDatabase.getInstance(mainActivity.activity)
+        val lastWinnerPosition = 1
+        val crowd = appDataBase.crowdDao().getAll()[0]
+        appDataBase.crowdDao().getPeople(crowd.id).forEach {
+            it.winnerPosition = lastWinnerPosition
+            appDataBase.crowdDao().updatePerson(it)
+            lastWinnerPosition.plus(1)
+        }
+        var exceptionPeopleListIsEmpty  = mainActivity.activity.getString(R.string.exception_people_list_is_empty)
+        onView(withId(R.id.fabRaffle)).perform(click())
+        onView(withId(android.support.design.R.id.snackbar_text)).check(matches(withText(exceptionPeopleListIsEmpty)))
+        onView(withId(R.id.textViewWinnersFacesAmount)).check(matches(withText("19")))
+    }
+
 }
 

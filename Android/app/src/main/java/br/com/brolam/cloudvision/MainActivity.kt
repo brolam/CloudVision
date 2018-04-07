@@ -55,8 +55,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerDeleg
     }
 
     override fun onPickedOneImage(pikedBitmap: Bitmap): Boolean {
-        //val imageView = this.findViewById<ImageView>(R.id.imageView)
-        //imageView.setImageBitmap(pikedBitmap)
         this.crowdsViewModel.insertCrowd(pikedBitmap, { crowdId: Long ->
             FacesActivity.show(this, crowdId)
         })

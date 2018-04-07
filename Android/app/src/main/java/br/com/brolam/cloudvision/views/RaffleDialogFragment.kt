@@ -12,7 +12,9 @@ import android.view.View
 import android.view.Window
 import br.com.brolam.cloudvision.R
 import android.animation.ValueAnimator
+import android.content.Context
 import android.widget.LinearLayout
+import br.com.brolam.cloudvision.models.CrowdPersonEntity
 import br.com.brolam.cloudvision.viewModels.CrowdViewModel
 
 /**
@@ -22,6 +24,8 @@ import br.com.brolam.cloudvision.viewModels.CrowdViewModel
 class RaffleDialogFragment : android.support.v4.app.DialogFragment() {
     private var faceContainer: LinearLayout? = null
     private lateinit var crowdViewModel: CrowdViewModel
+    private lateinit var raffledList: List<CrowdPersonEntity>
+    class ExceptionRaffledPeopleListIsEmpty(message: String?) : Exception(message) {}
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater?.inflate(R.layout.dialog_raffle, container, false);
@@ -40,9 +44,11 @@ class RaffleDialogFragment : android.support.v4.app.DialogFragment() {
         return R.style.FullScreenDialog
     }
 
-    fun show(fragmentManager: FragmentManager?, crowdViewModel: CrowdViewModel) {
-        super.show(fragmentManager, tag)
+    fun show(context: Context, fragmentManager: FragmentManager?, crowdViewModel: CrowdViewModel) {
         this.crowdViewModel = crowdViewModel
+        this.raffledList = this.crowdViewModel.createRaffledPeopleList()
+        if (this.raffledList.isEmpty()) throw ExceptionRaffledPeopleListIsEmpty(context.getString(R.string.exception_people_list_is_empty))
+        super.show(fragmentManager, tag)
     }
 
     override fun onResume() {
@@ -51,7 +57,6 @@ class RaffleDialogFragment : android.support.v4.app.DialogFragment() {
     }
 
     private fun raffleAnimator() {
-        val raffledList = this.crowdViewModel.createRaffledPeopleList()
         if ( this.faceContainer != null ) {
             val animatorSet = AnimatorSet()
             val x = IntArray(raffledList.size)
