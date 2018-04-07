@@ -89,7 +89,6 @@ class RaffleDialogFragment : android.support.v4.app.DialogFragment() {
                 }
             }
             animatorSet.playSequentially(facesAnimator, endAnimator)
-            //facesAnimator.startDelay = 1000
             animatorSet.start()
         }
 

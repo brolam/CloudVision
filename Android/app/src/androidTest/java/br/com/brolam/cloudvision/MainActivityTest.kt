@@ -21,6 +21,7 @@ import br.com.brolam.cloudvision.asserts.AssertsUtils.Companion.recyclerViewCoun
 import br.com.brolam.cloudvision.mocks.CameraMock
 import br.com.brolam.cloudvision.mocks.ImagesGalleryMock
 import br.com.brolam.cloudvision.models.AppDatabase
+import br.com.brolam.cloudvision.models.CrowdPersonEntity
 import org.hamcrest.Matchers.not
 import org.junit.Before
 
@@ -100,11 +101,7 @@ class MainActivityTest {
     fun raffleOnePerson(){
         selectOneCrowd()
         onView(withId(R.id.fabRaffle)).perform(click())
-        try {
-            Thread.sleep(10000)
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
+        waitingRaffle()
         onView(withId(R.id.textViewWinnersFacesTitle)).check(matches(withText("Winners")))
         onView(withId(R.id.textViewWinnersFacesAmount)).check(matches(withText("1")))
         onView(withId(R.id.flexboxLayoutWinnersFaces)).check(matches(isDisplayed()))
@@ -113,18 +110,41 @@ class MainActivityTest {
     @Test
     fun raffleOnePersonWithAllRafflesMade(){
         selectOneCrowd()
-        val appDataBase = AppDatabase.getInstance(mainActivity.activity)
-        val lastWinnerPosition = 1
-        val crowd = appDataBase.crowdDao().getAll()[0]
-        appDataBase.crowdDao().getPeople(crowd.id).forEach {
-            it.winnerPosition = lastWinnerPosition
-            appDataBase.crowdDao().updatePerson(it)
-            lastWinnerPosition.plus(1)
-        }
+        doRaffle(18)
         var exceptionPeopleListIsEmpty  = mainActivity.activity.getString(R.string.exception_people_list_is_empty)
         onView(withId(R.id.fabRaffle)).perform(click())
         onView(withId(android.support.design.R.id.snackbar_text)).check(matches(withText(exceptionPeopleListIsEmpty)))
         onView(withId(R.id.textViewWinnersFacesAmount)).check(matches(withText("19")))
+    }
+
+    @Test
+    fun raffleOnePersonWithOneFacePicture(){
+        selectOneCrowd()
+        val people = doRaffle(17)
+        Assert.assertEquals(1, people.filter { it.winnerPosition == 0 }.size)
+        onView(withId(R.id.fabRaffle)).perform(click())
+        waitingRaffle()
+
+        onView(withId(R.id.textViewWinnersFacesAmount)).check(matches(withText("19")))
+    }
+
+    private fun doRaffle(amount:Int): List<CrowdPersonEntity> {
+        val appDataBase = AppDatabase.getInstance(mainActivity.activity)
+        val crowd = appDataBase.crowdDao().getAll()[0]
+        val people = appDataBase.crowdDao().getPeople(crowd.id)
+        (0..amount).forEach() {
+            people[it].winnerPosition = it + 1
+            appDataBase.crowdDao().updatePerson(people[it])
+        }
+        return people
+    }
+
+    private fun waitingRaffle() {
+        try {
+            Thread.sleep(10000)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
     }
 
 }
