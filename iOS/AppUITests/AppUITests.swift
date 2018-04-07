@@ -42,7 +42,7 @@ class AppUITests: XCTestCase {
         app.launch()
         app.toolbars.buttons.element(boundBy:CAMERA_BUTTON).tap()
         XCTAssertTrue(waiterResultWithExpextation(app.collectionViews.element ) == .completed)
-        XCTAssertEqual(app.collectionViews.cells.count, 20)
+        XCTAssertEqual(app.collectionViews.cells.count, 18)
     }
     
     func testRaffleOnePerson(){
@@ -51,7 +51,7 @@ class AppUITests: XCTestCase {
         XCTAssertTrue(
             waiterResultWithExpextation(app.collectionViews.staticTexts["Winners"] , timeout: 10 ) == .completed
         )
-        XCTAssertEqual(app.collectionViews.cells.count, 21)
+        XCTAssertEqual(app.collectionViews.cells.count, 16)
     }
     
     func testShowPictureOnePersonInEveryone() {
@@ -64,7 +64,7 @@ class AppUITests: XCTestCase {
     
     func testShowPictureOnePersonInWinners() {
         testRaffleOnePerson()
-        XCTAssertEqual(app.collectionViews.cells.count, 21)
+        XCTAssertEqual(app.collectionViews.cells.count, 16)
         app.collectionViews.cells.element(boundBy: 0).tap()
         XCTAssert(app.images["PictureUIImageView"].exists)
         app.buttons["Done"].tap()
