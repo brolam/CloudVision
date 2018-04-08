@@ -15,6 +15,7 @@ import br.com.brolam.cloudvision.helpers.ImagePicker
 import br.com.brolam.cloudvision.helpers.ImagePickerDelegate
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
@@ -43,7 +44,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerDeleg
         this.recyclerView.layoutManager = LinearLayoutManager(this)
         this.recyclerView.adapter = mainAdapter
         this.crowdsViewModel = ViewModelProviders.of(this).get(CrowdsViewModel::class.java);
-        this.crowdsViewModel.getAllCrowds().observe(this, this )
+        this.crowdsViewModel.getAllCrowds().observe(this, this)
         val swipeHandler = object : SwipeToDeleteCallback(this) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val crowd = mainAdapter.crowds[viewHolder.adapterPosition]
@@ -55,9 +56,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerDeleg
     }
 
     override fun onPickedOneImage(pikedBitmap: Bitmap): Boolean {
-        this.crowdsViewModel.insertCrowd(pikedBitmap, { crowdId: Long ->
-            FacesActivity.show(this, crowdId)
-        })
+        this.crowdsViewModel.insertCrowd(pikedBitmap,
+                onCompleted = { crowdId ->
+                    FacesActivity.show(this, crowdId)
+                },
+                onError = { messageId ->
+                    Snackbar.make(fab, getString(messageId), Snackbar.LENGTH_LONG).setAction(null, null).show()
+                })
         return true
     }
 
@@ -92,7 +97,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerDeleg
     }
 
     override fun onChanged(crowds: List<CrowdEntity>?) {
-        if ( crowds != null ){
+        if (crowds != null) {
             this.mainAdapter.setCrows(crowds)
         }
     }

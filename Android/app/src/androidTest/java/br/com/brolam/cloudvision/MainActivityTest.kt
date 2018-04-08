@@ -124,8 +124,19 @@ class MainActivityTest {
         Assert.assertEquals(1, people.filter { it.winnerPosition == 0 }.size)
         onView(withId(R.id.fabRaffle)).perform(click())
         waitingRaffle()
-
         onView(withId(R.id.textViewWinnersFacesAmount)).check(matches(withText("19")))
+    }
+
+    @Test
+    fun tryAddPhotoWithoutFacesByPhotoLibrary(){
+        val appContext = InstrumentationRegistry.getTargetContext()
+        val recyclerView = onView(withId(R.id.recyclerView))
+        ImagesGalleryMock(appContext, R.raw.photo_without_faces)
+        val showGalleryButton = onView(withId(R.id.action_gallery))
+        showGalleryButton.perform(click())
+        var notValidPicture  = mainActivity.activity.getString(R.string.exception_not_valid_picture)
+        recyclerView.check(matches(recyclerViewCountEqual(expect =  0)))
+        onView(withId(android.support.design.R.id.snackbar_text)).check(matches(withText(notValidPicture)))
     }
 
     private fun doRaffle(amount:Int): List<CrowdPersonEntity> {

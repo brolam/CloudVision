@@ -17,17 +17,17 @@ import java.io.FileOutputStream
 /**
 * Created by brenomarques on 05/01/2018.
 */
-class ImagesGalleryMock(context: Context) {
+class ImagesGalleryMock(context: Context, rawResource:Int = R.raw.crowd_test_02 ) {
     private val storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
     private val tempPictureUrl = storageDir.absolutePath + "/tempPicture.jpg"
 
     init {
-        val streamFilePicture = context.getResources().openRawResource(R.raw.crowd_test_02)
-        streamFilePicture.use { streamFilePicture ->
-            val bitmapCrowd02 = BitmapFactory.decodeStream(streamFilePicture)
+        val streamFilePicture = context.resources.openRawResource(rawResource)
+        streamFilePicture.use {
+            val bitmapCrowd02 = BitmapFactory.decodeStream(it)
             val filePictureTemp = File(tempPictureUrl)
-            val filePictureTempOut = FileOutputStream(filePictureTemp);
-            bitmapCrowd02.compress(Bitmap.CompressFormat.JPEG, 85, filePictureTempOut);
+            val filePictureTempOut = FileOutputStream(filePictureTemp)
+            bitmapCrowd02.compress(Bitmap.CompressFormat.JPEG, 85, filePictureTempOut)
             filePictureTempOut.flush()
             filePictureTempOut.close()
             val pictureUriOutput = FileProvider.getUriForFile(

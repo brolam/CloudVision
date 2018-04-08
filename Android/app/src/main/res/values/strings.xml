@@ -7,4 +7,5 @@
     <string name="everyone">Everyone</string>
     <string name="winners">Winners</string>
     <string name="exception_all_raffles_been_made">All raffles have already been made.</string>
+    <string name="exception_not_valid_picture">Sorry, this picture is not valid.</string>
 </resources>
