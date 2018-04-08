@@ -85,7 +85,7 @@ class FacesActivity : AppCompatActivity(), CrowdViewModel.CrowdViewModelLifecycl
         if (fabRaffle == v){
             try {
                 raffleDialogFragment.show(this, supportFragmentManager, this.crowdViewModel)
-            } catch (e: RaffleDialogFragment.ExceptionRaffledPeopleListIsEmpty) {
+            } catch (e: RaffleDialogFragment.ExceptionAllRafflesBeenMade) {
                 Snackbar.make(fabRaffle, e.message!!, Snackbar.LENGTH_LONG).setAction(null, null).show()
             }
         }

@@ -1,9 +1,7 @@
 package br.com.brolam.cloudvision.views
 
-import android.animation.Animator
 import android.animation.AnimatorSet
 import android.app.Dialog
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
 import android.view.ViewGroup
@@ -25,7 +23,7 @@ class RaffleDialogFragment : android.support.v4.app.DialogFragment() {
     private var faceContainer: LinearLayout? = null
     private lateinit var crowdViewModel: CrowdViewModel
     private lateinit var raffledList: List<CrowdPersonEntity>
-    class ExceptionRaffledPeopleListIsEmpty(message: String?) : Exception(message) {}
+    class ExceptionAllRafflesBeenMade(message: String?) : Exception(message) {}
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater?.inflate(R.layout.dialog_raffle, container, false);
@@ -47,7 +45,7 @@ class RaffleDialogFragment : android.support.v4.app.DialogFragment() {
     fun show(context: Context, fragmentManager: FragmentManager?, crowdViewModel: CrowdViewModel) {
         this.crowdViewModel = crowdViewModel
         this.raffledList = this.crowdViewModel.createRaffledPeopleList()
-        if (this.raffledList.isEmpty()) throw ExceptionRaffledPeopleListIsEmpty(context.getString(R.string.exception_people_list_is_empty))
+        if (this.raffledList.isEmpty()) throw ExceptionAllRafflesBeenMade(context.getString(R.string.exception_all_raffles_been_made))
         super.show(fragmentManager, tag)
     }
 

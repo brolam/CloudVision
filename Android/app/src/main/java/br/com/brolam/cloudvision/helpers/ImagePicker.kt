@@ -21,7 +21,8 @@ interface ImagePickerDelegate {
 class ImagePicker(
         private val activity: Activity,
         private val requestCodeCapture: Int,
-        private val requestCodeSelect: Int) {
+        private val requestCodeSelect: Int,
+        private val imageWidthAndHeight: Float = 1200f ) {
     private val tempPicture = "tempPicture"
     private val fileProvider = "br.com.brolam.cloudvision.fileprovider"
 
@@ -55,7 +56,7 @@ class ImagePicker(
         }
 
         return if (pikedBitmap != null) {
-            delegate.onPickedOneImage(pikedBitmap)
+            delegate.onPickedOneImage(ImageUtil(activity).resizeImage(pikedBitmap, this.imageWidthAndHeight))
         } else {
             false
         }

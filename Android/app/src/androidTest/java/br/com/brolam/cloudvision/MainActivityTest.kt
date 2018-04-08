@@ -111,7 +111,7 @@ class MainActivityTest {
     fun raffleOnePersonWithAllRafflesMade(){
         selectOneCrowd()
         doRaffle(18)
-        var exceptionPeopleListIsEmpty  = mainActivity.activity.getString(R.string.exception_people_list_is_empty)
+        var exceptionPeopleListIsEmpty  = mainActivity.activity.getString(R.string.exception_all_raffles_been_made)
         onView(withId(R.id.fabRaffle)).perform(click())
         onView(withId(android.support.design.R.id.snackbar_text)).check(matches(withText(exceptionPeopleListIsEmpty)))
         onView(withId(R.id.textViewWinnersFacesAmount)).check(matches(withText("19")))

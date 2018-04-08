@@ -50,8 +50,24 @@ class ImageUtil(val context: Context) {
         val enlargedY = ((height * enlargeHeightInPercent) / 100.00)
         val newX = if (positionX - enlargedX >= 1) (positionX - enlargedX).toInt() else 1
         val newY = if (positionY - enlargedY >= 1) (positionY - enlargedY).toInt() else 1
-        val newWidth = (width + (enlargedX * 2)).toInt()
-        val newHeight = (height + (enlargedY * 2)).toInt()
+        var newWidth = (width + (enlargedX * 2)).toInt()
+        var newHeight = (height + (enlargedY * 2)).toInt()
+        //Check if width was exceeds
+        if ( ( newX +  newWidth) > bitmap.width ) newWidth -= ((newX + newWidth) - bitmap.width)
+        //Check if height was exceeds
+        if ( ( newY +  newHeight) > bitmap.height ) newHeight -= ((newY + newHeight) - bitmap.height)
         return Bitmap.createBitmap(bitmap, newX, newY, newWidth, newHeight)
+    }
+
+    fun resizeImage(bitmapOrigin: Bitmap, newSize: Float): Bitmap {
+        var scale = newSize / bitmapOrigin.width
+        var newHeight = bitmapOrigin.height * scale
+        return Bitmap.createScaledBitmap(
+                bitmapOrigin,
+                newSize.toInt(),
+                newHeight.toInt(),
+                true
+        )
+
     }
 }

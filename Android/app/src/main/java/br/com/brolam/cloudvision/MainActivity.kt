@@ -72,6 +72,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerDeleg
                 this.imagePiker.selectOneImage()
                 true
             }
+            R.id.action_camera -> {
+                this.imagePiker.captureOneImage()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
