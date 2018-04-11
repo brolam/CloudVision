@@ -7,16 +7,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
-            android:id="@+id/faceContainer"
-            android:layout_width="164dp"
-            android:layout_height="164dp"
+        <br.com.brolam.cloudvision.views.FaceItemView
+            android:id="@+id/zoomFaceItemView"
+            android:layout_width="264dp"
+            android:layout_height="264dp"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true">
-            <br.com.brolam.cloudvision.views.FaceItemView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:faceDrawable="@drawable/ic_face_black_60dp"/>
-        </LinearLayout>
+            android:layout_centerVertical="true"
+            tools:faceDrawable="@drawable/ic_face_black_60dp" />
     </RelativeLayout>
 </LinearLayout>

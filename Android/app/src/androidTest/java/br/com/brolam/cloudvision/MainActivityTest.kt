@@ -139,6 +139,14 @@ class MainActivityTest {
         onView(withId(android.support.design.R.id.snackbar_text)).check(matches(withText(notValidPicture)))
     }
 
+    @Test
+    fun zoomFace(){
+        selectOneCrowd()
+        onView( AssertsUtils.withIndex(withId(R.id.faceItemView), 0)).perform(click())
+        onView(withId(R.id.zoomFaceItemView)).check(matches(isDisplayed()))
+
+    }
+
     private fun doRaffle(amount:Int): List<CrowdPersonEntity> {
         val appDataBase = AppDatabase.getInstance(mainActivity.activity)
         val crowd = appDataBase.crowdDao().getAll()[0]

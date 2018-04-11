@@ -7,9 +7,11 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import br.com.brolam.cloudvision.models.CrowdPersonEntity
 import br.com.brolam.cloudvision.viewModels.CrowdViewModel
 import br.com.brolam.cloudvision.views.FaceItemView
 import br.com.brolam.cloudvision.views.RaffleDialogFragment
+import br.com.brolam.cloudvision.views.ZoomFaceDialogFragment
 import kotlinx.android.synthetic.main.activity_faces.*
 
 class FacesActivity : AppCompatActivity(), CrowdViewModel.CrowdViewModelLifecycle, View.OnClickListener {
@@ -54,6 +56,8 @@ class FacesActivity : AppCompatActivity(), CrowdViewModel.CrowdViewModelLifecycl
         this.crowdViewModel.getWinners().map { winner ->
             val faceItemView = layoutInflater.inflate(R.layout.view_face_item, flexboxLayoutWinnersFaces, false) as FaceItemView
             val faceBitmap = this.crowdViewModel.getPersonPicture(winner.id)
+            faceItemView.setOnClickListener(this)
+            faceItemView.tag = winner.id
             flexboxLayoutWinnersFaces.addView(faceItemView)
             faceItemView.setFaceDrawable(faceBitmap)
         }
@@ -75,6 +79,8 @@ class FacesActivity : AppCompatActivity(), CrowdViewModel.CrowdViewModelLifecycl
         this.crowdViewModel.getPeople().map { person ->
             val faceItemView = layoutInflater.inflate(R.layout.view_face_item, flexboxLayoutEveryOneFaces, false) as FaceItemView
             val faceBitmap = this.crowdViewModel.getPersonPicture(person.id)
+            faceItemView.setOnClickListener(this)
+            faceItemView.tag = person.id
             flexboxLayoutEveryOneFaces.addView(faceItemView)
             faceItemView.setFaceDrawable(faceBitmap)
         }
@@ -82,12 +88,19 @@ class FacesActivity : AppCompatActivity(), CrowdViewModel.CrowdViewModelLifecycl
     }
 
     override fun onClick(v: View?) {
+
         if (fabRaffle == v){
             try {
                 raffleDialogFragment.show(this, supportFragmentManager, this.crowdViewModel)
             } catch (e: RaffleDialogFragment.ExceptionAllRafflesBeenMade) {
                 Snackbar.make(fabRaffle, e.message!!, Snackbar.LENGTH_LONG).setAction(null, null).show()
             }
+        } else {
+            (v as FaceItemView).let({
+                val zoomFaceDialogFragment = ZoomFaceDialogFragment()
+                val faceBitmap = this.crowdViewModel.getPersonPicture(it.tag as Long)
+                zoomFaceDialogFragment.show(this, faceBitmap)
+            })
         }
     }
 }
