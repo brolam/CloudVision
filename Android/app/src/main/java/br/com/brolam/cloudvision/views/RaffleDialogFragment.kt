@@ -51,6 +51,7 @@ class RaffleDialogFragment : android.support.v4.app.DialogFragment() {
 
     override fun onResume() {
         super.onResume()
+        this.isCancelable = false
         raffleAnimator()
     }
 
@@ -91,5 +92,4 @@ class RaffleDialogFragment : android.support.v4.app.DialogFragment() {
         }
 
     }
-
 }

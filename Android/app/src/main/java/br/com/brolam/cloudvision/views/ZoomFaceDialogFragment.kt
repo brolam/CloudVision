@@ -23,6 +23,9 @@ class ZoomFaceDialogFragment : android.support.v4.app.DialogFragment() {
             val zoomFaceItemView = view!!.findViewById<FaceItemView>(R.id.zoomFaceItemView)
             zoomFaceItemView.setFaceDrawable(it)
         }
+        view?.setOnClickListener({
+            this.dismiss()
+        })
         return view
     }
 
