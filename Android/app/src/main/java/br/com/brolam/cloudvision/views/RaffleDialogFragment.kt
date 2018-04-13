@@ -14,6 +14,9 @@ import android.content.Context
 import android.widget.LinearLayout
 import br.com.brolam.cloudvision.models.CrowdPersonEntity
 import br.com.brolam.cloudvision.viewModels.CrowdViewModel
+import android.content.pm.ActivityInfo
+
+
 
 /**
  * Created by brenomarques on 30/03/2018.
@@ -51,8 +54,16 @@ class RaffleDialogFragment : android.support.v4.app.DialogFragment() {
 
     override fun onResume() {
         super.onResume()
+        //lock screen to portrait
+        activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
         this.isCancelable = false
         raffleAnimator()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        //set rotation to sensor dependent
+        activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
     }
 
     private fun raffleAnimator() {
