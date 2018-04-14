@@ -24,34 +24,52 @@ class CrowdsViewModel(application: Application) : AndroidViewModel(application) 
     private val appDatabase: AppDatabase = AppDatabase.getInstance(application)
     private val crowdDao = this.appDatabase.crowdDao()
     private val imageUtil = ImageUtil(application)
+    private var backgroundProcess: AsyncTask<Void, Void, Long>? = null
+
+    fun hasBackgroundProcess():Boolean{
+        return this.backgroundProcess?.status == AsyncTask.Status.RUNNING
+    }
 
     fun getAllCrowds(): LiveData<List<CrowdEntity>> {
         return this.crowdDao.getAllLiveData()
     }
 
-    fun insertCrowd(trackedImageBitmap: Bitmap, onCompleted: (Long) -> Unit, onError: (messageId:Int) -> Unit) {
-        AsyncTask.execute {
-            val facesDetector = FacesDetector(this.getApplication())
-            facesDetector.trackFaces(trackedImageBitmap)
-            if ( facesDetector.trackingFaces.size() == 0) {
-                onError(R.string.exception_not_valid_picture)
-                return@execute
+    fun insertCrowd(trackedImageBitmap: Bitmap, onCompleted: (Long) -> Unit, onError: (messageId: Int) -> Unit) {
+        this.backgroundProcess = object : AsyncTask<Void, Void, Long>() {
+            override fun doInBackground(vararg params: Void?): Long? {
+                val facesDetector = FacesDetector(getApplication())
+                facesDetector.trackFaces(trackedImageBitmap)
+                if (facesDetector.trackingFaces.size() == 0) {
+                    return null
+                }
+                val created = Date().time
+                val title = DateUtils.formatDateTime(
+                        getApplication(),
+                        created,
+                        DateUtils.FORMAT_SHOW_DATE + DateUtils.FORMAT_ABBREV_MONTH + DateUtils.FORMAT_SHOW_TIME)
+                val trackingFaces = facesDetector.trackingFaces
+                val trackedImageName = "/crowd_$created.jpg"
+                return insertCrowdWithTransaction(title, trackedImageName, created, trackingFaces, trackedImageBitmap)
+
             }
-            val created = Date().time
-            val title = DateUtils.formatDateTime(
-                    this.getApplication(),
-                    created,
-                    DateUtils.FORMAT_SHOW_DATE + DateUtils.FORMAT_ABBREV_MONTH + DateUtils.FORMAT_SHOW_TIME )
-            val trackingFaces = facesDetector.trackingFaces
-            val trackedImageName = "/crowd_$created.jpg"
-            insertCrowdWithTransaction(title, trackedImageName, created, trackingFaces, trackedImageBitmap, onCompleted)
+
+            override fun onPostExecute(newCrowdId: Long?) {
+                super.onPostExecute(newCrowdId)
+                if (newCrowdId != null) {
+                    onCompleted(newCrowdId)
+                } else {
+                    onError(R.string.exception_not_valid_picture)
+                }
+            }
         }
+        this.backgroundProcess?.execute()
     }
 
-    private fun insertCrowdWithTransaction(title: String, trackedImageName: String, created: Long, trackingFaces: SparseArray<Face>, trackedImageBitmap: Bitmap, onCompleted: (Long) -> Unit) {
+    private fun insertCrowdWithTransaction(title: String, trackedImageName: String, created: Long, trackingFaces: SparseArray<Face>, trackedImageBitmap: Bitmap): Long {
+        var crowdId: Long = -1
         this.appDatabase.runInTransaction {
             val crowdEntity = CrowdEntity(title = title, trackedImageName = trackedImageName, created = created)
-            val crowdId = this.crowdDao.insert(crowdEntity)
+            crowdId = this.crowdDao.insert(crowdEntity)
             val crowdPeople = mutableListOf<CrowdPersonEntity>()
             for (index in 0 until trackingFaces.size()) {
                 val face = trackingFaces.valueAt(index)
@@ -66,16 +84,17 @@ class CrowdsViewModel(application: Application) : AndroidViewModel(application) 
                 this.imageUtil.save(trackedImageName, trackedImageBitmap)
             }
             this.crowdDao.insert(crowdPeople)
-            onCompleted(crowdId)
+
         }
+        return crowdId
     }
 
     fun deleteCrowd(crowd: CrowdEntity) {
         AsyncTask.execute {
-                 appDatabase.runInTransaction {
-                    crowdDao.deleteOneCrowd(crowd)
-                    imageUtil.delete(crowd.trackedImageName)
-                }
+            appDatabase.runInTransaction {
+                crowdDao.deleteOneCrowd(crowd)
+                imageUtil.delete(crowd.trackedImageName)
+            }
         }
     }
 }

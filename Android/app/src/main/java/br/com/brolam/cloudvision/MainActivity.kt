@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-
 import kotlinx.android.synthetic.main.activity_main.*
 import android.content.Intent
 import android.graphics.Bitmap
@@ -19,11 +18,9 @@ import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
-import android.util.Log
 import br.com.brolam.cloudvision.adapters.MainAdapter
 import br.com.brolam.cloudvision.adapters.holders.SwipeToDeleteCallback
 import br.com.brolam.cloudvision.models.CrowdEntity
-
 
 class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerDelegate, Observer<List<CrowdEntity>>, MainAdapter.MainAdapterListener {
 
@@ -43,7 +40,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerDeleg
         this.mainAdapter = MainAdapter(this)
         this.recyclerView.layoutManager = LinearLayoutManager(this)
         this.recyclerView.adapter = mainAdapter
-        this.crowdsViewModel = ViewModelProviders.of(this).get(CrowdsViewModel::class.java);
+        this.crowdsViewModel = ViewModelProviders.of(this).get(CrowdsViewModel::class.java)
         this.crowdsViewModel.getAllCrowds().observe(this, this)
         val swipeHandler = object : SwipeToDeleteCallback(this) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -55,15 +52,33 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerDeleg
         itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (this.crowdsViewModel.hasBackgroundProcess()) this.showProcessBar() else this.hideProcessBar()
+    }
+
     override fun onPickedOneImage(pikedBitmap: Bitmap): Boolean {
+        this.showProcessBar()
         this.crowdsViewModel.insertCrowd(pikedBitmap,
                 onCompleted = { crowdId ->
+                    this.hideProcessBar()
                     FacesActivity.show(this, crowdId)
                 },
                 onError = { messageId ->
+                    this.hideProcessBar()
                     Snackbar.make(fab, getString(messageId), Snackbar.LENGTH_LONG).setAction(null, null).show()
                 })
         return true
+    }
+
+    private fun showProcessBar() {
+        fab.hide()
+        progressBar.visibility = View.VISIBLE
+    }
+
+    private fun hideProcessBar() {
+        fab.show()
+        progressBar.visibility = View.GONE
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -109,5 +124,4 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerDeleg
     override fun getContext(): Context {
         return this
     }
-
 }

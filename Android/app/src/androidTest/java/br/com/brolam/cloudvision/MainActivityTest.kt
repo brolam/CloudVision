@@ -51,10 +51,7 @@ class MainActivityTest {
 
     @Test
     fun takeOnePhotoByCamera() {
-        val appContext = InstrumentationRegistry.getTargetContext()
-        CameraMock(appContext)
-        val cameraButton = onView(withId(R.id.fab))
-        cameraButton.perform(click())
+        baseTakeOnePhotoByCamera()
     }
 
     @Test
@@ -67,30 +64,17 @@ class MainActivityTest {
 
     @Test
     fun newCrowdByCamera() {
-        this.takeOnePhotoByCamera()
-        val facesActivity = onView(withId(R.id.activity_faces_layout))
-        facesActivity.check(matches(isDisplayed()))
-        onView(withId(R.id.imageViewTrackedImage)).check(matches(AssertsUtils.hasDrawable()))
-        onView(withId(R.id.textViewTitle)).check(matches(not(withText(""))))
-        onView(withId(R.id.textViewEveryOneFacesTitle)).check(matches(withText("Everyone")))
-        onView(withId(R.id.textViewEveryOneFacesAmount)).check(matches(withText("19")))
-        onView(withId(R.id.flexboxLayoutEveryOneFaces)).check(matches(isDisplayed()))
-        pressBack()
-        val recyclerView = onView(withId(R.id.recyclerView))
-        recyclerView.check(matches(recyclerViewCount(greaterThan =  0)))
+        baseNewCrowdByCamera()
     }
 
     @Test
     fun selectOneCrowd(){
-        this.newCrowdByCamera()
-        onView( AssertsUtils.withIndex(withId(R.id.cardViewCrowd), 0)).perform(click())
-        val facesActivity = onView(withId(R.id.activity_faces_layout))
-        facesActivity.check(matches(isDisplayed()))
+        baseSelectOneCrowd()
     }
 
     @Test
     fun deleteOneCrowd(){
-        this.newCrowdByCamera()
+        this.baseNewCrowdByCamera()
         val recyclerView = onView(withId(R.id.recyclerView))
         val cardViewCrowd = onView(AssertsUtils.withIndex(withId(R.id.cardViewCrowd), 0))
         cardViewCrowd.perform(swipeLeft())
@@ -99,7 +83,7 @@ class MainActivityTest {
 
     @Test
     fun raffleOnePerson(){
-        selectOneCrowd()
+        baseSelectOneCrowd()
         onView(withId(R.id.fabRaffle)).perform(click())
         waitingRaffle()
         onView(withId(R.id.textViewWinnersFacesTitle)).check(matches(withText("Winners")))
@@ -109,9 +93,9 @@ class MainActivityTest {
 
     @Test
     fun raffleOnePersonWithAllRafflesMade(){
-        selectOneCrowd()
+        baseSelectOneCrowd()
         doRaffle(18)
-        var exceptionPeopleListIsEmpty  = mainActivity.activity.getString(R.string.exception_all_raffles_been_made)
+        val exceptionPeopleListIsEmpty  = mainActivity.activity.getString(R.string.exception_all_raffles_been_made)
         onView(withId(R.id.fabRaffle)).perform(click())
         onView(withId(android.support.design.R.id.snackbar_text)).check(matches(withText(exceptionPeopleListIsEmpty)))
         onView(withId(R.id.textViewWinnersFacesAmount)).check(matches(withText("19")))
@@ -119,7 +103,7 @@ class MainActivityTest {
 
     @Test
     fun raffleOnePersonWithOneFacePicture(){
-        selectOneCrowd()
+        baseSelectOneCrowd()
         val people = doRaffle(17)
         Assert.assertEquals(1, people.filter { it.winnerPosition == 0 }.size)
         onView(withId(R.id.fabRaffle)).perform(click())
@@ -134,24 +118,52 @@ class MainActivityTest {
         ImagesGalleryMock(appContext, R.raw.photo_without_faces)
         val showGalleryButton = onView(withId(R.id.action_gallery))
         showGalleryButton.perform(click())
-        var notValidPicture  = mainActivity.activity.getString(R.string.exception_not_valid_picture)
+        val notValidPicture  = mainActivity.activity.getString(R.string.exception_not_valid_picture)
         recyclerView.check(matches(recyclerViewCountEqual(expect =  0)))
         onView(withId(android.support.design.R.id.snackbar_text)).check(matches(withText(notValidPicture)))
     }
 
     @Test
     fun zoomFace(){
-        selectOneCrowd()
+        baseSelectOneCrowd()
         onView( AssertsUtils.withIndex(withId(R.id.faceItemView), 0)).perform(click())
         onView(withId(R.id.zoomFaceItemView)).check(matches(isDisplayed()))
 
+    }
+
+    private fun baseNewCrowdByCamera() {
+        this.baseTakeOnePhotoByCamera()
+        val facesActivity = onView(withId(R.id.activity_faces_layout))
+        facesActivity.check(matches(isDisplayed()))
+        onView(withId(R.id.imageViewTrackedImage)).check(matches(AssertsUtils.hasDrawable()))
+        onView(withId(R.id.textViewTitle)).check(matches(not(withText(""))))
+        onView(withId(R.id.textViewEveryOneFacesTitle)).check(matches(withText("Everyone")))
+        onView(withId(R.id.textViewEveryOneFacesAmount)).check(matches(withText("19")))
+        onView(withId(R.id.flexboxLayoutEveryOneFaces)).check(matches(isDisplayed()))
+        pressBack()
+        val recyclerView = onView(withId(R.id.recyclerView))
+        recyclerView.check(matches(recyclerViewCount(greaterThan =  0)))
+    }
+
+    private fun baseSelectOneCrowd(){
+        this.baseNewCrowdByCamera()
+        onView( AssertsUtils.withIndex(withId(R.id.cardViewCrowd), 0)).perform(click())
+        val facesActivity = onView(withId(R.id.activity_faces_layout))
+        facesActivity.check(matches(isDisplayed()))
+    }
+
+    private fun baseTakeOnePhotoByCamera() {
+        val appContext = InstrumentationRegistry.getTargetContext()
+        CameraMock(appContext)
+        val cameraButton = onView(withId(R.id.fab))
+        cameraButton.perform(click())
     }
 
     private fun doRaffle(amount:Int): List<CrowdPersonEntity> {
         val appDataBase = AppDatabase.getInstance(mainActivity.activity)
         val crowd = appDataBase.crowdDao().getAll()[0]
         val people = appDataBase.crowdDao().getPeople(crowd.id)
-        (0..amount).forEach() {
+        (0..amount).forEach {
             people[it].winnerPosition = it + 1
             appDataBase.crowdDao().updatePerson(people[it])
         }
