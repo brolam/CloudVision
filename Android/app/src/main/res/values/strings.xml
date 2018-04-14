@@ -8,4 +8,5 @@
     <string name="winners">Winners</string>
     <string name="exception_all_raffles_been_made">All raffles have already been made.</string>
     <string name="exception_not_valid_picture">Sorry, this picture is not valid.</string>
+    <string name="exception_current_process_not_finished">Please wait until the current process is finished.</string>
 </resources>

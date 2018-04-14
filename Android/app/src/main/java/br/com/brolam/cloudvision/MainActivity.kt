@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerDeleg
                 },
                 onError = { messageId ->
                     this.hideProcessBar()
-                    Snackbar.make(fab, getString(messageId), Snackbar.LENGTH_LONG).setAction(null, null).show()
+                    showSnackBar(messageId)
                 })
         return true
     }
@@ -81,12 +81,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerDeleg
         progressBar.visibility = View.GONE
     }
 
+    private fun parseHasBackgroundProcess(): Boolean {
+        if (this.crowdsViewModel.hasBackgroundProcess()) {
+            showSnackBar(R.string.exception_current_process_not_finished)
+            return false
+        }
+        return true
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (!parseHasBackgroundProcess()) return false
         return when (item.itemId) {
             R.id.action_gallery -> {
                 this.imagePiker.selectOneImage()
@@ -105,6 +114,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerDeleg
     }
 
     override fun onClick(view: View?) {
+        if (!parseHasBackgroundProcess()) return
         if (view == null) return
         if (view == fab) {
             this.imagePiker.captureOneImage()
@@ -118,10 +128,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerDeleg
     }
 
     override fun onSelectOneCrowd(crowd: CrowdEntity) {
+        if (!parseHasBackgroundProcess()) return
         FacesActivity.show(this, crowd.id)
     }
 
     override fun getContext(): Context {
         return this
+    }
+
+    private fun showSnackBar(messageId: Int) {
+        Snackbar.make(fab, getString(messageId), Snackbar.LENGTH_LONG).setAction(null, null).show()
     }
 }
