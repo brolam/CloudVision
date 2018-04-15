@@ -40,9 +40,17 @@ class ImageUtil(val context: Context) {
     }
 
     fun getImage(fileName: String, onCompleted: (Bitmap?) -> Unit) {
-        AsyncTask.execute {
-            onCompleted(getImage(fileName))
+        class GetImageAsyncTask : AsyncTask<Void, Void, Bitmap?>() {
+            override fun doInBackground(vararg params: Void?): Bitmap? {
+                return getImage(fileName)
+            }
+
+            override fun onPostExecute(result: Bitmap?) {
+                super.onPostExecute(result)
+                onCompleted(result)
+            }
         }
+        GetImageAsyncTask().execute()
     }
 
     fun crop(bitmap: Bitmap, positionX: Float, positionY: Float, width: Float, height: Float, enlargeWidthInPercent: Float, enlargeHeightInPercent: Float): Bitmap {
@@ -53,15 +61,15 @@ class ImageUtil(val context: Context) {
         var newWidth = (width + (enlargedX * 2)).toInt()
         var newHeight = (height + (enlargedY * 2)).toInt()
         //Check if width was exceeds
-        if ( ( newX +  newWidth) > bitmap.width ) newWidth -= ((newX + newWidth) - bitmap.width)
+        if ((newX + newWidth) > bitmap.width) newWidth -= ((newX + newWidth) - bitmap.width)
         //Check if height was exceeds
-        if ( ( newY +  newHeight) > bitmap.height ) newHeight -= ((newY + newHeight) - bitmap.height)
+        if ((newY + newHeight) > bitmap.height) newHeight -= ((newY + newHeight) - bitmap.height)
         return Bitmap.createBitmap(bitmap, newX, newY, newWidth, newHeight)
     }
 
     fun resizeImage(bitmapOrigin: Bitmap, newSize: Float): Bitmap {
-        var scale = newSize / bitmapOrigin.width
-        var newHeight = bitmapOrigin.height * scale
+        val scale = newSize / bitmapOrigin.width
+        val newHeight = bitmapOrigin.height * scale
         return Bitmap.createScaledBitmap(
                 bitmapOrigin,
                 newSize.toInt(),

@@ -13,31 +13,34 @@ import br.com.brolam.cloudvision.models.CrowdEntity
  * Created by brenomarques on 13/03/2018.
  *
  */
-class MainAdapter( private val mainAdapterListener: MainAdapterListener) : Adapter<CrowdCardHolder>() {
+class MainAdapter(private val mainAdapterListener: MainAdapterListener) : Adapter<CrowdCardHolder>() {
     private val imageUtil = ImageUtil(mainAdapterListener.getContext())
-    var crowds:List<CrowdEntity> = ArrayList<CrowdEntity>()
+    var crowds: List<CrowdEntity> = ArrayList()
 
     interface MainAdapterListener {
-        fun onSelectOneCrowd( crowd: CrowdEntity)
-        fun getContext() : Context
+        fun onSelectOneCrowd(crowd: CrowdEntity)
+        fun getContext(): Context
     }
 
-    fun setCrows(crowds: List<CrowdEntity> ){
+    fun setCrows(crowds: List<CrowdEntity>) {
         this.crowds = crowds
         this.notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(crowdCardHolder: CrowdCardHolder?, position: Int) {
-        if ( crowdCardHolder == null ) return
+        if (crowdCardHolder == null) return
         val crowd = crowds[position]
-        crowdCardHolder.bindView(crowd, imageUtil.getImage(crowd.trackedImageName))
+        crowdCardHolder.bindView(crowd, null)
+        imageUtil.getImage(crowd.trackedImageName, {
+            crowdCardHolder.bindView(crowd, it)
+        })
         crowdCardHolder.itemView.setOnClickListener {
             mainAdapterListener.onSelectOneCrowd(crowd)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): CrowdCardHolder {
-        val view = LayoutInflater.from(mainAdapterListener.getContext()).inflate(R.layout.holder_crowd_card , parent, false)
+        val view = LayoutInflater.from(mainAdapterListener.getContext()).inflate(R.layout.holder_crowd_card, parent, false)
         return CrowdCardHolder(view)
     }
 
