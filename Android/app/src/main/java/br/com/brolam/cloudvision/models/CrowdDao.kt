@@ -30,8 +30,8 @@ interface CrowdDao {
     @Query("SELECT * FROM crowds WHERE id = :id")
     fun getCrowdPeopleById(id: Long): LiveData<CrowdPeopleEntity>
 
-    @Query("SELECT * FROM crowds")
-    fun getAllLiveData(): LiveData<List<CrowdEntity>>
+    @Query("SELECT * FROM crowds ORDER BY created DESC")
+    fun getAllOrderedByCreated(): LiveData<List<CrowdEntity>>
 
     @Query("SELECT * FROM crowdsPeople WHERE crowdId = :crowdId ORDER BY insertedOrder")
     fun getPeople(crowdId: Long): List<CrowdPersonEntity>

@@ -31,7 +31,7 @@ class CrowdsViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun getAllCrowds(): LiveData<List<CrowdEntity>> {
-        return this.crowdDao.getAllLiveData()
+        return this.crowdDao.getAllOrderedByCreated()
     }
 
     fun insertCrowd(trackedImageBitmap: Bitmap, onCompleted: (Long) -> Unit, onError: (messageId: Int) -> Unit) {

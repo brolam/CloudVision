@@ -141,7 +141,7 @@ class AppDatabaseTest {
         val observer = Observer<List<CrowdEntity>>(function = { crowdEntities ->
             expectedCrowdEntities = crowdEntities
         })
-        this.crowdDao.getAllLiveData().observeForever(observer)
+        this.crowdDao.getAllOrderedByCreated().observeForever(observer)
         spyOnCompleted.await(2, TimeUnit.SECONDS)
         assertNotNull(expectedCrowdEntities)
         this.assertCrowdEntity(expectedCrowdEntities!![0], currentTime)
