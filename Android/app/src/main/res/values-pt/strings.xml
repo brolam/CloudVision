@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Cloud Vision</string>
+    <string name="title_activity_faces">Grupo</string>
+    <string name="action_camera">Tire uma foto</string>
+    <string name="action_gallery">Selecione uma imagem</string>
+    <string name="action_settings">Configurações</string>
+    <string name="everyone">Todos</string>
+    <string name="winners">Vencedores</string>
+    <string name="exception_all_raffles_been_made">Todos os sorteios já foram realizados.</string>
+    <string name="exception_not_valid_picture">Desculpe, está foto não é válida.</string>
+    <string name="exception_current_process_not_finished">Por favor, espere até que o processo atual seja concluído.</string>
+</resources>
