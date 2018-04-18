@@ -1,79 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-     Copyright (C) 2017 Breno Marques
-
-     Licensed under the Apache License, Version 2.0 (the "License");
-     you may not use this file except in compliance with the License.
-     You may obtain a copy of the License at
-
-          http://www.apache.org/licenses/LICENSE-2.0
-
-     Unless required by applicable law or agreed to in writing, software
-     distributed under the License is distributed on an "AS IS" BASIS,
-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     See the License for the specific language governing permissions and
-     limitations under the License.
--->
 <resources>
     <string name="app_name">Cloud Vision</string>
-    <!--Navigation Drawer Strings !-->
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_notes_vision">Notes Vision</string>
-    <string name="nav_log_off">Log Off</string>
-    <string name="nav_inputs_model">Inputs Model</string>
-    <string name="nav_analysis_model">Analysis Model</string>
-    <string name="feature_not_available">This feature is not available</string>
-
-    <!--Note Vision Activity!-->
-    <string name="note_vision_save">Save Note Vision</string>
-    <string name="note_vision_keyboard_on">Keyboard on</string>
-    <string name="note_vision_camera_on">Camera on</string>
-    <string name="note_vision_edit_title_hint">Title</string>
-    <string name="note_vision_edit_content_hint">Note</string>
-    <string name="note_vision_validate_title_empty">Please the title must be completed</string>
-    <string name="note_vision_validate_content_empty">Please select at least one text.</string>
-    <string name="ok">OK</string>
-    <string name="yes">Yes</string>
-    <string name="permission_camera_rationale">Access to the camera is needed for detection</string>
-    <string name="low_storage_error">Ocr dependencies cannot be downloaded due to low device storage</string>
-    <string name="no_camera_permission">This application cannot run because it does not have the camera permission.  The application will now exit.</string>
-    <string name="note_vision_ask_fill_title">Is this the Note Vision title?</string>
-
-    <!--Main Activity!-->
-    <string name="note_vision_share">Share</string>
-    <string name="note_vision_copy">Copy</string>
-    <string name="note_vision_background">Background</string>
-    <string name="note_vision_add">Add Note Vision</string>
-    <string name="note_vision_search">Search</string>
-    <string name="note_vision_search_hint">title</string>
-    <string name="note_vision_alert_background_image_in_processing">There is a background image in processing.</string>
-    <string name="main_activity_request_error" formatted="true">Request %d error, please contact support for assistance.</string>
-    <string name="note_vision_clipboard_copied">Copied</string>
-
-    <!--Note Vision Searchable!-->
-    <string name="note_vision_searchable_title_format">Search/%s</string>
-    <string name="title_activity_note_vision_details">NoteVisionDetailsActivity</string>
-
-    <!--Note Vision Details!-->
-    <string name="note_vision_delete">Delete</string>
-    <string name="note_vision_confirm_delete">Are you sure? %s to delete.</string>
-
-    <!--Note Vision Widgets!-->
-    <string name="note_vision_widget_empty">Notes Vision could not be recovered</string>
-
-    <!--TalkBack Strings!-->
-    <string name="talk_back_list_of_notes_vision">List of notes vision</string>
-    <string name="talk_back_list_of_notes_vision_items">List of notes vision Items</string>
-    <string name="talk_back_camera_preview">Camera preview</string>
-    <string name="talk_back_camera_flash_on">Turn on the flash</string>
-    <string name="talk_back_camera_flash_off">Turn off the flash</string>
-    <string name="talk_back_camera_play">Turn on the play</string>
-    <string name="talk_back_camera_pause">Turn on the pause</string>
-    <string name="talk_back_keyboard_on">Keyboard Enabled</string>
-    <string name="talk_back_note_vision_item_edit">Edit note</string>
-    <string name="talk_back_note_vision_item_copy">Copy note</string>
-    <string name="talk_back_note_vision_item_share">Share note</string>
-    <string name="talk_back_note_vision_item_delete">Delete note</string>
-    <string name="talk_your_picture">Your picture</string>
-    <string name="talk_background_image">Note Vision background image</string>
+    <string name="title_activity_faces">Crowd</string>
+    <string name="action_camera">Take a photo</string>
+    <string name="action_gallery">Select a picture</string>
+    <string name="action_settings">Settings</string>
+    <string name="everyone">Everyone</string>
+    <string name="winners">Winners</string>
+    <string name="exception_all_raffles_been_made">All raffles have already been made.</string>
+    <string name="exception_not_valid_picture">Sorry, this picture is not valid.</string>
+    <string name="exception_current_process_not_finished">Please wait until the current process is finished.</string>
 </resources>

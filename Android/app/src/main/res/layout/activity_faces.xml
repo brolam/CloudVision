@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_faces_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="br.com.brolam.cloudvision.FacesActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_bar_height"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:toolbarId="@+id/toolbar">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/app_bar_height">
+
+                <ImageView
+                    android:id="@+id/imageViewTrackedImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white_texts_background_protection"
+                    android:gravity="bottom"
+                    android:orientation="vertical" />
+            </RelativeLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textViewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_margin="@dimen/text_margin"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+                tools:text="Dec 31 2017 00:00:00" />
+
+            <LinearLayout
+                android:id="@+id/linearLayoutWinnersFaces"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewTitle"
+                android:layout_marginBottom="@dimen/text_margin"
+                android:layout_marginLeft="@dimen/text_margin"
+                android:layout_marginRight="@dimen/text_margin"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/textViewWinnersFacesTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/winners"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
+
+                <TextView
+                    android:id="@+id/textViewWinnersFacesAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    tools:text="4"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2" />
+            </LinearLayout>
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/flexboxLayoutWinnersFaces"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/linearLayoutWinnersFaces"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginRight="@dimen/default_margin"
+                android:visibility="gone"
+                app:dividerDrawable="@drawable/divider_flexbox"
+                app:flexWrap="wrap"
+                app:showDivider="middle">
+
+                <br.com.brolam.cloudvision.views.FaceItemView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    tools:faceDrawable="@drawable/ic_face_black_60dp" />
+                <br.com.brolam.cloudvision.views.FaceItemView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    tools:faceDrawable="@drawable/ic_face_black_60dp" />
+                <br.com.brolam.cloudvision.views.FaceItemView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    tools:faceDrawable="@drawable/ic_face_black_60dp" />
+                <br.com.brolam.cloudvision.views.FaceItemView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    tools:faceDrawable="@drawable/ic_face_black_60dp" />
+            </com.google.android.flexbox.FlexboxLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutEveryOneFaces"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/flexboxLayoutWinnersFaces"
+                android:layout_marginBottom="@dimen/text_margin"
+                android:layout_marginLeft="@dimen/text_margin"
+                android:layout_marginRight="@dimen/text_margin">
+
+                <TextView
+                    android:id="@+id/textViewEveryOneFacesTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/everyone"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
+
+                <TextView
+                    android:id="@+id/textViewEveryOneFacesAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    tools:text="4"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2" />
+            </LinearLayout>
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/flexboxLayoutEveryOneFaces"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/linearLayoutEveryOneFaces"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginRight="@dimen/default_margin"
+                app:dividerDrawable="@drawable/divider_flexbox"
+                app:flexWrap="wrap"
+                app:showDivider="middle">
+
+                <br.com.brolam.cloudvision.views.FaceItemView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    tools:faceDrawable="@drawable/ic_face_black_60dp" />
+                <br.com.brolam.cloudvision.views.FaceItemView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    tools:faceDrawable="@drawable/ic_face_black_60dp" />
+                <br.com.brolam.cloudvision.views.FaceItemView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    tools:faceDrawable="@drawable/ic_face_black_60dp" />
+                <br.com.brolam.cloudvision.views.FaceItemView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    tools:faceDrawable="@drawable/ic_face_black_60dp" />
+            </com.google.android.flexbox.FlexboxLayout>
+        </RelativeLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabRaffle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_action_raffle"
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="bottom|end" />
+
+</android.support.design.widget.CoordinatorLayout>
