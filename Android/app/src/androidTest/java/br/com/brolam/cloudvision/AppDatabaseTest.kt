@@ -38,7 +38,7 @@ class AppDatabaseTest {
     @Test
     fun insertOneCrowd() {
         val currentCountCrowds = this.crowdDao.count()
-        val crowd = CrowdEntity(
+        val crowd = CvImageEntity(
                 title = "Dec 31 2017 00:00:00",
                 created = Date().time,
                 trackedImageName = "/Picture/crowd_1.jpp")
@@ -70,7 +70,7 @@ class AppDatabaseTest {
 
     @Test
     fun insertCrowdWithPeople() {
-        val crowd = CrowdEntity(
+        val crowd = CvImageEntity(
                 title = "Dec 31 2017 00:00:00",
                 created = Date().time,
                 trackedImageName = "/Picture/crowd_1.jpp"
@@ -105,8 +105,8 @@ class AppDatabaseTest {
         val spyOnCompleted = CountDownLatch(1)
         val currentTime = Date().time
         this.insertOneCrowd()
-        var expectedCrowdEntity: CrowdEntity? = null
-        val observer = Observer<CrowdEntity>(function = { crowdEntity ->
+        var expectedCrowdEntity: CvImageEntity? = null
+        val observer = Observer<CvImageEntity>(function = { crowdEntity ->
             expectedCrowdEntity = crowdEntity
         })
         this.crowdDao.getById(1).observeForever(observer)
@@ -137,8 +137,8 @@ class AppDatabaseTest {
         val spyOnCompleted = CountDownLatch(1)
         val currentTime = Date().time
         this.insertOneCrowd()
-        var expectedCrowdEntities: List<CrowdEntity>? = null
-        val observer = Observer<List<CrowdEntity>>(function = { crowdEntities ->
+        var expectedCrowdEntities: List<CvImageEntity>? = null
+        val observer = Observer<List<CvImageEntity>>(function = { crowdEntities ->
             expectedCrowdEntities = crowdEntities
         })
         this.crowdDao.getAllOrderedByCreated().observeForever(observer)
@@ -157,7 +157,7 @@ class AppDatabaseTest {
         assertEquals(1, people[0].winnerPosition)
     }
 
-    private fun assertCrowdEntity(crowd: CrowdEntity, currentTime: Long) {
+    private fun assertCrowdEntity(crowd: CvImageEntity, currentTime: Long) {
         assertEquals("Dec 31 2017 00:00:00", crowd.title)
         assertTrue(crowd.created >= currentTime)
         assertEquals("/Picture/crowd_1.jpp", crowd.trackedImageName)

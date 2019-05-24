@@ -16,7 +16,7 @@ import android.arch.persistence.room.ForeignKey.CASCADE
 
 @Entity(tableName = "crowdsPeople",
         foreignKeys = [(ForeignKey(
-                entity = CrowdEntity::class,
+                entity = CvImageEntity::class,
                 parentColumns = ["id"],
                 childColumns = ["crowdId"],
                 onDelete = CASCADE))]

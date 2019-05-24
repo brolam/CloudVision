@@ -8,8 +8,8 @@ import android.arch.persistence.room.PrimaryKey
  * Created by brenomarques on 07/01/2018.
  *
  */
-@Entity(tableName = "crowds")
-data class CrowdEntity(
+@Entity(tableName = "cvImageEntity")
+data class CvImageEntity(
         @ColumnInfo(name = "id")
         @PrimaryKey(autoGenerate = true) var id: Long = 0,
         @ColumnInfo(name = "title") var title: String = "",

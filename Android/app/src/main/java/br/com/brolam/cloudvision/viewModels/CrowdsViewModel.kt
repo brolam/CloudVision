@@ -11,7 +11,7 @@ import br.com.brolam.cloudvision.R
 import br.com.brolam.cloudvision.helpers.FacesDetector
 import br.com.brolam.cloudvision.helpers.ImageUtil
 import br.com.brolam.cloudvision.models.AppDatabase
-import br.com.brolam.cloudvision.models.CrowdEntity
+import br.com.brolam.cloudvision.models.CvImageEntity
 import br.com.brolam.cloudvision.models.CrowdPersonEntity
 import com.google.android.gms.vision.face.Face
 import java.util.*
@@ -30,7 +30,7 @@ class CrowdsViewModel(application: Application) : AndroidViewModel(application) 
         return this.backgroundProcess?.status == AsyncTask.Status.RUNNING
     }
 
-    fun getAllCrowds(): LiveData<List<CrowdEntity>> {
+    fun getAllCrowds(): LiveData<List<CvImageEntity>> {
         return this.crowdDao.getAllOrderedByCreated()
     }
 
@@ -68,7 +68,7 @@ class CrowdsViewModel(application: Application) : AndroidViewModel(application) 
     private fun insertCrowdWithTransaction(title: String, trackedImageName: String, created: Long, trackingFaces: SparseArray<Face>, trackedImageBitmap: Bitmap): Long {
         var crowdId: Long = -1
         this.appDatabase.runInTransaction {
-            val crowdEntity = CrowdEntity(title = title, trackedImageName = trackedImageName, created = created)
+            val crowdEntity = CvImageEntity(title = title, trackedImageName = trackedImageName, created = created)
             crowdId = this.crowdDao.insert(crowdEntity)
             val crowdPeople = mutableListOf<CrowdPersonEntity>()
             for (index in 0 until trackingFaces.size()) {
@@ -89,7 +89,7 @@ class CrowdsViewModel(application: Application) : AndroidViewModel(application) 
         return crowdId
     }
 
-    fun deleteCrowd(crowd: CrowdEntity) {
+    fun deleteCrowd(crowd: CvImageEntity) {
         AsyncTask.execute {
             appDatabase.runInTransaction {
                 crowdDao.deleteOneCrowd(crowd)

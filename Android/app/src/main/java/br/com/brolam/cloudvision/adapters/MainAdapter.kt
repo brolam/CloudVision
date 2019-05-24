@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView.Adapter
 import br.com.brolam.cloudvision.R
 import br.com.brolam.cloudvision.adapters.holders.CrowdCardHolder
 import br.com.brolam.cloudvision.helpers.ImageUtil
-import br.com.brolam.cloudvision.models.CrowdEntity
+import br.com.brolam.cloudvision.models.CvImageEntity
 
 /**
  * Created by brenomarques on 13/03/2018.
@@ -15,14 +15,14 @@ import br.com.brolam.cloudvision.models.CrowdEntity
  */
 class MainAdapter(private val mainAdapterListener: MainAdapterListener) : Adapter<CrowdCardHolder>() {
     private val imageUtil = ImageUtil(mainAdapterListener.getContext())
-    var crowds: List<CrowdEntity> = ArrayList()
+    var crowds: List<CvImageEntity> = ArrayList()
 
     interface MainAdapterListener {
-        fun onSelectOneCrowd(crowd: CrowdEntity)
+        fun onSelectOneCrowd(crowd: CvImageEntity)
         fun getContext(): Context
     }
 
-    fun setCrows(crowds: List<CrowdEntity>) {
+    fun setCrows(crowds: List<CvImageEntity>) {
         this.crowds = crowds
         this.notifyDataSetChanged()
     }

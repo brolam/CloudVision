@@ -9,7 +9,7 @@ import android.arch.persistence.room.Relation
  */
 class CrowdPeopleEntity {
     @Embedded
-    lateinit var crowd: CrowdEntity
+    lateinit var crowd: CvImageEntity
     @Relation(parentColumn = "id", entityColumn = "crowdId", entity = CrowdPersonEntity::class)
     lateinit var people: List<CrowdPersonEntity>
 }

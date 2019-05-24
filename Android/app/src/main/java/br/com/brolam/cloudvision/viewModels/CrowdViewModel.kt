@@ -9,7 +9,7 @@ import android.os.AsyncTask
 import br.com.brolam.cloudvision.helpers.ImageUtil
 import br.com.brolam.cloudvision.helpers.Raffle
 import br.com.brolam.cloudvision.models.AppDatabase
-import br.com.brolam.cloudvision.models.CrowdEntity
+import br.com.brolam.cloudvision.models.CvImageEntity
 import br.com.brolam.cloudvision.models.CrowdPeopleEntity
 import br.com.brolam.cloudvision.models.CrowdPersonEntity
 
@@ -44,7 +44,7 @@ class CrowdViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun getCrowd(): CrowdEntity {
+    fun getCrowd(): CvImageEntity {
         return this.crowdPeopleEntity!!.crowd
     }
 

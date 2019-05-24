@@ -20,10 +20,10 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import br.com.brolam.cloudvision.adapters.MainAdapter
 import br.com.brolam.cloudvision.adapters.holders.SwipeToDeleteCallback
-import br.com.brolam.cloudvision.models.CrowdEntity
+import br.com.brolam.cloudvision.models.CvImageEntity
 import android.os.Parcelable
 
-class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerDelegate, Observer<List<CrowdEntity>>, MainAdapter.MainAdapterListener {
+class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerDelegate, Observer<List<CvImageEntity>>, MainAdapter.MainAdapterListener {
 
     companion object {
         const val REQUEST_IMAGE_CAPTURE = 5001
@@ -108,14 +108,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerDeleg
         }
     }
 
-    override fun onChanged(crowds: List<CrowdEntity>?) {
+    override fun onChanged(crowds: List<CvImageEntity>?) {
         if (crowds != null) {
             this.mainAdapter.setCrows(crowds)
             this.restoreRecyclerViewState()
         }
     }
 
-    override fun onSelectOneCrowd(crowd: CrowdEntity) {
+    override fun onSelectOneCrowd(crowd: CvImageEntity) {
         if (!parseHasBackgroundProcess()) return
         FacesActivity.show(this, crowd.id)
     }
