@@ -14,14 +14,14 @@ import android.arch.persistence.room.ForeignKey.CASCADE
  *
  */
 
-@Entity(tableName = "crowdsPeople",
+@Entity(tableName = "cvRecognizableItemEntity",
         foreignKeys = [(ForeignKey(
                 entity = CvImageEntity::class,
                 parentColumns = ["id"],
                 childColumns = ["crowdId"],
                 onDelete = CASCADE))]
 )
-data class CrowdPersonEntity(
+data class CvRecognizableItemEntity(
         @ColumnInfo(name = "id")
         @PrimaryKey(autoGenerate = true) var id: Long = 0,
         @ColumnInfo(name = "crowdId") var crowdId: Long = 0,

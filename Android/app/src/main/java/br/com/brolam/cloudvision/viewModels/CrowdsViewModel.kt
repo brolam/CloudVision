@@ -12,7 +12,7 @@ import br.com.brolam.cloudvision.helpers.FacesDetector
 import br.com.brolam.cloudvision.helpers.ImageUtil
 import br.com.brolam.cloudvision.models.AppDatabase
 import br.com.brolam.cloudvision.models.CvImageEntity
-import br.com.brolam.cloudvision.models.CrowdPersonEntity
+import br.com.brolam.cloudvision.models.CvRecognizableItemEntity
 import com.google.android.gms.vision.face.Face
 import java.util.*
 
@@ -70,10 +70,10 @@ class CrowdsViewModel(application: Application) : AndroidViewModel(application) 
         this.appDatabase.runInTransaction {
             val crowdEntity = CvImageEntity(title = title, trackedImageName = trackedImageName, created = created)
             crowdId = this.crowdDao.insert(crowdEntity)
-            val crowdPeople = mutableListOf<CrowdPersonEntity>()
+            val crowdPeople = mutableListOf<CvRecognizableItemEntity>()
             for (index in 0 until trackingFaces.size()) {
                 val face = trackingFaces.valueAt(index)
-                val crowdPerson = CrowdPersonEntity(
+                val crowdPerson = CvRecognizableItemEntity(
                         crowdId = crowdId,
                         insertedOrder = index,
                         faceWidth = face.width,

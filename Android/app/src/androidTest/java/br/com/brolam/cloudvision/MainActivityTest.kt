@@ -21,7 +21,7 @@ import br.com.brolam.cloudvision.asserts.AssertsUtils.Companion.recyclerViewCoun
 import br.com.brolam.cloudvision.mocks.CameraMock
 import br.com.brolam.cloudvision.mocks.ImagesGalleryMock
 import br.com.brolam.cloudvision.models.AppDatabase
-import br.com.brolam.cloudvision.models.CrowdPersonEntity
+import br.com.brolam.cloudvision.models.CvRecognizableItemEntity
 import org.hamcrest.Matchers.not
 import org.junit.Before
 
@@ -159,7 +159,7 @@ class MainActivityTest {
         cameraButton.perform(click())
     }
 
-    private fun doRaffle(amount:Int): List<CrowdPersonEntity> {
+    private fun doRaffle(amount:Int): List<CvRecognizableItemEntity> {
         val appDataBase = AppDatabase.getInstance(mainActivity.activity)
         val crowd = appDataBase.crowdDao().getAll()[0]
         val people = appDataBase.crowdDao().getPeople(crowd.id)

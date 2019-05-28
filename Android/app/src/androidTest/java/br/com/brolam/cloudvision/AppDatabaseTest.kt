@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit
  */
 @RunWith(AndroidJUnit4::class)
 class AppDatabaseTest {
-    private lateinit var crowdDao: CrowdDao
+    private lateinit var crowdDao: CvImageDao
     private lateinit var appDataBase: AppDatabase
 
     @Before
@@ -77,7 +77,7 @@ class AppDatabaseTest {
         )
         val crowdId = this.crowdDao.insert(crowd)
         val people = listOf(
-                CrowdPersonEntity(
+                CvRecognizableItemEntity(
                         crowdId = crowdId,
                         insertedOrder = 1,
                         facePositionX = 100f,
@@ -85,7 +85,7 @@ class AppDatabaseTest {
                         faceWidth = 101f,
                         faceHeight = 102f
                 ),
-                CrowdPersonEntity(
+                CvRecognizableItemEntity(
                         crowdId = crowdId,
                         insertedOrder = 2,
                         facePositionX = 100f,
@@ -120,8 +120,8 @@ class AppDatabaseTest {
         val spyOnCompleted = CountDownLatch(1)
         val currentTime = Date().time
         this.insertCrowdWithPeople()
-        var expectedCrowdPeople: CrowdPeopleEntity? = null
-        val observer = Observer<CrowdPeopleEntity>(function = { crowdPeopleEntity ->
+        var expectedCrowdPeople: CvRecognizableEntity? = null
+        val observer = Observer<CvRecognizableEntity>(function = { crowdPeopleEntity ->
             expectedCrowdPeople = crowdPeopleEntity
         })
         this.crowdDao.getCrowdPeopleById(id = 1).observeForever(observer)
@@ -163,7 +163,7 @@ class AppDatabaseTest {
         assertEquals("/Picture/crowd_1.jpp", crowd.trackedImageName)
     }
 
-    private fun assertCrowdPersonEntity(crowdPerson: CrowdPersonEntity, crowdId: Long, insertedOrder: Int) {
+    private fun assertCrowdPersonEntity(crowdPerson: CvRecognizableItemEntity, crowdId: Long, insertedOrder: Int) {
         assertEquals(insertedOrder, crowdPerson.insertedOrder)
         assertEquals(crowdId, crowdPerson.crowdId)
         assertEquals(100f, crowdPerson.facePositionX)

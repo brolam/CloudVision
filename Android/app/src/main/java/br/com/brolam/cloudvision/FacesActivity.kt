@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import br.com.brolam.cloudvision.models.CrowdPersonEntity
 import br.com.brolam.cloudvision.viewModels.CrowdViewModel
 import br.com.brolam.cloudvision.views.FaceItemView
 import br.com.brolam.cloudvision.views.RaffleDialogFragment

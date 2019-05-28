@@ -12,7 +12,7 @@ import br.com.brolam.cloudvision.R
 import android.animation.ValueAnimator
 import android.content.Context
 import android.widget.LinearLayout
-import br.com.brolam.cloudvision.models.CrowdPersonEntity
+import br.com.brolam.cloudvision.models.CvRecognizableItemEntity
 import br.com.brolam.cloudvision.viewModels.CrowdViewModel
 import android.content.pm.ActivityInfo
 
@@ -25,7 +25,7 @@ import android.content.pm.ActivityInfo
 class RaffleDialogFragment : android.support.v4.app.DialogFragment() {
     private var faceContainer: LinearLayout? = null
     private lateinit var crowdViewModel: CrowdViewModel
-    private lateinit var raffledList: List<CrowdPersonEntity>
+    private lateinit var raffledList: List<CvRecognizableItemEntity>
     class ExceptionAllRafflesBeenMade(message: String?) : Exception(message) {}
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {

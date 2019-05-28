@@ -7,9 +7,9 @@ import android.arch.persistence.room.Relation
  * Created by brenomarques on 21/01/2018.
  *
  */
-class CrowdPeopleEntity {
+class CvRecognizableEntity {
     @Embedded
     lateinit var crowd: CvImageEntity
-    @Relation(parentColumn = "id", entityColumn = "crowdId", entity = CrowdPersonEntity::class)
-    lateinit var people: List<CrowdPersonEntity>
+    @Relation(parentColumn = "id", entityColumn = "crowdId", entity = CvRecognizableItemEntity::class)
+    lateinit var people: List<CvRecognizableItemEntity>
 }

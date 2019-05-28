@@ -10,8 +10,8 @@ import br.com.brolam.cloudvision.helpers.ImageUtil
 import br.com.brolam.cloudvision.helpers.Raffle
 import br.com.brolam.cloudvision.models.AppDatabase
 import br.com.brolam.cloudvision.models.CvImageEntity
-import br.com.brolam.cloudvision.models.CrowdPeopleEntity
-import br.com.brolam.cloudvision.models.CrowdPersonEntity
+import br.com.brolam.cloudvision.models.CvRecognizableEntity
+import br.com.brolam.cloudvision.models.CvRecognizableItemEntity
 
 /**
  * Created by brenomarques on 08/01/2018.
@@ -21,7 +21,7 @@ class CrowdViewModel(application: Application) : AndroidViewModel(application) {
     private val appDatabase: AppDatabase = AppDatabase.getInstance(application)
     private val crowdDao = this.appDatabase.crowdDao()
     private val imageUtil = ImageUtil(application)
-    private var crowdPeopleEntity: CrowdPeopleEntity? = null
+    private var cvRecognizable: CvRecognizableEntity? = null
     private var trackedImage: Bitmap? = null;
     private var facesBitmap = HashMap<Long, Bitmap>()
 
@@ -31,8 +31,8 @@ class CrowdViewModel(application: Application) : AndroidViewModel(application) {
 
     fun setCrowdPeopleObserve(crowdId: Long, lifecycleOwner: CrowdViewModelLifecycle) {
         this.crowdDao.getCrowdPeopleById(crowdId).observe(lifecycleOwner, Observer {
-            this.crowdPeopleEntity = it
-            if (this.crowdPeopleEntity != null) {
+            this.cvRecognizable = it
+            if (this.cvRecognizable != null) {
                 this.trackedImage = this.imageUtil.getImage(this.getCrowd().trackedImageName)
                 this.facesBitmap = HashMap<Long, Bitmap>()
                 getPeople().forEach { crowdPersonEntity ->
@@ -45,24 +45,24 @@ class CrowdViewModel(application: Application) : AndroidViewModel(application) {
 
 
     fun getCrowd(): CvImageEntity {
-        return this.crowdPeopleEntity!!.crowd
+        return this.cvRecognizable!!.crowd
     }
 
     fun getTrackedImage(): Bitmap {
         return this.trackedImage!!
     }
 
-    fun getPeople(): List<CrowdPersonEntity> {
-        return this.crowdPeopleEntity!!.people
+    fun getPeople(): List<CvRecognizableItemEntity> {
+        return this.cvRecognizable!!.people
     }
 
-    fun getWinners(): List<CrowdPersonEntity> {
-        return this.crowdPeopleEntity!!.people.filter { it.winnerPosition > 0 }.sortedBy { it.winnerPosition }
+    fun getWinners(): List<CvRecognizableItemEntity> {
+        return this.cvRecognizable!!.people.filter { it.winnerPosition > 0 }.sortedBy { it.winnerPosition }
     }
 
-    fun createRaffledPeopleList(): List<CrowdPersonEntity> {
-        val raffledPeopleList = ArrayList<CrowdPersonEntity>()
-        val competitors = this.crowdPeopleEntity!!.people.filter { it.winnerPosition == 0 }
+    fun createRaffledPeopleList(): List<CvRecognizableItemEntity> {
+        val raffledPeopleList = ArrayList<CvRecognizableItemEntity>()
+        val competitors = this.cvRecognizable!!.people.filter { it.winnerPosition == 0 }
         (0..10).forEach {
             var person = Raffle.chooseOne(competitors)
             person?.let { raffledPeopleList.add(it) }
@@ -70,15 +70,15 @@ class CrowdViewModel(application: Application) : AndroidViewModel(application) {
         return raffledPeopleList
     }
 
-    private fun getLastWinner(): CrowdPersonEntity? {
-        return this.crowdPeopleEntity!!.people.sortedBy { it.winnerPosition }.last()
+    private fun getLastWinner(): CvRecognizableItemEntity? {
+        return this.cvRecognizable!!.people.sortedBy { it.winnerPosition }.last()
     }
 
     fun getPersonPicture(personId: Long): Bitmap {
         return this.facesBitmap.get(personId)!!
     }
 
-    private fun getPersonPicture(crowdPersonEntity: CrowdPersonEntity): Bitmap {
+    private fun getPersonPicture(crowdPersonEntity: CvRecognizableItemEntity): Bitmap {
         return this.imageUtil.crop(
                 this.getTrackedImage(),
                 crowdPersonEntity.facePositionX,
@@ -89,7 +89,7 @@ class CrowdViewModel(application: Application) : AndroidViewModel(application) {
                 enlargeHeightInPercent = 15.toFloat())
     }
 
-    fun setWinner(person: CrowdPersonEntity) {
+    fun setWinner(person: CvRecognizableItemEntity) {
         AsyncTask.execute {
             val lastWinnerPosition = (getLastWinner()?.winnerPosition ?: 0)
             person.winnerPosition = lastWinnerPosition + 1

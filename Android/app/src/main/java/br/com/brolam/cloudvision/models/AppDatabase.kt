@@ -10,7 +10,7 @@ import android.content.Context
  * Created by brenomarques on 07/01/2018.
  *
  */
-@Database(entities = [(CvImageEntity::class), (CrowdPersonEntity::class)], version = 2)
+@Database(entities = [(CvImageEntity::class), (CvRecognizableItemEntity::class)], version = 2)
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {
@@ -28,5 +28,5 @@ abstract class AppDatabase : RoomDatabase() {
         }
     }
 
-    abstract fun crowdDao(): CrowdDao
+    abstract fun crowdDao(): CvImageDao
 }
